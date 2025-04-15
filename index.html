@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Top Menu</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+
+    </head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+
+
+
+        <!-- script for menu -->
+
+
+<div class="top-bar">
+	<img src="stuff/3.14.png"  class="logo" /> 
+	
+    <div class="menu-icon" id="menuIcon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="#" onclick="closeMenu()">Home</a></li>
+      <li><a href="#" onclick="closeMenu()">About</a></li>
+      <li><a href="/var/www/html/nopage.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="#" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <div class="content" id="content">
+    <h1>Welcome</h1>
+    <p>Click the menu icon. Watch the dropdown glide and the icon transform like magic.</p>
+
+</div>
+
+
+
+
+        <!-- script for menu -->
+
+
+
+
+        <script src="script.js"> </script>
+
+    </body>                                                                                             </html>
