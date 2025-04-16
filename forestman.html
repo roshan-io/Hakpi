@@ -33,21 +33,22 @@
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
     }
 
     .four_zero_four_bg h1 {
       font-size: 80px;
       color: #fff;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5); /* optional: adds glow */
     }
 
     .contant_box_404 {
-      margin-top: -50px;
+      margin-top: 20px;
     }
 
     .contant_box_404 h3 {
