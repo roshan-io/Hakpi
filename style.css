@@ -107,18 +107,18 @@ html, body {                                                                    
       left: 0;
       width: 100%;
       background: rgba(30, 30, 30, 0.98);
-      max-height: 0;
+      height: 0;
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
-      transition: max-height 0.5s ease, opacity 0.4s ease;
+      transition: height 0.5s ease, opacity 0.4s ease;
       z-index: 999;
       margin-bottom: 0;
       padding-bottom: 0;
     }
 
     .menu-panel.open {
-      height: 240px; /* Adjust based on content */
+      height: 200px; /* Adjust based on content */
       opacity: 1;
       pointer-events: auto;
     }
