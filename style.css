@@ -140,6 +140,8 @@ html, body {                                                                    
       color: white;
       width: 100%;
       transition: background 0.3s ease;
+      font-weight: bold;
+font-family: sans-serif;
     }
 
     .menu-panel li a:hover {
