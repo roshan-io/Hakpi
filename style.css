@@ -118,7 +118,7 @@ html, body {                                                                    
     }
 
     .menu-panel.open {
-      height: 220px; /* Adjust based on content */
+      height: 200px; /* Adjust based on content */
       opacity: 1;
       pointer-events: auto;
     }
