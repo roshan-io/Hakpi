@@ -45,11 +45,36 @@
       padding: 40px;
     }
 
-    @media (min-width: 768px) {
+   /* @media (min-width: 768px) {
       #container {
         grid-template-columns: repeat(2, 1fr);
       }
-    } 
+    } */
+
+
+.panel-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+
+
+/* For larger screens: side by side */
+@media (min-width: 768px) {
+  .panel-row {
+    flex-direction: row;
+  }
+
+  .panel-row:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+}
+
+
  
     .panel {
       width: 350px;
@@ -90,7 +115,7 @@
   <canvas id="bgCanvas"></canvas>
   <div id="blur-backdrop"></div>
 
-  <div id="container">
+  /* <div id="container">
     <div class="panel">Panel 1</div>
     <div class="panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
     <div class="panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
@@ -101,7 +126,52 @@
     <div class="panel">Panel 8</div>
     <div class="panel">Panel 9</div>
     <div class="panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
-  </div>
+  </div> */ 
+
+
+
+<div class=""container">
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+
+
+
+
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+</div>
 
   <script>
     // Background lines
