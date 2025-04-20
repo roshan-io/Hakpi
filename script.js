@@ -109,16 +109,17 @@ animate();
 
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-          observer.unobserve(entry.target); // Animate only once
-        }
-      });
-    }, {
-      threshold: 0.3
-    });
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    } else {
+      entry.target.classList.remove('show');
+    }
+  });
+}, {
+  threshold: 0.3
+});
 
-    document.querySelectorAll('.panel').forEach(panel => {
-      observer.observe(panel);
-    });
+document.querySelectorAll('.panel').forEach(panel => {
+  observer.observe(panel);
+});
