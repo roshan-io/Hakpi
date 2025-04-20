@@ -93,28 +93,6 @@
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
       z-index: 3;
     }
-   
-<!--aspect ratio -->
-
-.panel::before {
-  content: "";
-  display: block;
-  padding-top: 75%; /* 3:4 height to width ratio */
-}
-
-.panel-inner {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 20px;
-  color: white;
-}
 
 
 
@@ -126,7 +104,7 @@
   display: block;
   object-fit: cover;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
+  border-radius: inherit;
 }
     .panel.show {
       opacity: 1;
