@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakpi.io</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cascading.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    
+
+
+<style> 
+footer {
+    background-color: #1a1a1a; /* Dark background */
+    color: #f0f0f0; /* Light text color */
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive columns */
+    gap: 30px;
+}
+
+h3 {
+    color: #eee;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+a:hover {
+    color: #eee;
+}
+
+.icon {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 1em; /* Adjust icon size as needed */
+    /* You'll need to add specific styles or a font library for actual icons */
+}
+
+/* Basic styling for the light/dark mode toggle (if you want to include it) */
+.light-dark-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.light-dark-toggle label {
+    display: inline-block;
+    margin: 0 10px;
+    color: #ccc;
+}
+
+.light-dark-toggle input[type="radio"] {
+    display: none;
+}
+
+.light-dark-toggle .toggle-switch {
+    background-color: #333;
+    border-radius: 15px;
+    width: 60px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.light-dark-toggle .toggle-switch::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.light-dark-toggle input[type="radio"]:checked + .toggle-switch::before {
+    transform: translateX(30px);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+
+
+
+
+</style>
+
+
+
+
+
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+
+
+
+        <!-- script for menu -->
+
+
+<div class="top-bar">
+        <img src="3.14.png"  class="logo" /> 
+
+    <div class="menu-icon" id="menuIcon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="#" onclick="closeMenu()">Home</a></li>
+      <li><a href="forestman.html" onclick="closeMenu()">About</a></li>
+      <li><a href="redirect.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <div class="content" id="content">
+    <h1>Welcome</h1>
+    <p> This Site is under-development . Yet to be published  </p>
+
+</div>
+
+
+
+
+        <!--script for panels -->
+
+
+  <div id="blur-backdrop"></div>
+
+
+<!-- panels -->
+
+<div class=""container">
+
+
+<!-- row 1 -->
+
+<div class="panel-row">
+
+  <div class="panel text-panel">
+        Some text here
+  </div>
+
+  <div class="panel image-panel">
+          <img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png">
+   </div>
+
+</div>
+
+
+<!-- row 2 -->
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 3 -->
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 4 -->
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 5 -->
+
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 6 -->
+
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+<!-- footer -->
+
+<footer>
+        <div class="container">
+            <div class="links">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Download / Get Kali</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">OS Documentation</a></li>
+                    <li><a href="#">Tool Documentation</a></li>
+                    <li><a href="#">System Status</a></li>
+                    <li><a href="#">Archived Releases</a></li>
+                </ul>
+            </div>
+            <div class="platforms">
+                <h3>Platforms</h3>
+                <ul>
+                    <li><a href="#">ARM (SBC)</a></li>
+                    <li><a href="#">NetHunter (Mobile)</a></li>
+                    <li><a href="#"><i class="icon"></i> Amazon AWS</a></li>
+                    <li><a href="#"><i class="icon"></i> Docker</a></li>
+                    <li><a href="#"><i class="icon"></i> Linode</a></li>
+                    <li><a href="#"><i class="icon"></i> Microsoft Azure</a></li>
+                    <li><a href="#"><i class="icon"></i> Microsoft Store (WSL)</a></li>
+                    <li><a href="#"><i class="icon"></i> Vagrant</a></li>
+                </ul>
+            </div>
+            <div class="development">
+                <h3>Development</h3>
+                <ul>
+                    <li><a href="#">Bug Tracker</a></li>
+                    <li><a href="#">Continuous Integration</a></li>
+                    <li><a href="#">Network Mirror</a></li>
+                    <li><a href="#">Package Tracker</a></li>
+                    <li><a href="#"><i class="icon"></i> GitLab</a></li>
+                </ul>
+            </div>
+            <div class="community">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#"><i class="icon"></i> Discord</a></li>
+                    <li><a href="#">Support Forum</a></li>
+                </ul>
+            </div>
+            <div class="follow-us">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="icon"></i> Facebook</a></li>
+                    <li><a href="#"><i class="icon"></i> Instagram</a></li>
+                    <li><a href="#"><i class="icon"></i> Mastodon</a></li>
+                    <li><a href="#"><i class="icon"></i> Twitter</a></li>
+                    <li><a href="#"><i class="icon"></i> Newsletter</a></li>
+                    <li><a href="#"><i class="icon"></i> RSS</a></li>
+                </ul>
+            </div>
+            <div class="policies">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Trademark Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+   <script src="script.js"> </script>
+
+    </body>                                                                                             </html>
