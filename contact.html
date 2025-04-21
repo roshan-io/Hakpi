@@ -123,15 +123,15 @@
     <form action="https://formspree.io/f/xldbrbna" method="POST">
       <h2>Feedback</h2>
       <div class="input-group">
-        <input type="text" required />
+        <input type="text" name="name" required />
         <label>Name</label>
       </div>
       <div class="input-group">
-        <input type="email" required />
+        <input type="email" name="email" required />
         <label>Email</label>
       </div>
       <div class="input-group">
-        <textarea rows="1" required id="feedback"></textarea>
+        <textarea rows="1" name="message" required id="feedback"></textarea>
         <label>Write your feedback...</label>
       </div>
       <button type="submit">Submit</button>
