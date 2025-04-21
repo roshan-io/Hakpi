@@ -10,8 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
     * {
         margin: 0;
         padding: 0;
@@ -20,12 +18,12 @@
     }
 
     body {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        min-height: 100vh !important;
-        background: #000 !important;
-        padding: 20px !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #000;
+        padding: 20px;
     }
 
     .wrapper {
@@ -40,10 +38,6 @@
         backdrop-filter: blur(6px);
         -webkit-backdrop-filter: blur(6px);
         z-index: 4;
-    }
-
-    form {
-        background: transparent;
     }
 
     h2 {
@@ -103,12 +97,61 @@
         margin-top: 20px;
     }
 
-    .emoji:hover {
-        background: #0ef;
-        transform: scale(1.1);
+    .note {
+        color: #aaa;
+        font-size: 14px;
+        text-align: center;
+        margin-top: -10px;
+        margin-bottom: 20px;
     }
 
-    .emoji.selected {
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+
+    .popup-overlay.show {
+        display: flex;
+    }
+
+    .popup-card {
+        background: rgb(0, 0, 0);
+        padding: 20px 30px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        max-width: 90vw;
+        width: 360px;
+        z-index: 10000;
+    }
+
+    .emoji-box {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .emoji {
+        font-size: 22px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 12px;
+        transition: transform 0.2s;
+        cursor: pointer;
+        color: #000;
+    }
+
+    .emoji:hover {
+        transform: scale(1.2);
         background: #0ef;
         color: #000;
     }
@@ -136,76 +179,9 @@
             font-size: 14px;
         }
     }
-
-    .note {
-        color: #aaa;
-        font-size: 14px;
-        text-align: center;
-        margin-top: -10px;
-        margin-bottom: 20px;
-    }
-
-    .popup-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background: rgba(0, 0, 0, 0.6);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-    }
-
-    .popup-overlay.show .popup-card {
-        display: block;
-    }
-
-    .popup-card {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgb(0,0,0);
-        padding: 20px 30px;
-        border-radius: 20px;
-        text-align: center;
-        display: none;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        max-width: 90vw;
-        width: 360px;
-        z-index: 10000;
-    }
-
-    .emoji-box {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        margin: 20px 0;
-    }
-
-    .emoji {
-        font-size: 22px;
-        background: #fff;
-        padding: 10px;
-        border-radius: 12px;
-        transition: transform 0.2s;
-        cursor: pointer;
-        color: #fff;
-    }
-
-    .emoji:hover {
-        transform: scale(1.2);
-        background: #0ef;
-        color: #000;
-    }
-
   </style>
 </head>
 <body>
-
-<canvas id="bgCanvas"></canvas>
 
 <div class="wrapper" id="feedbackWrapper">
   <form id="feedbackForm" action="https://formspree.io/f/xldbrbna" method="POST">
@@ -249,7 +225,6 @@
   const form = document.getElementById('feedbackForm');
   const popup = document.getElementById('popup');
   const emojiInput = document.getElementById('emojiInput');
-  let feedbackPending = false;
 
   textarea.addEventListener('input', () => {
     textarea.style.height = 'auto';
@@ -259,24 +234,37 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    feedbackPending = true;
     popup.classList.add("show");
   });
 
   document.querySelectorAll('.emoji').forEach(emoji => {
     emoji.addEventListener('click', () => {
-      document.querySelectorAll('.emoji').forEach(e => e.classList.remove('selected'));
-      emoji.classList.add('selected');
       emojiInput.value = emoji.textContent;
+      popup.classList.remove("show");
 
-      if (feedbackPending) {
-        feedbackPending = false;
-        submitForm();
-      }
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          alert("Feedback submitted. Thank you!");
+        } else {
+          alert("Error submitting feedback.");
+        }
+      }).catch(() => {
+        alert("Oops! Something went wrong.");
+      });
     });
   });
 
-  function submitForm() {
+  function closePopup() {
+    popup.classList.remove("show");
+
     const formData = new FormData(form);
     fetch(form.action, {
       method: "POST",
@@ -285,7 +273,6 @@
         'Accept': 'application/json'
       }
     }).then(response => {
-      popup.classList.remove("show");
       if (response.ok) {
         form.reset();
         alert("Feedback submitted. Thank you!");
@@ -293,14 +280,8 @@
         alert("Error submitting feedback.");
       }
     }).catch(() => {
-      popup.classList.remove("show");
       alert("Oops! Something went wrong.");
     });
-  }
-
-  function closePopup() {
-    popup.classList.remove("show");
-    alert("Please select an emoji to submit.");
   }
 </script>
 
