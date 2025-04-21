@@ -123,3 +123,12 @@ animate();
 document.querySelectorAll('.panel').forEach(panel => {
   observer.observe(panel);
 });
+
+
+// auto-reload
+
+
+  const css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = 'style.css?v=' + new Date().getTime();
+  document.head.appendChild(css);
