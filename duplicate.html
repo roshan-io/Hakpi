@@ -16,6 +16,7 @@ footer {
     background-color: #1a1a1a; /* Dark background */
     color: #f0f0f0; /* Light text color */
     padding: 40px 20px;
+    z-index: 99999;
 }
 
 .container {
@@ -61,47 +62,7 @@ a:hover {
     /* You'll need to add specific styles or a font library for actual icons */
 }
 
-/* Basic styling for the light/dark mode toggle (if you want to include it) */
-.light-dark-toggle {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
 
-.light-dark-toggle label {
-    display: inline-block;
-    margin: 0 10px;
-    color: #ccc;
-}
-
-.light-dark-toggle input[type="radio"] {
-    display: none;
-}
-
-.light-dark-toggle .toggle-switch {
-    background-color: #333;
-    border-radius: 15px;
-    width: 60px;
-    height: 30px;
-    position: relative;
-    cursor: pointer;
-}
-
-.light-dark-toggle .toggle-switch::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 20px;
-    height: 20px;
-    background-color: #f0f0f0;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-}
-
-.light-dark-toggle input[type="radio"]:checked + .toggle-switch::before {
-    transform: translateX(30px);
-}
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
