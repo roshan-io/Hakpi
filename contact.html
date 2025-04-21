@@ -235,6 +235,112 @@
 
 
 
+<div class="wrapper" id="feedbackWrapper">
+  <form id="feedbackForm" action="https://formspree.io/f/xldbrbna" method="POST">
+    <h2>Contact Us</h2>
+    <div class="input-group">
+      <input type="text" name="name" required />
+      <label>Name</label>
+    </div>
+    <div class="input-group">
+      <input type="email" name="email" required />
+      <label>Email</label>
+    </div>
+    <div class="input-group">
+      <textarea rows="1" name="message" required id="feedback"></textarea>
+      <label>Write Your Message...</label>
+    </div>
+    <input type="hidden" name="emoji" id="emojiInput" />
+    <p class="note">Any suggestions, bugs, or comments? Let us know!</p>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+<div class="popup-overlay" id="popup">
+  <div class="popup-card">
+    <h3>Thank You!</h3>
+    <p>Your feedback helps us improve. How did you feel?</p>
+    <div class="emoji-box">
+      <div class="emoji">😐</div>
+      <div class="emoji">🙂</div>
+      <div class="emoji">😃</div>
+      <div class="emoji">🤩</div>
+      <div class="emoji">🔥</div>
+    </div>
+    <button class="close-btn" onclick="closePopup()">Skip</button>
+  </div>
+</div>
+
+
+
+
+
+
+<script>
+  const textarea = document.getElementById('feedback');
+  const wrapper = document.getElementById('feedbackWrapper');
+  const form = document.getElementById('feedbackForm');
+  const popup = document.getElementById('popup');
+  const emojiInput = document.getElementById('emojiInput');
+
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+    wrapper.style.height = 'auto';
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    popup.classList.add("show");
+  });
+
+  document.querySelectorAll('.emoji').forEach(emoji => {
+    emoji.addEventListener('click', () => {
+      emojiInput.value = emoji.textContent;
+      popup.classList.remove("show");
+
+      const formData = new FormData(form);
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          alert("Feedback submitted. Thank you!");
+        } else {
+          alert("Error submitting feedback.");
+        }
+      }).catch(() => {
+        alert("Oops! Something went wrong.");
+      });
+    });
+  });
+
+  function closePopup() {
+    popup.classList.remove("show");
+
+    const formData = new FormData(form);
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        alert("Feedback submitted. Thank you!");
+      } else {
+        alert("Error submitting feedback.");
+      }
+    }).catch(() => {
+      alert("Oops! Something went wrong.");
+    });
+  }
+</script>
         <script src="script.js"> </script>
 
     </body>                                                                                             </html>
