@@ -8,7 +8,133 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="cascading.css" />
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-    </head>
+    
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      min-height: 100vh !important;
+      background: #000 !important;
+      padding: 20px !important;
+    }
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      background: #000;
+      box-shadow: 0 0 50px #0ef;
+      border-radius: 20px;
+      padding: 40px 20px;
+      transition: height 0.3s ease;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .input-group {
+      position: relative;
+      margin: 30px 0;
+      border-bottom: 2px solid #fff;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #fff;
+      pointer-events: none;
+      transition: 0.5s;
+    }
+
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      font-size: 16px;
+      color: #fff;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 10px 5px;
+      resize: none;
+    }
+
+    .input-group input:focus ~ label,
+    .input-group input:valid ~ label,
+    .input-group textarea:focus ~ label,
+    .input-group textarea:valid ~ label {
+      top: -5px;
+    }
+
+    button {
+      width: 100%;
+      height: 40px;
+      background: #0ef;
+      box-shadow: 0 0 10px #0ef;
+      font-size: 16px;
+      color: #000;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      margin-top: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .wrapper {
+        padding: 30px 15px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .input-group {
+        margin: 20px 0;
+      }
+
+      .input-group input,
+      .input-group textarea {
+        font-size: 14px;
+      }
+
+      button {
+        height: 36px;
+        font-size: 14px;
+      }
+    }
+
+.note {
+  color: #aaa;
+  font-size: 14px;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+  </style>
+
+
+
+</head>
 <body>
 
     <canvas id="bgCanvas"></canvas>
