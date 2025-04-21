@@ -163,25 +163,26 @@
     }
 
     .popup-card {
-        background: #fff;
-        padding: 20px;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 300px;
-    }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 20px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 90vw; /* Make popup responsive */
+    width: 360px; /* Increased width */
+}
 
-    .emoji-box {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-        background: rgb(0,0,0);
-        width: 40%;
-    }
-
+.emoji-box {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 20px 0;
+}
     .emoji {
         font-size: 22px;
         background: #fff;;
