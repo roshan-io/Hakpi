@@ -93,16 +93,9 @@
 /* styles for footer */
 
 
-/* footer {
-    background: rgb(0,0,0);
-    color: rgb(255,255,255); 
-    padding: 40px 20px;
-    z-index: 5;
-    position: relative;
-} */
 
 footer {
-  background: rgba(0, 20, 50 , 0.9);
+  background: rgba(0, 0, 0 , 0.9);
   padding: 40px 20px;
   text-align: center;
   color: white;
