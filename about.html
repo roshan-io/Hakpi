@@ -36,6 +36,8 @@ body {
   inset: 0;
   border: 2px solid #fff;
   transition: 0.5s;
+  border: 6px solid var(--clr);
+  filter: drop-shadow(0 0 20px var(--clr));
 }
 .ring i:nth-child(1) {
   border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
@@ -49,10 +51,7 @@ body {
   border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
   animation: animate2 10s linear infinite;
 }
-.ring:hover i {
-  border: 6px solid var(--clr);
-  filter: drop-shadow(0 0 20px var(--clr));
-}
+
 @keyframes animate {
   0% {
     transform: rotate(0deg);
