@@ -22,16 +22,22 @@ body {
   background: #111;
   width: 100%;
   overflow: hidden;
+  
 }
+
+
+
 .ring {
   position: relative;
-  width: 90%;
-  height: auto;
-  aspect-ratio: 1/1;
+  width: 80%; /* Use a percentage to make it responsive */
+  aspect-ratio: 1; /* This maintains a 1:1 ratio, ensuring a circle */
+  max-width: 300px; /* Set a maximum width to prevent it from getting too large */
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+
 .ring i {
   position: absolute;
   inset: 0;
