@@ -216,3 +216,17 @@ a:hover {
      font-size:14px;
 
 }
+
+
+@media (max-width: 420px) {
+  footer .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    justify-items: center; /* Center-align content in each column */
+    text-align: center; /* Optional: center text inside columns */
+  }
+
+  footer .container > div {
+    text-align: center; /* Ensures inner text is also centered */
+  }
+}
