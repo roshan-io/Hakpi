@@ -108,7 +108,7 @@ footer {
   z-index: 3;
   background: #0d0d0d;
   box-shadow: 0 -20px 40px rgba(54, 123, 240, 0.4);
- 
+  padding-bottom: 20px;
 
 }
 
