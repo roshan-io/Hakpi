@@ -154,6 +154,10 @@ h3 {
     text-align:left;
 }
 
+footer .container > div {
+  text-align: left;
+}
+
 ul {
     list-style: none;
     padding: 0;
