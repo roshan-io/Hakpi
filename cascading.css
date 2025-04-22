@@ -39,10 +39,7 @@
   .panel-row {
     flex-direction: row;
   }
-
-
-@media (min-width: 768px) {
-  .container {
+.container {
     grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
   }
 
