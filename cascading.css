@@ -29,13 +29,13 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 20px:
 }
 
 
 
 /* For larger screens: side by side */
-@media (min-width: 768px) {
+@media (min-width: 550px) {
   .panel-row {
     flex-direction: row;
   }
