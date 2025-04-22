@@ -347,7 +347,23 @@
   }
 </script>
 
-   
+   <script>
+  const menuIcon = document.getElementById('menuIcon');
+  const menuPanel = document.getElementById('menuPanel');
+  const overlay = document.getElementById('overlay');
+
+  menuIcon.addEventListener('click', () => {
+    menuIcon.classList.toggle('open');
+    menuPanel.classList.toggle('show');
+    overlay.classList.toggle('show');
+  });
+
+  function closeMenu() {
+    menuIcon.classList.remove('open');
+    menuPanel.classList.remove('show');
+    overlay.classList.remove('show');
+  }
+</script>
 
 </body>
 </html>
