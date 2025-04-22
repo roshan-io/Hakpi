@@ -92,13 +92,38 @@
 
 /* styles for footer */
 
-footer {
+/* footer {
     background: rgb(0,0,0); /* Dark background */
     color: rgb(255,255,255); /* Light text color */
     padding: 40px 20px;
     z-index: 3;
     position: relative;
+} */
+
+
+.footer {
+  background: rgba(0, 20, 50, 0.9);
+  padding: 40px 20px;
+  text-align: center;
+  color: white;
+  font-size: 14px;
+  margin-top: 60px;
+  box-shadow: 0 -20px 60px rgba(0, 150, 255, 0.2); /* soft upward glow */
+  position: relative;
+  z-index: 2;
 }
+
+.footer a {
+  color: #99ccee;
+  margin: 0 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  color: #cceeff;
+}
+
 
 .container {
     max-width: 1200px;
