@@ -33,7 +33,7 @@
 }
 
 /* === Panel - For larger screens: side by side === */
-@media (min-width: 768px) {
+@media (min-width: 478px) {
   .panel-row {
     flex-direction: row;
   }
