@@ -49,7 +49,7 @@
 
     .panel {
       width: 90%;
-      max-width: 400px;
+      max-width: 50vw;
       aspect-ratio: 16/9 ;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
