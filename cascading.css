@@ -194,7 +194,7 @@ a:hover {
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .container {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(180px, 2fr));
     }
 }
 
