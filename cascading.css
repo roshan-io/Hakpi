@@ -40,6 +40,13 @@
     flex-direction: row;
   }
 
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+  }
+
+
   .panel-row:nth-child(even) {
     flex-direction: row-reverse;
   }
