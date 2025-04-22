@@ -93,7 +93,13 @@
 /* styles for footer */
 
 
-
+/* footer {
+    background: rgb(0,0,0);
+    color: rgb(255,255,255); 
+    padding: 40px 20px;
+    z-index: 3;
+    position: relative;
+} */
 
 .footer {
   background: rgba(0, 20, 50, 0.9);
@@ -104,7 +110,7 @@
   margin-top: 60px;
   box-shadow: 0 -20px 60px rgba(0, 150, 255, 0.2); /* soft upward glow */
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .footer a {
