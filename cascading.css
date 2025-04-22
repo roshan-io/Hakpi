@@ -1,4 +1,4 @@
-    #blur-backdrop {
+      #blur-backdrop {
       position: fixed;
       top: 0;
       left: 0;
@@ -51,12 +51,12 @@
       width: 90%;
       max-width: 50vw;
       aspect-ratio: 16/9 ;
-     
+      background: rgba(255,255,255,0.1);
       border-radius: 20px;
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       border: 1px solid rgba(255, 255, 255, 0.2);
-     
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -68,8 +68,7 @@
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
       z-index: 3;
       overflow: hidden;
-      background: #0d0d0d;
-      box-shadow: 0 -10px 30px rgba(0, 255, 255, 0.5);    
+          
 
 
 }
@@ -99,15 +98,16 @@
 
 
 footer {
-  background: rgba(0, 0, 0 , 0.9);
+  
   padding: 40px 20px;
   text-align: center;
   color: white;
   font-size: 14px;
   margin-top: 60px;
-  box-shadow: 0 -20px 60px rgba(0, 150, 255, 0.2); /* soft upward glow */
   position: relative;
   z-index: 3;
+  background: #0d0d0d;
+  box-shadow: 0 -10px 30px rgba(0, 255, 255, 0.5);
 }
 
 .footer a {
