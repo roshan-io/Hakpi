@@ -149,13 +149,13 @@ a {
 
 
 
-/* Additional optional styling for links if necessary */
+/* 
 a:focus {
-    outline: none; /* Remove focus outline if you don't want it */
-}
+    outline: none;  
+} */
 
 a:hover {
-    color: blue;
+    color: rgb(28, 85, 255) ;
 }
 
 .icon {
