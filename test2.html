@@ -185,6 +185,8 @@ flex-grow: 1;
       height: 100vh;
       width: 100vw;
       background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       display: none;
       justify-content: center;
       align-items: center;
@@ -445,31 +447,24 @@ flex-grow: 1;
 </div>
 </div>
     </footer>
-
- <script>
+  <script>
     const textarea = document.getElementById('feedback');
     const wrapper = document.getElementById('feedbackWrapper');
+    const form = document.getElementById('contactForm');
+    const popup = document.getElementById('popup');
+    const pageContent = document.getElementById('pageContent');
+    const emojiInput = document.getElementById('emojiInput');textarea.addEventListener('input', () => {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+  wrapper.style.height = 'auto';
+});
 
-    textarea.addEventListener('input', () => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-      wrapper.style.height = 'auto';
-    });
-
-
-
-const popup = document.getElementById('popup');
-const pageContent = document.getElementById('pageContent');
-const emojiInput = document.getElementById('emojiInput');
-
-// Show popup on form submit
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   popup.classList.add("show");
   pageContent.classList.add("blur");
 });
 
-// Emoji click events
 document.querySelectorAll('.emoji').forEach(emoji => {
   emoji.addEventListener('click', () => {
     emojiInput.value = emoji.textContent;
@@ -477,15 +472,13 @@ document.querySelectorAll('.emoji').forEach(emoji => {
   });
 });
 
-// Close popup and submit
-function closePopup() {
-  submitForm();
+function submitForm() {
+  popup.classList.remove("show");
+  pageContent.classList.remove("blur");
+  form.submit();
 }
 
-
-
   </script>
-
 
 
   <script src="script.js"></script>
