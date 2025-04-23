@@ -27,7 +27,7 @@
       padding: 20px clamp(10px, 5vw, 60px);
       overflow-x: hidden;
 
-   
+   }
   .page-content{
 flex-grow: 1;
 }
@@ -286,7 +286,7 @@ flex-grow: 1;
 
 
 
-   <div class="page-content1" id="pageContent">
+   <div class="page-content1" id="pageContentinner">
     <div class="wrapper">
       <form id="feedbackForm" action="https://formspree.io/f/xldbrbna" method="POST">
         <h2>Contact Us</h2>
@@ -433,7 +433,7 @@ flex-grow: 1;
     const form = document.getElementById('feedbackForm');
     const popup = document.getElementById('popup');
     const emojiInput = document.getElementById('emojiInput');
-    const pageContent = document.getElementById('pageContent');
+    const pageContent = document.getElementById('pageContentinner');
 
     textarea.addEventListener('input', () => {
       textarea.style.height = 'auto';
