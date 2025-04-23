@@ -421,50 +421,7 @@ flex-grow: 1;
 </div>
 </div>
     </footer>
-  <script>
-    const textarea = document.getElementById('feedback');
-    const wrapper = document.getElementById('feedbackWrapper');
-    const form = document.getElementById('contactForm');
-    const popup = document.getElementById('popup');
-    const pageContent = document.getElementById('pageContent');
-    const emojiInput = document.getElementById('emojiInput');textarea.addEventListener('input', () => {
-  textarea.style.height = 'auto';
-  textarea.style.height = textarea.scrollHeight + 'px';
-  wrapper.style.height = 'auto';
-});
-
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  popup.classList.add("show");
-  pageContent.classList.add("blur");
-});
-
-document.querySelectorAll('.emoji').forEach(emoji => {
-  emoji.addEventListener('click', () => {
-    emojiInput.value = emoji.textContent;
-    submitForm();
-  });
-});
-
-function submitForm() {
-  popup.classList.remove("show");
-  pageContent.classList.remove("blur");
-  form.submit();
-}
-
-
-.page-content.blur {
-  filter: blur(8px);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0; /* Make sure blurred content stays below the popup */
-}
-
-
-
-
-
-  </script>
+  
 
 
   <script src="script.js"></script>
