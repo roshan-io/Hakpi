@@ -21,18 +21,17 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Audiowide', sans-serif;
     }
-    
-
-body {
-  background: #000;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #111;
+      width: 100%;
+      overflow: hidden;
+    }
 
     .ring {
       position: relative;
@@ -42,8 +41,7 @@ body {
       display: flex;
       justify-content: center;
       margin: 0;
-      align-items: flex-start;
-      padding: 20px;
+      align-items: center;
       flex-direction: column; /* Ensure the text is stacked vertically */
     }
 
@@ -149,24 +147,21 @@ body {
       text-decoration: none;
     }
 
+    .ring span {
+      color: #00f9ff;
+        font-size: clamp(1.5rem, 5vw, 3rem);
+      text-align: center;
+      letter-spacing: 2px; /* Adds spacing between letters for a modern look */
+      text-transform: uppercase; /* Makes the text uppercase for a bold, clean look */
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif; /* A clean, futuristic font */
+      padding: 10px 20px; /* Padding to give space around text */
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      display: block; /* Ensures each text part is on a new line */
+    }
 
 
-   
-.ring span {
-  color: #00f9ff;
-  font-size: clamp(1.5rem, 5vw, 3rem);
-  text-align: left; /* Left align the text */
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px; /* Top/Bottom: 10px, Left/Right: 20px */
-  display: block;
-  align-self: flex-start; /* Ensures text aligns left in flex column */
-  width: 100%; /* Makes it span the full width of the container */
-  box-sizing: border-box; /* Ensures padding doesn't exceed width */
-}
+
 
 
 
@@ -237,12 +232,7 @@ flex-grow: 1;
 
 
 
-.main-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 
 
 
@@ -282,13 +272,6 @@ flex-grow: 1;
 
 
 <body>
-
-
-
-
-<div class="main-container">
-  <!-- All page content, including canvas, top-bar, ring, etc. -->
-
   <canvas id="bgCanvas"></canvas>
 
   <!-- Top Bar & Menu -->
@@ -325,7 +308,7 @@ flex-grow: 1;
 
 
   <div class="page-content" id="pageContent">
-    
+
 
 
 <div class="ring">
@@ -355,7 +338,7 @@ flex-grow: 1;
 
 
 
-</div>
+
 
 
 
@@ -438,7 +421,50 @@ flex-grow: 1;
 </div>
 </div>
     </footer>
-  
+  <script>
+    const textarea = document.getElementById('feedback');
+    const wrapper = document.getElementById('feedbackWrapper');
+    const form = document.getElementById('contactForm');
+    const popup = document.getElementById('popup');
+    const pageContent = document.getElementById('pageContent');
+    const emojiInput = document.getElementById('emojiInput');textarea.addEventListener('input', () => {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+  wrapper.style.height = 'auto';
+});
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  popup.classList.add("show");
+  pageContent.classList.add("blur");
+});
+
+document.querySelectorAll('.emoji').forEach(emoji => {
+  emoji.addEventListener('click', () => {
+    emojiInput.value = emoji.textContent;
+    submitForm();
+  });
+});
+
+function submitForm() {
+  popup.classList.remove("show");
+  pageContent.classList.remove("blur");
+  form.submit();
+}
+
+
+.page-content.blur {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0; /* Make sure blurred content stays below the popup */
+}
+
+
+
+
+
+  </script>
 
 
   <script src="script.js"></script>
