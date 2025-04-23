@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="cascading.css" />
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+
 
 <style>
     * {
@@ -25,18 +27,12 @@
       align-items: center;
       padding: 20px clamp(10px, 5vw, 60px);
       overflow-x: hidden;
-    }
 
-    .page-content {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      flex-direction: column;
-      position: relative;
-      z-index: 1;
-    }
+   }
+  .page-content{
+flex-grow: 1;
+}
+
 
     .page-content1 {
       width: 100%;
@@ -46,21 +42,36 @@
     }
 
     .page-content.blur {
+      filter: blur(8px);
       pointer-events: none;
       user-select: none;
     }
 
-    .wrapper {
+
+  /*  .wrapper {
+      position: relative;
       width: 100%;
       max-width: 500px;
       background: rgba(0,0,0,0.3);
       box-shadow: 0 0 50px #0ef;
       border-radius: 20px;
       padding: 40px 20px;
+      transition: height 0.3s ease;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       z-index: 4;
-    }
+    } */
+.wrapper {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(0,0,0,0.3);
+  box-shadow: 0 0 50px #0ef;
+  border-radius: 20px;
+  padding: 40px 20px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 4;
+}
 
     h2 {
       font-size: 30px;
@@ -105,13 +116,44 @@
       top: -5px;
     }
 
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      flex-grow:1;
-    }
+
+ .main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex-grow:1;
+}
+
+
+/* .page-content {
+  width: 100%;
+  position: relative;
+  transition: filter 0.3s ease;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.page-content {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+
+
+
 
     button {
       width: 100%;
@@ -163,7 +205,7 @@
       width: 360px;
       max-width: 90vw;
       box-shadow: 0 0 50px #0ef;
-      z-index: 1000;
+      z-index: 1001;
     }
 
     .emoji-box {
@@ -223,16 +265,23 @@
         font-size: 14px;
       }
     }
-</style>
+  </style>
+
+
+
 
 </head>
+
 
 <body>
   <canvas id="bgCanvas"></canvas>
 
   <!-- Top Bar & Menu -->
-  <div class="top-bar">
-    <img src="3.14.png" class="logo" />
+
+
+<div class="top-bar">
+        <img src="3.14.png"  class="logo" /> 
+
     <div class="menu-icon" id="menuIcon">
       <span></span>
       <span></span>
@@ -251,7 +300,15 @@
 
   <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
+
+
   <!-- Page Content Starts -->
+ 
+
+
+
+
+
   <div class="page-content" id="pageContent">
     <div class="wrapper" id="feedbackWrapper">
       <form id="contactForm">
@@ -273,7 +330,6 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-
     <div class="popup-overlay" id="popup">
       <div class="popup-card">
         <h3>Thank You!</h3>
@@ -289,58 +345,141 @@
       </div>
     </div>
   </div>
+
+
+
+
+
+
+
+
   <!-- Page Content Ends -->
 
-  <footer>
-    <div class="container">
-      <div class="links">
-        <h3>Links</h3>
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Download / Get Kali</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">OS Documentation</a></li>
-          <li><a href="#">Tool Documentation</a></li>
-          <li><a href="#">System Status</a></li>
-          <li><a href="#">Archived Releases</a></li>
-        </ul>
-      </div>
-      <!-- Other footer content -->
-    </div>
-  </footer>
+  
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer (should be outside .page-content for full-width, consistent layout) -->
+
+
+<footer>
+        <div class="container">
+            <div class="links">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Download / Get Kali</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">OS Documentation</a></li>
+                    <li><a href="#">Tool Documentation</a></li>
+                    <li><a href="#">System Status</a></li>
+                    <li><a href="#">Archived Releases</a></li>
+                </ul>
+            </div>
+            <div class="platforms">
+                <h3>Platforms</h3>
+                <ul>
+                    <li><a href="#">ARM (SBC)</a></li>
+                    <li><a href="#">NetHunter (Mobile)</a></li>
+                    <li><a href="#"><i class="icon"></i> Amazon AWS</a></li>
+                    <li><a href="#"><i class="icon"></i> Docker</a></li>
+                    <li><a href="#"><i class="icon"></i> Linode</a></li>
+                    <li><a href="#"><i class="icon"></i> Microsoft Azure</a></li>
+                    <li><a href="#"><i class="icon"></i> Microsoft Store (WSL)</a></li>
+                    <li><a href="#"><i class="icon"></i> Vagrant</a></li>
+                </ul>
+            </div>
+            <div class="development">
+                <h3>Development</h3>
+                <ul>
+                    <li><a href="#">Bug Tracker</a></li>
+                    <li><a href="#">Continuous Integration</a></li>
+                    <li><a href="#">Network Mirror</a></li>
+                    <li><a href="#">Package Tracker</a></li>
+                    <li><a href="#"><i class="icon"></i> GitLab</a></li>
+                </ul>
+            </div>
+            <div class="community">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#"><i class="icon"></i> Discord</a></li>
+                    <li><a href="#">Support Forum</a></li>
+                </ul>
+            </div>
+            <div class="follow-us">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="icon"></i> Facebook</a></li>
+                    <li><a href="#"><i class="icon"></i> Instagram</a></li>
+                    <li><a href="#"><i class="icon"></i> Mastodon</a></li>
+                    <li><a href="#"><i class="icon"></i> Twitter</a></li>
+                    <li><a href="#"><i class="icon"></i> Newsletter</a></li>
+                    <li><a href="#"><i class="icon"></i> RSS</a></li>
+                </ul>
+            </div>
+            <div class="policies">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Trademark Policy</a></li>
+                </ul>
+            </div>
+        </div>
+  <img src="3.14.png" alt="Footer Logo" class="footer-logo">
+
+
+
+
+<div class="copyright"> 
+           © KaliPi Services Limited 2025. All rights reserved.
+</div>
+</div>
+    </footer>
   <script>
     const textarea = document.getElementById('feedback');
     const wrapper = document.getElementById('feedbackWrapper');
     const form = document.getElementById('contactForm');
     const popup = document.getElementById('popup');
     const pageContent = document.getElementById('pageContent');
-    const emojiInput = document.getElementById('emojiInput');
+    const emojiInput = document.getElementById('emojiInput');textarea.addEventListener('input', () => {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+  wrapper.style.height = 'auto';
+});
 
-    textarea.addEventListener('input', () => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-      wrapper.style.height = 'auto';
-    });
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  popup.classList.add("show");
+  pageContent.classList.add("blur");
+});
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      popup.classList.add("show");
-      pageContent.classList.add("blur");
-    });
+document.querySelectorAll('.emoji').forEach(emoji => {
+  emoji.addEventListener('click', () => {
+    emojiInput.value = emoji.textContent;
+    submitForm();
+  });
+});
 
-    document.querySelectorAll('.emoji').forEach(emoji => {
-      emoji.addEventListener('click', () => {
-        emojiInput.value = emoji.textContent;
-        submitForm();
-      });
-    });
+function submitForm() {
+  popup.classList.remove("show");
+  pageContent.classList.remove("blur");
+  form.submit();
+}
 
-    function submitForm() {
-      popup.classList.remove("show");
-      pageContent.classList.remove("blur");
-      form.submit();
-    }
   </script>
-</body>
-</html>
+
+
+  <script src="script.js"></script>
+</body> </html>
