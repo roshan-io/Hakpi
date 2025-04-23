@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hakpi.io</title>
-  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="cascading.css" />
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
@@ -20,19 +20,72 @@
       background: #000;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
       padding: 20px;
-      overflow-x: hidden;
-      overflow-y: hidden;
+    }
+
+    .top-bar {
+      width: 100%;
+      position: absolute;
+      top: 10px;
+      left: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      z-index: 10;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+    }
+
+    .menu-icon span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #0ef;
+      margin: 5px 0;
+    }
+
+    .menu-panel {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: #111;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0ef;
+      z-index: 100;
+    }
+
+    .menu-panel ul {
+      list-style: none;
+      padding: 10px 20px;
+    }
+
+    .menu-panel li {
+      margin: 10px 0;
+    }
+
+    .menu-panel a {
+      text-decoration: none;
+      color: #0ef;
+      font-weight: bold;
     }
 
     .page-content {
       width: 100%;
-      max-width: 500px;
-      position: relative;
+      max-width: 900px;
       transition: filter 0.3s ease;
       z-index: 1;
+      margin-top: 60px;
     }
 
     .page-content.blur {
@@ -45,12 +98,12 @@
       background: rgba(0, 0, 0, 0.3);
       box-shadow: 0 0 50px #0ef;
       border-radius: 20px;
-      padding: 40px 20px;
+      padding: 60px 40px;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      width: 90%;
-      max-width: 500px;
-      overflow: hidden;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     h2 {
@@ -206,9 +259,8 @@
     }
   </style>
 </head>
-
 <body>
-  <!-- ===== TOP BAR ====== -->
+
   <div class="top-bar">
     <img src="3.14.png" class="logo" />
     <div class="menu-icon" id="menuIcon">
@@ -220,41 +272,40 @@
 
   <div class="menu-panel" id="menuPanel">
     <ul>
-      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+      <li><a href="abc.html" onclick="closeMenu()">Home</a></li>
       <li><a href="forestman.html" onclick="closeMenu()">About</a></li>
       <li><a href="redirect.html" onclick="closeMenu()">Services</a></li>
       <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
     </ul>
   </div>
 
-  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+  <div class="page-content" id="pageContent">
+    <div class="wrapper">
+      <form id="feedbackForm" action="https://formspree.io/f/xldbrbna" method="POST">
+        <h2>Contact Us</h2>
 
-  <div class="content" id="content">
-    <div class="page-content" id="pageContent">
-      <div class="wrapper">
-        <form id="feedbackForm" action="https://formspree.io/f/xldbrbna" method="POST">
-          <h2>Contact Us</h2>
-          <div class="input-group">
-            <input type="text" name="name" required />
-            <label>Name</label>
-          </div>
-          <div class="input-group">
-            <input type="email" name="email" required />
-            <label>Email</label>
-          </div>
-          <div class="input-group">
-            <textarea rows="1" name="message" required id="feedback"></textarea>
-            <label>Write Your Message...</label>
-          </div>
-          <input type="hidden" name="emoji" id="emojiInput" />
-          <p class="note">Any suggestions, bugs, or comments? Let us know!</p>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+        <div class="input-group">
+          <input type="text" name="name" required />
+          <label>Name</label>
+        </div>
+
+        <div class="input-group">
+          <input type="email" name="email" required />
+          <label>Email</label>
+        </div>
+
+        <div class="input-group">
+          <textarea rows="1" name="message" required id="feedback"></textarea>
+          <label>Write Your Message...</label>
+        </div>
+
+        <input type="hidden" name="emoji" id="emojiInput" />
+        <p class="note">Any suggestions, bugs, or comments? Let us know!</p>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   </div>
 
-  <!-- Popup -->
   <div class="popup-overlay" id="popup">
     <div class="popup-card">
       <h3>Thank You!</h3>
@@ -270,7 +321,6 @@
     </div>
   </div>
 
-  <!-- JS -->
   <script>
     const textarea = document.getElementById('feedback');
     const form = document.getElementById('feedbackForm');
