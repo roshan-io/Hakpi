@@ -47,7 +47,7 @@ flex-grow: 1;
   filter: blur(8px);
   pointer-events: none;
   user-select: none;
-  z-index: 0; /* Make sure blurred content stays below the popup */
+  z-index: 1; /* Make sure blurred content stays below the popup */
 }
 
 
@@ -460,6 +460,35 @@ function submitForm() {
   popup.classList.remove("show");
   pageContent.classList.remove("blur");
   form.submit();
+}
+
+
+.page-content.blur {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0; /* Make sure blurred content stays below the popup */
+}
+
+
+
+// Handle emoji selection
+document.querySelectorAll('.emoji').forEach(emoji => {
+  emoji.addEventListener('click', () => {
+    emojiInput.value = emoji.textContent;  // Set the emoji value in hidden input
+    submitForm();  // Automatically submit the form after selecting an emoji
+  });
+});
+
+// Submit the form when emoji is selected
+function submitForm() {
+  if (emojiInput.value) {  // Check if emoji is selected
+    popup.classList.remove("show");
+    pageContent.classList.remove("blur");
+    form.submit();  // Submit the form with the emoji value
+  } else {
+    alert("Please select an emoji!");  // Prompt user to select an emoji if not selected
+  }
 }
 
   </script>
