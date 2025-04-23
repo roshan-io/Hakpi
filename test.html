@@ -47,16 +47,21 @@ flex-grow: 1;
       user-select: none;
     }
 
+    
     .wrapper {
-      background: rgba(0, 0, 0, 0.3);
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      background: rgba(0,0,0,0.3);
       box-shadow: 0 0 50px #0ef;
       border-radius: 20px;
       padding: 40px 20px;
+      transition: height 0.3s ease;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      width: min(90%, 1200px);
-      margin: 50px auto;
-    }
+      z-index: 4;
+    } 
+
 
     h2 {
       font-size: 30px;
