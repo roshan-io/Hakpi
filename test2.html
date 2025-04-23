@@ -162,59 +162,7 @@ flex-grow: 1;
       margin-bottom: 20px;
     }
 
-    .popup-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .popup-overlay.show {
-      display: flex;
-    }
-
-    .popup-card {
-      background: #000;
-      padding: 20px 30px;
-      border-radius: 20px;
-      text-align: center;
-      width: 360px;
-      max-width: 90vw;
-      box-shadow: 0 0 50px #0ef;
-      z-index: 100000;
-    }
-
-    .emoji-box {
-      display: flex;
-      justify-content: space-between;
-      margin: 20px 0;
-      gap: 12px;
-    }
-
-    .emoji {
-      font-size: 22px;
-      background: #000;
-      padding: 10px;
-      border-radius: 12px;
-      transition: transform 0.2s;
-      cursor: pointer;
-      color: #0ef;
-      box-shadow: 0 0 5px #0ef, 0 0 10px #0ef;
-    }
-
-    .emoji:hover {
-      transform: scale(1.2);
-      background: #0ef;
-      color: #000;
-    }
+    
 
     .close-btn {
       margin-top: 10px;
@@ -314,21 +262,6 @@ flex-grow: 1;
         <button type="submit">Submit</button>
       </form>
     </div>
-    <div class="popup-overlay" id="popup">
-      <div class="popup-card">
-        <h3>Thank You!</h3>
-        <p>Your feedback helps us improve. How did you feel?</p>
-        <div class="emoji-box">
-          <div class="emoji">😐</div>
-          <div class="emoji">🙂</div>
-          <div class="emoji">😃</div>
-          <div class="emoji">🤩</div>
-          <div class="emoji">🔥</div>
-        </div>
-        <button class="close-btn" onclick="submitForm()">Skip</button>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -472,24 +405,7 @@ function submitForm() {
 
 
 
-// Handle emoji selection
-document.querySelectorAll('.emoji').forEach(emoji => {
-  emoji.addEventListener('click', () => {
-    emojiInput.value = emoji.textContent;  // Set the emoji value in hidden input
-    submitForm();  // Automatically submit the form after selecting an emoji
-  });
-});
 
-// Submit the form when emoji is selected
-function submitForm() {
-  if (emojiInput.value) {  // Check if emoji is selected
-    popup.classList.remove("show");
-    pageContent.classList.remove("blur");
-    form.submit();  // Submit the form with the emoji value
-  } else {
-    alert("Please select an emoji!");  // Prompt user to select an emoji if not selected
-  }
-}
 
   </script>
 
