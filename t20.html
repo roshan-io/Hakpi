@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hakpi.io</title>
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="cascading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      padding: 20px clamp(10px, 5vw, 60px);
+      overflow-x: hidden;
+    }
+
+    .page-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(0,0,0,0.3);
+      box-shadow: 0 0 50px #0ef;
+      border-radius: 20px;
+      padding: 40px 20px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    h2 {
+      font-size: 30px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-group {
+      position: relative;
+      margin: 30px 0;
+      border-bottom: 2px solid #fff;
+    }
+
+    .input-group label {
+      position: absolute;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: #fff;
+      pointer-events: none;
+      transition: 0.5s;
+    }
+
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
+      font-size: 16px;
+      color: #fff;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 10px 5px;
+      resize: none;
+    }
+
+    .input-group input:focus ~ label,
+    .input-group input:valid ~ label,
+    .input-group textarea:focus ~ label,
+    .input-group textarea:valid ~ label {
+      top: -5px;
+    }
+
+    button {
+      width: 100%;
+      height: 40px;
+      background: #0ef;
+      box-shadow: 0 0 10px #0ef;
+      font-size: 16px;
+      color: #000;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      margin-top: 20px;
+    }
+
+    .note {
+      color: #aaa;
+      font-size: 14px;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+
+    footer {
+      background-color: #111;
+      color: #ccc;
+      padding: 20px 40px;
+    }
+
+    footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    footer h3 {
+      margin-bottom: 10px;
+    }
+
+    footer ul {
+      list-style: none;
+    }
+
+    footer ul li {
+      margin-bottom: 5px;
+    }
+
+    footer ul li a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .footer-logo {
+      width: 80px;
+      margin-top: 20px;
+    }
+
+    .copyright {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 500px) {
+      .wrapper {
+        padding: 30px 15px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
+
+      .input-group {
+        margin: 20px 0;
+      }
+
+      .input-group input,
+      .input-group textarea {
+        font-size: 14px;
+      }
+
+      button {
+        height: 36px;
+        font-size: 14px;
+      }
+
+      footer .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar & Menu -->
+  <div class="top-bar">
+    <img src="3.14.png" class="logo" />
+    <div class="menu-icon" id="menuIcon">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="#" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="redirect.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <!-- Page Content -->
+  <div class="page-content">
+    <div class="wrapper">
+      <form id="contactForm" action="https://formspree.io/f/xldbrbna" method="POST">
+        <h2>Contact Us</h2>
+        <div class="input-group">
+          <input type="text" name="name" required />
+          <label>Name</label>
+        </div>
+        <div class="input-group">
+          <input type="email" name="email" required />
+          <label>Email</label>
+        </div>
+        <div class="input-group">
+          <textarea rows="1" name="message" required></textarea>
+          <label>Write Your Message...</label>
+        </div>
+        <p class="note">Any suggestions, bugs, or comments? Let us know!</p>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="links">
+        <h3>Links</h3>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Download / Get Kali</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">OS Documentation</a></li>
+          <li><a href="#">Tool Documentation</a></li>
+          <li><a href="#">System Status</a></li>
+          <li><a href="#">Archived Releases</a></li>
+        </ul>
+      </div>
+      <div class="platforms">
+        <h3>Platforms</h3>
+        <ul>
+          <li><a href="#">ARM (SBC)</a></li>
+          <li><a href="#">NetHunter (Mobile)</a></li>
+          <li><a href="#">Amazon AWS</a></li>
+          <li><a href="#">Docker</a></li>
+          <li><a href="#">Linode</a></li>
+          <li><a href="#">Microsoft Azure</a></li>
+          <li><a href="#">Microsoft Store (WSL)</a></li>
+          <li><a href="#">Vagrant</a></li>
+        </ul>
+      </div>
+      <div class="development">
+        <h3>Development</h3>
+        <ul>
+          <li><a href="#">Bug Tracker</a></li>
+          <li><a href="#">Continuous Integration</a></li>
+          <li><a href="#">Network Mirror</a></li>
+          <li><a href="#">Package Tracker</a></li>
+          <li><a href="#">GitLab</a></li>
+        </ul>
+      </div>
+      <div class="community">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Support Forum</a></li>
+        </ul>
+      </div>
+      <div class="follow-us">
+        <h3>Follow Us</h3>
+        <ul>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Mastodon</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Newsletter</a></li>
+          <li><a href="#">RSS</a></li>
+        </ul>
+      </div>
+      <div class="policies">
+        <h3>Policies</h3>
+        <ul>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Trademark Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <img src="3.14.png" alt="Footer Logo" class="footer-logo">
+    <div class="copyright">© KaliPi Services Limited 2025. All rights reserved.</div>
+  </footer>
+</body>
+</html>
