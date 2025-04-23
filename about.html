@@ -1,109 +1,253 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hakpi.io</title>
-  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="cascading.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakpi.io</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cascading.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+
+
+
+
+
+
+
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Quicksand", sans-serif;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Quicksand", sans-serif;
+  }
 
-    body {
-      background: #000;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 0 20px;
-      overflow-x: hidden;
-    }
+  
+body {
+  background: #000;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  .ring {
+    position: relative;
+    width: 88%;
+    aspect-ratio: 1;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .ring i {
+    position: absolute;
+    inset: 0;
+    border: 6px solid var(--clr);
+    filter: drop-shadow(0 0 20px var(--clr));
+    transition: 0.5s;
+  }
+
+  .ring i:nth-child(1) {
+    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+    animation: animate 12s linear infinite;
+  }
+
+  .ring i:nth-child(2) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate 18s linear infinite;
+  }
+
+  .ring i:nth-child(3) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate2 24s linear infinite;
+  }
+
+  @keyframes animate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes animate2 {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  .login {
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .login h2 {
+    font-size: 2em;
+    color: #fff;
+  }
+
+  .login .inputBx {
+    position: relative;
+    width: 100%;
+  }
+
+  .login .inputBx input {
+    position: relative;
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    font-size: 1.2em;
+    color: #fff;
+    box-shadow: none;
+    outline: none;
+  }
+
+  .login .inputBx input[type="submit"] {
+    width: 100%;
+    background: linear-gradient(45deg, #ff357a, #fff172);
+    border: none;
+    cursor: pointer;
+  }
+
+  .login .inputBx input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .login .links {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  .login .links a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .ring span {
+    color: #00f9ff;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block;
+  }
+
+  body {
+    background: #000;
+    min-height: 100vh;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px clamp(10px, 5vw, 60px);
+    overflow-x: hidden;
+  }
+
+  .page-content {
+    flex-grow: 1;
+  }
+
+  .page-content1 {
+    width: 100%;
+    position: relative;
+    transition: filter 0.3s ease;
+    z-index: 1;
+  }
+
+  .page-content.blur {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  
+.page-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+  button {
+    width: 100%;
+    height: 40px;
+    background: #0ef;
+    box-shadow: 0 0 10px #0ef;
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+  }
+
+  .note {
+    color: #aaa;
+    font-size: 14px;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+</style>
 
 
 
-    .main-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
 
-    .ring {
-      position: relative;
-      width: 88%;
-      aspect-ratio: 1;
-      max-width: 600px;
-      margin-top: 60px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    .ring i {
-      position: absolute;
-      inset: 0;
-      border: 6px solid var(--clr);
-      filter: drop-shadow(0 0 20px var(--clr));
-      transition: 0.5s;
-    }
-
-    .ring i:nth-child(1) {
-      border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-      animation: animate 12s linear infinite;
-    }
-
-    .ring i:nth-child(2) {
-      border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
-      animation: animate 18s linear infinite;
-    }
-
-    .ring i:nth-child(3) {
-      border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
-      animation: animate2 24s linear infinite;
-    }
-
-    @keyframes animate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes animate2 {
-      0% { transform: rotate(360deg); }
-      100% { transform: rotate(0deg); }
-    }
-
-    .ring span {
-      color: #00f9ff;
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      text-align: center;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 10px 20px;
-      margin-top: 10px;
-    }
-
-
-  </style>
 </head>
 
+
 <body>
+
+<div class="main-container">
+  <!-- All page content, including canvas, top-bar, ring, etc. -->
+
+
   <canvas id="bgCanvas"></canvas>
 
-  <div class="top-bar">
+  <!-- Top Bar & Menu -->
+
+
+<div class="top-bar">
         <img src="3.14.png"  class="logo" /> 
 
     <div class="menu-icon" id="menuIcon">
@@ -115,114 +259,183 @@
 
   <div class="menu-panel" id="menuPanel">
     <ul>
-      <li><a href="#" onclick="closeMenu()">Home</a></li>
+      <li><a href="index.html" onclick="closeMenu()">Home</a></li>
       <li><a href="about.html" onclick="closeMenu()">About</a></li>
-      <li><a href="redirect.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="404.html" onclick="closeMenu()">Services</a></li>
       <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
     </ul>
   </div>
 
   <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-  <div class="main-container">
 
-    <div class="ring">
-      <i style="--clr:#00ff0a;"></i>
-      <i style="--clr:#ff0057;"></i>
-      <i style="--clr:#fffd44;"></i>
-      <span>Hi, I am</span>
-      <span>SHEIK ROSHAN</span>
-    </div>
-  </div>
 
-  <footer>
-    <div class="container">
-      <div class="links">
-        <h3>Links</h3>
-        <ul>
-          <li><a href="https://roshan-io.github.io/Hakpi/index.html">Home</a></li>
-          <li><a href="#">Download / Get Kali</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">OS Documentation</a></li>
-          <li><a href="#">Tool Documentation</a></li>
-          <li><a href="#">System Status</a></li>
-          <li><a href="#">Archived Releases</a></li>
-        </ul>
-      </div>
-      <div class="platforms">
-        <h3>Platforms</h3>
-        <ul>
-          <li><a href="#">ARM (SBC)</a></li>
-          <li><a href="#">NetHunter (Mobile)</a></li>
-          <li><a href="#">Amazon AWS</a></li>
-          <li><a href="#">Docker</a></li>
-          <li><a href="#">Linode</a></li>
-          <li><a href="#">Microsoft Azure</a></li>
-          <li><a href="#">Microsoft Store</a></li>
-          <li><a href="#">Vagrant</a></li>
-        </ul>
-      </div>
-      <div class="development">
-        <h3>Development</h3>
-        <ul>
-          <li><a href="#">Bug Tracker</a></li>
-          <li><a href="#">Network Mirror</a></li>
-          <li><a href="#">Package Tracker</a></li>
-          <li><a href="#">GitLab</a></li>
-        </ul>
-      </div>
-      <div class="community">
-        <h3>Community</h3>
-        <ul>
-          <li><a href="#">Discord</a></li>
-          <li><a href="#">Support Forum</a></li>
-        </ul>
-      </div>
-      <div class="follow-us">
-        <h3>Follow Us</h3>
-        <ul>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Instagram</a></li>
-          <li><a href="#">Mastodon</a></li>
-          <li><a href="#">Twitter</a></li>
-          <li><a href="#">Newsletter</a></li>
-        </ul>
-      </div>
-      <div class="policies">
-        <h3>Policies</h3>
-        <ul>
-          <li><a href="#">Cookie Policy</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Trademark Policy</a></li>
-        </ul>
-      </div>
-    </div>
-    <img src="3.14.png" alt="Footer Logo" class="footer-logo" />
-    <div class="copyright">
-      © KaliPi Services Limited 2025. All rights reserved.
-    </div>
-  </footer>
-<script src="javascript.js">
+  <!-- Page Content Starts -->
 
 
 
 
-</script>
- <script>
-const menuIcon = document.getElementById("menuIcon");
-const menuPanel = document.getElementById("menuPanel");
-const overlay = document.getElementById("overlay");
 
-menuIcon.addEventListener("click", () => {
-  menuPanel.classList.toggle("open");
-  overlay.classList.toggle("active");
+
+  <div class="page-content" id="pageContent">
+
+
+
+<div class="ring">
+  <i style="--clr:#00ff0a;"></i>
+  <i style="--clr:#ff0057;"></i>
+  <i style="--clr:#fffd44;"></i>
+
+  <span> Hi, I am </span>
+  <span> SHEIK ROSHAN </span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+  <!-- Page Content Ends -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer (should be outside .page-content for full-width, consistent layout) -->
+
+
+<footer>
+        <div class="container">
+            <div class="links">
+                <h3>Links</h3>
+                <ul>
+                    <li><a href="https://roshan-io.github.io/Hakpi/index.html">Home</a></li>
+                    <li><a href="#">Download / Get Kali</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">OS Documentation</a></li>
+                    <li><a href="#">Tool Documentation</a></li>
+                    <li><a href="#">System Status</a></li>
+                    <li><a href="#">Archived Releases</a></li>
+                </ul>
+            </div>
+            <div class="platforms">
+                <h3>Platforms</h3>
+                <ul>
+                    <li><a href="#">ARM (SBC)</a></li>
+                    <li><a href="#">NetHunter (Mobile)</a></li>
+                    <li><a href="#"><i class="icon"></i>Amazon AWS</a></li>
+                    <li><a href="#"><i class="icon"></i>Docker</a></li>
+                    <li><a href="#"><i class="icon"></i>Linode</a></li>
+                    <li><a href="#"><i class="icon"></i>Microsoft Azure</a></li>
+                    <li><a href="#"><i class="icon"></i>Microsoft Store</a></li>
+                    <li><a href="#"><i class="icon"></i>Vagrant</a></li>
+                </ul>
+            </div>
+            <div class="development">
+                <h3>Development</h3>
+                <ul>
+                    <li><a href="#">Bug Tracker</a></li>
+                    <li><a href="#">Network Mirror</a></li>
+                    <li><a href="#">Package Tracker</a></li>
+                    <li><a href="#"><i class="icon"></i> GitLab</a></li>
+                </ul>
+            </div>
+            <div class="community">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#"><i class="icon"></i>Discord</a></li>
+                    <li><a href="#">Support Forum</a></li>
+                </ul>
+            </div>
+            <div class="follow-us">
+                <h3>Follow Us</h3>
+                <ul>
+                    <li><a href="#"><i class="icon"></i>Facebook</a></li>
+                    <li><a href="#"><i class="icon"></i>Instagram</a></li>
+                    <li><a href="#"><i class="icon"></i>Mastodon</a></li>
+                    <li><a href="#"><i class="icon"></i>Twitter</a></li>
+                    <li><a href="#"><i class="icon"></i>Newsletter</a></li>
+
+                </ul>
+            </div>
+            <div class="policies">
+                <h3>Policies</h3>
+                <ul>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Trademark Policy</a></li>
+                </ul>
+            </div>
+        </div>
+  <img src="3.14.png" alt="Footer Logo" class="footer-logo">
+
+
+
+
+<div class="copyright"> 
+           © KaliPi Services Limited 2025. All rights reserved.
+</div>
+</div>
+    </footer>
+  <script>
+    const textarea = document.getElementById('feedback');
+    const wrapper = document.getElementById('feedbackWrapper');
+    const form = document.getElementById('contactForm');
+    const popup = document.getElementById('popup');
+    const pageContent = document.getElementById('pageContent');
+    const emojiInput = document.getElementById('emojiInput');textarea.addEventListener('input', () => {
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+  wrapper.style.height = 'auto';
 });
 
-function closeMenu() {
-  menuPanel.classList.remove("open");
-  overlay.classList.remove("active");
-}
-</script>
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  popup.classList.add("show");
+  pageContent.classList.add("blur");
+});
 
-</body>
-</html>
+document.querySelectorAll('.emoji').forEach(emoji => {
+  emoji.addEventListener('click', () => {
+    emojiInput.value = emoji.textContent;
+    submitForm();
+  });
+});
+
+function submitForm() {
+  popup.classList.remove("show");
+  pageContent.classList.remove("blur");
+  form.submit();
+}
+
+
+.page-content.blur {
+  filter: blur(8px);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0; /* Make sure blurred content stays below the popup */
+}
+
+
+
+
+
+  
+
+
+  <script src="script.js"></script>
+</body> </html>
