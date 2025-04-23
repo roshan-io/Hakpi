@@ -380,7 +380,16 @@ flex-grow: 1;
 
     </footer>
 
+ <script>
+    const textarea = document.getElementById('feedback');
+    const wrapper = document.getElementById('feedbackWrapper');
 
+    textarea.addEventListener('input', () => {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+      wrapper.style.height = 'auto';
+    });
+  </script>
 
   
 
