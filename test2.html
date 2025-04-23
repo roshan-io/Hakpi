@@ -457,6 +457,35 @@ flex-grow: 1;
       textarea.style.height = textarea.scrollHeight + 'px';
       wrapper.style.height = 'auto';
     });
+
+
+
+const popup = document.getElementById('popup');
+const pageContent = document.getElementById('pageContent');
+const emojiInput = document.getElementById('emojiInput');
+
+// Show popup on form submit
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  popup.classList.add("show");
+  pageContent.classList.add("blur");
+});
+
+// Emoji click events
+document.querySelectorAll('.emoji').forEach(emoji => {
+  emoji.addEventListener('click', () => {
+    emojiInput.value = emoji.textContent;
+    submitForm();
+  });
+});
+
+// Close popup and submit
+function closePopup() {
+  submitForm();
+}
+
+
+
   </script>
 
 
