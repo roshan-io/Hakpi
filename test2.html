@@ -301,58 +301,56 @@ flex-grow: 1;
 
 
   <!-- Page Content Starts -->
-  <div class="page-content">
+ 
 
 
 
-    <div id="blur-backdrop"></div>
 
-    <!-- Panel Rows -->
-    <div id="container">
-      <div class="panel-row"></div>
-      <div class="panel-row"></div>
-      <!-- more rows -->
+
+  <div class="page-content" id="pageContent">
+    <div class="wrapper" id="feedbackWrapper">
+      <form id="contactForm">
+        <h2>Contact Us</h2>
+        <div class="input-group">
+          <input type="text" name="name" required />
+          <label>Name</label>
+        </div>
+        <div class="input-group">
+          <input type="email" name="email" required />
+          <label>Email</label>
+        </div>
+        <div class="input-group">
+          <textarea rows="1" name="message" required id="feedback"></textarea>
+          <label>Write Your Message...</label>
+        </div>
+        <p class="note">Any suggestions, bugs, or comments? Let us know!</p>
+        <input type="hidden" name="emoji" id="emojiInput">
+        <button type="submit">Submit</button>
+      </form>
     </div>
-
-
-
-
-  <div class="wrapper" id="feedbackWrapper">
-    <form action="https://formspree.io/f/xldbrbna" method="POST">
-      <h2>Contact Us</h2>
-      <div class="input-group">
-        <input type="text" name="name" required />
-        <label>Name</label>
+    <div class="popup-overlay" id="popup">
+      <div class="popup-card">
+        <h3>Thank You!</h3>
+        <p>Your feedback helps us improve. How did you feel?</p>
+        <div class="emoji-box">
+          <div class="emoji">😐</div>
+          <div class="emoji">🙂</div>
+          <div class="emoji">😃</div>
+          <div class="emoji">🤩</div>
+          <div class="emoji">🔥</div>
+        </div>
+        <button class="close-btn" onclick="submitForm()">Skip</button>
       </div>
-      <div class="input-group">
-        <input type="email" name="email" required />
-        <label>Email</label>
-      </div>
-      <div class="input-group">
-        <textarea rows="1" name="message" required id="feedback"></textarea>
-        <label>Write Your Message...</label>
-      </div>
-  <p class="note">Any suggestions, bugs, or comments? Let us know!</p>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
-
-
-  <div class="popup-overlay" id="popup">
-    <div class="popup-card">
-      <h3>Thank You!</h3>
-      <p>Your feedback helps us improve. How did you feel?</p>
-      <div class="emoji-box">
-        <div class="emoji">😐</div>
-        <div class="emoji">🙂</div>
-        <div class="emoji">😃</div>
-        <div class="emoji">🤩</div>
-        <div class="emoji">🔥</div>
-      </div>
-      <button class="close-btn" onclick="closePopup()">Skip</button>
     </div>
   </div>
-  </div>
+
+
+
+
+
+
+
+
   <!-- Page Content Ends -->
 
   
