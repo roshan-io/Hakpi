@@ -9,6 +9,224 @@
     <link rel="stylesheet" href="cascading.css" />
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
     </head>
+
+
+
+  <style>
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Quicksand", sans-serif;
+  }
+
+
+body {
+  background: #000;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  .ring {
+    position: relative;
+    width: 88%;
+    aspect-ratio: 1;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .ring i {
+    position: absolute;
+    inset: 0;
+    border: 6px solid var(--clr);
+    filter: drop-shadow(0 0 20px var(--clr));
+    transition: 0.5s;
+  }
+
+  .ring i:nth-child(1) {
+    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+    animation: animate 12s linear infinite;
+  }
+
+  .ring i:nth-child(2) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate 18s linear infinite;
+  }
+
+  .ring i:nth-child(3) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate2 24s linear infinite;
+  }
+
+  @keyframes animate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes animate2 {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  .login {
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .login h2 {
+    font-size: 2em;
+    color: #fff;
+  }
+
+  .login .inputBx {
+    position: relative;
+    width: 100%;
+  }
+
+  .login .inputBx input {
+    position: relative;
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    font-size: 1.2em;
+    color: #fff;
+    box-shadow: none;
+    outline: none;
+  }
+
+  .login .inputBx input[type="submit"] {
+    width: 100%;
+    background: linear-gradient(45deg, #ff357a, #fff172);
+    border: none;
+    cursor: pointer;
+  }
+
+  .login .inputBx input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .login .links {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  .login .links a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .ring span {
+    color: #00f9ff;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: block;
+  }
+
+  body {
+    background: #000;
+    min-height: 100vh;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px clamp(10px, 5vw, 60px);
+    overflow-x: hidden;
+  }
+
+  .page-content {
+    flex-grow: 1;
+  }
+
+  .page-content1 {
+    width: 100%;
+    position: relative;
+    transition: filter 0.3s ease;
+    z-index: 1;
+  }
+
+  .page-content.blur {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+
+.page-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+  button {
+    width: 100%;
+    height: 40px;
+    background: #0ef;
+    box-shadow: 0 0 10px #0ef;
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+  }
+
+  .note {
+    color: #aaa;
+    font-size: 14px;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+</style>
+
+
 <body>
 
     <canvas id="bgCanvas"></canvas>
@@ -40,12 +258,23 @@
 
   <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-  <div class="content" id="content">
-    <h1>Welcome</h1>
-    <p> This Site is under-development . Yet to be published  </p>
+ 
+  <div class="page-content" id="pageContent">
+
+
+
+<div class="ring">
+  <i style="--clr:#00ff0a;"></i>
+  <i style="--clr:#ff0057;"></i>
+  <i style="--clr:#fffd44;"></i>
+
+  <span> Hi, I am </span>
+  <span> SHEIK ROSHAN </span>
 
 </div>
 
+
+</div>
 
 
 
