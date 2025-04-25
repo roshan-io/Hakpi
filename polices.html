@@ -37,11 +37,12 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.5); /* Transparent black */
+  background: rgba(0, 0, 0, 0.1); /* Transparent black */
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 1;
-  position: relative;
+  position: relative; 
 }
     .header {
       text-align: center;
