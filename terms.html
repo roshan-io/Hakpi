@@ -132,6 +132,33 @@
   </style>
 </head>
 <body>
+
+
+<!-- top bar -->
+
+
+<div class="top-bar">
+        <img src="3.14.png"  class="logo" /> 
+
+    <div class="menu-icon" id="menuIcon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="#" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="redirect.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+
   <canvas id="bgCanvas"></canvas>
   <div class="wrapper">
     <header class="header">
