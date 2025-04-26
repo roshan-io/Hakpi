@@ -1,139 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Terms and Conditions</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    html, body {
+      height: 100%;
+      background: #000;
+      font-family: 'Arial', sans-serif;
+      color: #e0e0e0;
+      font-size: 0.9em;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    canvas#bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display: block;
+      pointer-events: none;
+    }
 
-body {
-      
-  font-family: 'Arial', sans-serif;
-   /* Dark background */
-  color: #e0e0e0;  /* Light text for readability */
-  font-size: 0.9em;  /* Smaller text size for compactness */
-}
-
-.wrapper {
+    .wrapper {
   max-width: 1200px;
- background: rgba(0,0,0,0.4);
   margin: 0 auto;
   padding: 20px;
-      
-  /* Slightly lighter dark background */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);  /* Subtle shadow for depth */
-  border-radius: 8px;
- z-index: 999;
+  background: rgba(0, 0, 0, 0.1); /* Transparent black */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 1;
+  position: relative; 
 }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
+    .header h1 {
+      font-size: 2.2em;
+      color: #bb86fc;
+    }
 
-.header h1 {
-  font-size: 2.2em;
-  color: #bb86fc;  /* Light purple for heading */
-}
+    .header p {
+      font-size: 1em;
+      color: #a1a1a1;
+    }
 
-.header p {
-  font-size: 1em;
-  color: #a1a1a1;  /* Light gray for subheading */
-}
+    .content {
+      margin: 20px 0;
+    }
 
-.content {
-  margin: 20px 0;
-}
+    .section {
+      margin-bottom: 20px;
+    }
 
-.section {
-  margin-bottom: 20px;
-}
+    .section h2 {
+      font-size: 1.6em;
+      color: #bb86fc;
+      margin-bottom: 10px;
+    }
 
-.section h2 {
-  font-size: 1.6em;
-  color: #bb86fc;  /* Light purple for subheadings */
-  margin-bottom: 10px;
-}
+    .section p,
+    .section ul,
+    .section ol {
+      font-size: 0.9em;
+      line-height: 1.5;
+      color: #e0e0e0;
+    }
 
-.section p,
-.section ul,
-.section ol {
-  font-size: 0.9em;
-  line-height: 1.5;
-  color: #e0e0e0;  /* Light text */
-}
+    ul, ol {
+      margin-left: 20px;
+    }
 
-ul,
-ol {
-  margin-left: 20px;
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      color: #e0e0e0;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  color: #e0e0e0;
-}
+    table th,
+    table td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
 
-table th,
-table td {
-  border: 1px solid #333;
-  padding: 8px;
-  text-align: left;
-}
+    table th {
+      background-color: #2c2c2c;
+      color: #bb86fc;
+    }
 
-table th {
-  background-color: #2c2c2c;
-  color: #bb86fc;
-}
+    table tr:nth-child(even) {
+      background-color: #2a2a2a;
+    }
 
-table tr:nth-child(even) {
-  background-color: #2a2a2a;
-}
+    @media (max-width: 768px) {
+      .wrapper {
+        padding: 15px;
+      }
 
+      .header h1 {
+        font-size: 1.8em;
+      }
 
-@media (max-width: 768px) {
-  .wrapper {
-    padding: 15px;
-  }
+      .header p {
+        font-size: 0.9em;
+      }
 
-  .header h1 {
-    font-size: 1.8em;
-  }
+      .section h2 {
+        font-size: 1.4em;
+      }
 
-  .header p {
-    font-size: 0.9em;
-  }
-
-  .section h2 {
-    font-size: 1.4em;
-  }
-
-  .section p {
-    font-size: 0.8em;
-  }
-}
-
-
-</style>
+      .section p {
+        font-size: 0.8em;
+      }
+    }
+  </style>
 </head>
 <body>
-    <canvas id="bgCanvas"></canvas>
+  <canvas id="bgCanvas"></canvas>
   <div class="wrapper">
-     
-
     <header class="header">
       <h1>Terms & Conditions</h1>
       <p>Read carefully and explore the complexities of the fine print.</p>
     </header>
+
 
     <section class="content">
       <div class="section">
@@ -175,9 +180,88 @@ table tr:nth-child(even) {
 
     </section>
 
-  
+
+
+
   </div>
 
-<script src="script.js"> </script>
+  <script>
+    // Background Canvas Animation
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let lines = [];
+    const numLines = 100;
+    const minHeight = 10;
+    const maxHeight = 40;
+    const minSpeed = 0.3;
+    const maxSpeed = 0.7;
+    const minSpacing = 60;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initLines();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function initLines() {
+      lines = [];
+      for (let i = 0; i < numLines; i++) {
+        let x, y, valid;
+        let attempts = 0;
+
+        do {
+          x = Math.random() * canvas.width;
+          y = Math.random() * canvas.height;
+          valid = lines.every(line => Math.hypot(line.x - x, line.y - y) > minSpacing);
+          attempts++;
+        } while (!valid && attempts < 10);
+
+        const height = Math.random() * (maxHeight - minHeight) + minHeight;
+        const speed = Math.random() * (maxSpeed - minSpeed) + minSpeed;
+        lines.push({ x, y, height, speed });
+      }
+    }
+
+    function update() {
+      for (const line of lines) {
+        line.x += line.speed;
+        line.y -= line.speed;
+
+        if (line.x > canvas.width + line.height) {
+          line.x -= canvas.width + line.height;
+        }
+        if (line.y < -line.height) {
+          line.y += canvas.height + line.height;
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = 'white';
+
+      for (const line of lines) {
+        ctx.save();
+        ctx.translate(line.x, line.y);
+        ctx.rotate(Math.PI / 4);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, line.height);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function animate() {
+      update();
+      draw();
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
