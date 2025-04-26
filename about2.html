@@ -18,6 +18,14 @@
       box-sizing: border-box;
       font-family: "Orbitron", sans-serif;
     }
+
+    body {
+      background: #000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
     #bgCanvas {
       position: fixed;
       top: 0;
@@ -28,20 +36,95 @@
       filter: blur(5px);
       pointer-events: none;
     }
-    body {
-      background: #000;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
+
+    /* === TOP BAR === */
+    .top-bar {
+      width: 100%;
+      background: #0d0d0d;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(54, 123, 240, 0.4);
+    }
+
+    .top-bar .logo {
+      height: 40px;
+    }
+
+    .menu-icon {
       display: flex;
       flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
     }
+
+    .menu-icon span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    /* === MENU PANEL === */
+    .menu-panel {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background: #0a0a0a;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+      z-index: 15;
+      transition: right 0.3s ease;
+      padding-top: 80px;
+    }
+
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu-panel li {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .menu-panel a {
+      color: #00f9ff;
+      text-decoration: none;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    .menu-panel a:hover {
+      color: #ff0057;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 12;
+      display: none;
+    }
+
+    /* === MAIN CONTENT === */
     .main-container {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 80px; /* Give space for the fixed top bar */
     }
+
     .ring {
       position: relative;
       width: 88%;
@@ -52,6 +135,7 @@
       align-items: center;
       flex-direction: column;
     }
+
     .ring i {
       position: absolute;
       inset: 0;
@@ -59,6 +143,7 @@
       filter: drop-shadow(0 0 20px var(--clr));
       transition: 0.5s;
     }
+
     .ring i:nth-child(1) { border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%; animation: animate 12s linear infinite; }
     .ring i:nth-child(2) { border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%; animation: animate 18s linear infinite; }
     .ring i:nth-child(3) { border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%; animation: animate2 24s linear infinite; }
@@ -79,58 +164,49 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       font-weight: bold;
-      font-family: 'Orbitron', sans-serif;
       padding: 10px 20px;
-      display: block;
     }
 
-    .page-content {
-      flex: 1;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-    }
-
-    /* FOOTER STYLES */
+    /* === FOOTER === */
     footer {
       padding: 40px 20px 50px 20px;
       text-align: center;
       color: white;
       font-size: 14px;
       margin-top: 60px;
-      position: relative;
-      z-index: 3;
       background: #0d0d0d;
       box-shadow: 0 -20px 40px rgba(54, 123, 240, 0.4);
+      position: relative;
+      z-index: 3;
     }
+
     footer a {
       color: #99ccee;
       margin: 0 10px;
       text-decoration: none;
       transition: color 0.3s ease;
     }
+
     footer a:hover {
       color: #cceeff;
     }
+
     footer .container {
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 30px;
-      padding-left: 20px;
-      padding-right: 20px;
     }
+
     .footer-logo {
       width: 30%;
       max-width: 100%;
       height: auto;
+      margin: 20px auto;
       display: block;
-      margin: 0 auto 20px auto;
     }
+
     footer h3 {
       color: #eee;
       margin-bottom: 15px;
@@ -138,15 +214,17 @@
       text-align: left;
       font-weight: bold;
     }
+
     footer .container > div {
       text-align: left;
       font-weight: bold;
     }
+
     ul {
       list-style: none;
       padding: 0;
-      margin: 0;
     }
+
     li {
       margin-bottom: 8px;
     }
@@ -178,10 +256,11 @@
   </ul>
 </div>
 
+<!-- Overlay -->
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-<!-- Main Page Content -->
-<div class="page-content" id="pageContent">
+<!-- Main Content -->
+<div class="main-container" id="pageContent">
   <div class="ring">
     <i style="--clr:#00ff0a;"></i>
     <i style="--clr:#ff0057;"></i>
@@ -206,12 +285,11 @@
         <li><a href="#">Archived Releases</a></li>
       </ul>
     </div>
-
     <div class="platforms">
       <h3>Platforms</h3>
       <ul>
         <li><a href="https://www.offsec.com/">OffSec</a></li>
-        <li><a href="https://www.raspberrypi.com/">Raspberrypi</a></li>
+        <li><a href="https://www.raspberrypi.com/">Raspberry Pi</a></li>
         <li><a href="https://ngrok.com/">Ngrok</a></li>
         <li><a href="https://www.docker.com/">Docker</a></li>
         <li><a href="https://codepen.io/">CodePen</a></li>
@@ -220,7 +298,6 @@
         <li><a href="https://play.google.com/store/apps/details?id=com.termux">Termux App</a></li>
       </ul>
     </div>
-
     <div class="development">
       <h3>Development</h3>
       <ul>
@@ -231,7 +308,6 @@
         <li><a href="#">GitLab</a></li>
       </ul>
     </div>
-
     <div class="community">
       <h3>Community</h3>
       <ul>
@@ -239,7 +315,6 @@
         <li><a href="#">Support Forum</a></li>
       </ul>
     </div>
-
     <div class="follow-us">
       <h3>Follow Us</h3>
       <ul>
@@ -249,7 +324,6 @@
         <li><a href="#">Twitter</a></li>
       </ul>
     </div>
-
     <div class="policies">
       <h3>Policies</h3>
       <ul>
