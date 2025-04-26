@@ -443,7 +443,7 @@ flex-grow: 1;
   // Show popup on form submit
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    popup.classList.add("show");
+    popup.style.display = 'block'; // << fixed
     pageContent.classList.add("blur");
   });
 
@@ -457,7 +457,7 @@ flex-grow: 1;
 
   // Submit the form after emoji is selected
   function submitForm() {
-    popup.classList.remove("show");
+    popup.style.display = 'none'; // << fixed
     pageContent.classList.remove("blur");
     form.submit();
   }
