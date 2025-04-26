@@ -189,6 +189,9 @@ a {
   transition: color 0.3s ease;
   display: flex;
   align-items: center;
+  user-select: none; /* <-- prevent highlighting */
+  -webkit-user-select: none; /* for Safari */
+  -ms-user-select: none; /* for old Edge */
 }
 
 a:hover {
