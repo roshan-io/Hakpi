@@ -312,7 +312,7 @@ flex-grow: 1;
     </div>
 
 <div class="wrapper popup" id="popup" style="display:none;">
-  <h2>Select Your Mood</h2>
+  <h2>Whats Your Experience</h2>
   <div class="emoji-container">
     <span class="emoji">😐</span>
     <span class="emoji">🙂</span>
@@ -422,61 +422,46 @@ flex-grow: 1;
 </div>
 </div>
     </footer>
-  <script>
-    const textarea = document.getElementById('feedback');
-    const wrapper = document.getElementById('feedbackWrapper');
-    const form = document.getElementById('contactForm');
-    const popup = document.getElementById('popup');
-    const pageContent = document.getElementById('pageContent');
-    const emojiInput = document.getElementById('emojiInput');textarea.addEventListener('input', () => {
-  textarea.style.height = 'auto';
-  textarea.style.height = textarea.scrollHeight + 'px';
-  wrapper.style.height = 'auto';
-});
 
-form.addEventListener('submit', function (e) {
-  e.preventDefault();
-  popup.classList.add("show");
-  pageContent.classList.add("blur");
-});
 
-document.querySelectorAll('.emoji').forEach(emoji => {
-  emoji.addEventListener('click', () => {
-    emojiInput.value = emoji.textContent;
-    submitForm();
-  });
-});
-
-function submitForm() {
-  popup.classList.remove("show");
-  pageContent.classList.remove("blur");
-  form.submit();
-}
 
 <script>
+  const textarea = document.getElementById('feedback');
+  const wrapper = document.getElementById('feedbackWrapper');
+  const form = document.getElementById('contactForm');
+  const popup = document.getElementById('popup');
+  const pageContent = document.getElementById('pageContent');
+  const emojiInput = document.getElementById('emojiInput');
 
-// When user clicks submit button
-form.addEventListener('submit', function (e) {
-  e.preventDefault(); // stop form for now
-  popup.style.display = "block"; // show popup
-  pageContent.classList.add("blur"); // blur background
-});
-
-// When user picks an emoji
-document.querySelectorAll('.emoji').forEach(emoji => {
-  emoji.addEventListener('click', () => {
-    emojiInput.value = emoji.textContent; // set emoji hidden input
-    popup.style.display = "none"; // hide popup
-    pageContent.classList.remove("blur"); // remove blur
-    form.submit(); // now really submit
+  // Auto expand textarea
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+    wrapper.style.height = 'auto';
   });
-});
+
+  // Show popup on form submit
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    popup.classList.add("show");
+    pageContent.classList.add("blur");
+  });
+
+  // Handle emoji click
+  document.querySelectorAll('.emoji').forEach(emoji => {
+    emoji.addEventListener('click', () => {
+      emojiInput.value = emoji.textContent;
+      submitForm();
+    });
+  });
+
+  // Submit the form after emoji is selected
+  function submitForm() {
+    popup.classList.remove("show");
+    pageContent.classList.remove("blur");
+    form.submit();
+  }
 </script>
-
-
-
-
-  </script>
 
 
   <script src="script.js"></script>
