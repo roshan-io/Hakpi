@@ -182,7 +182,20 @@ flex-grow: 1;
 
 
 
-
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px); /* <- this applies blur */
+  background: rgba(0, 0, 0, 0.2); /* optional: darkens a bit */
+  z-index: 999; /* higher than page */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: auto; /* allow blocking clicks */
+}
 
 
 
@@ -312,6 +325,7 @@ flex-grow: 1;
     </div>
 </div>
 
+<div id="overlay" style="display: none;">
 <div class="wrapper popup" id="popup" style="display:none;">
   <h2>Whats Your Experience</h2>
   <div class="emoji-container">
@@ -322,7 +336,7 @@ flex-grow: 1;
     <span class="emoji">🔥</span>
   </div>
 </div>
-
+</div>
 
 
 
