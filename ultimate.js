@@ -1,14 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('container');
 
-  // Single click to show bin and row number box
   container.addEventListener('click', function (e) {
     const row = e.target.closest('.panel-row');
     if (row) {
-      // Remove existing delete buttons and row number inputs
+      // Remove existing delete buttons and number boxes
       document.querySelectorAll('.delete-btn, .row-number').forEach(el => el.remove());
 
-      // Create bin button
+      // Create delete (bin) button
       const bin = document.createElement('button');
       bin.classList.add('delete-btn');
       bin.innerHTML = '🗑️';
@@ -21,51 +20,90 @@ document.addEventListener('DOMContentLoaded', function () {
       bin.style.border = 'none';
       bin.style.fontSize = '18px';
 
-      bin.onclick = function(event) {
+      bin.onclick = function (event) {
         event.stopPropagation();
         row.remove();
       };
       row.appendChild(bin);
 
-      // Create small dark blurred row number input
+      // Create number input box
       const rowNumberInput = document.createElement('input');
       rowNumberInput.classList.add('row-number');
-      rowNumberInput.type = 'number';
-      rowNumberInput.min = '1';
-      rowNumberInput.value = Array.from(container.children).indexOf(row) + 1;
+      rowNumberInput.type = 'text'; // allow easier editing
+      rowNumberInput.readOnly = true; // make read-only by default
+      const currentIndex = Array.from(container.children).indexOf(row) + 1; // +1 to start from 1
+      rowNumberInput.value = currentIndex;
 
-      // style it to look nice
-      rowNumberInput.style.position = 'absolute';
-      rowNumberInput.style.top = '40px';
-      rowNumberInput.style.right = '10px';
-      rowNumberInput.style.width = '30px';
-      rowNumberInput.style.height = '25px';
-      rowNumberInput.style.background = 'rgba(0, 0, 0, 0.5)';
-      rowNumberInput.style.backdropFilter = 'blur(4px)';
-      rowNumberInput.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-      rowNumberInput.style.borderRadius = '5px';
-      rowNumberInput.style.color = 'white';
-      rowNumberInput.style.textAlign = 'center';
-      rowNumberInput.style.fontSize = '12px';
-      rowNumberInput.style.zIndex = '10';
+      // Style for small dark blurred input
+      Object.assign(rowNumberInput.style, {
+        position: 'absolute',
+        top: '40px',
+        right: '10px',
+        width: '30px',
+        height: '25px',
+        background: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(4px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '5px',
+        color: 'white',
+        textAlign: 'center',
+        fontSize: '12px',
+        zIndex: '10',
+        outline: 'none',
+      });
 
-      rowNumberInput.onblur = function() {
-        let newIndex = parseInt(rowNumberInput.value, 10) - 1;
-        if (isNaN(newIndex)) return;
+      // Allow double-click to edit
+      let clickCount = 0;
+      rowNumberInput.addEventListener('click', function (e) {
+        clickCount++;
+        setTimeout(() => {
+          if (clickCount === 2) {
+            rowNumberInput.readOnly = false;
+            rowNumberInput.focus();
+            rowNumberInput.select();
+          }
+          clickCount = 0;
+        }, 250);
+      });
 
-        const rows = Array.from(container.querySelectorAll('.panel-row'));
-        if (newIndex < 0) newIndex = 0;
-        if (newIndex >= rows.length) newIndex = rows.length - 1;
+      // On blur, reorder properly
+      rowNumberInput.addEventListener('blur', function () {
+        if (!rowNumberInput.readOnly) {
+          rowNumberInput.readOnly = true; // lock again after editing
 
-        container.insertBefore(row, rows[newIndex]);
-      };
+          let newIndex = parseInt(rowNumberInput.value, 10) - 1; // -1 because position in array starts from 0
+          const rows = Array.from(container.querySelectorAll('.panel-row')).filter(r => r !== row); // Exclude current
+
+          if (isNaN(newIndex) || newIndex < 0) newIndex = 0;
+          if (newIndex >= rows.length) newIndex = rows.length;
+
+          if (newIndex === rows.length) {
+            container.appendChild(row);
+          } else {
+            container.insertBefore(row, rows[newIndex]);
+          }
+
+          // After moving, update all visible numbers
+          updateRowNumbers();
+        }
+      });
 
       row.appendChild(rowNumberInput);
-      row.style.position = 'relative'; // necessary to properly place bin and number box
+      row.style.position = 'relative';
     }
   });
 
-  // Double click to edit text
+  function updateRowNumbers() {
+    const rows = Array.from(container.querySelectorAll('.panel-row'));
+    rows.forEach((row, index) => {
+      const input = row.querySelector('.row-number');
+      if (input) {
+        input.value = index + 1;
+      }
+    });
+  }
+
+  // Double-click to edit text
   container.addEventListener('dblclick', function (e) {
     const textPanel = e.target.closest('.text-panel');
     if (textPanel) {
@@ -79,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Double click to upload image
+  // Double-click to upload image
   container.addEventListener('dblclick', function (e) {
     const img = e.target.closest('.image-panel img');
     if (img) {
