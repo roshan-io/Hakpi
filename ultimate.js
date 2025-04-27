@@ -1,40 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', function () {
-  const container = document.getElementById('container');
-  let draggedRow = null;
 
-  container.addEventListener('dragstart', function (e) {
-    if (e.target.classList.contains('panel-row')) {
-      draggedRow = e.target;
-      e.dataTransfer.effectAllowed = 'move';
-
-      // Reduce opacity of the dragged row
-      draggedRow.style.opacity = '0.5';
-    }
-  });
-
-  container.addEventListener('dragover', function (e) {
-    e.preventDefault(); // Prevent default scrolling behavior
-    const target = e.target.closest('.panel-row');
-    if (target && target !== draggedRow) {
-      const rect = target.getBoundingClientRect();
-      const next = (e.clientY - rect.top) / (rect.bottom - rect.top) > 0.5;
-      container.insertBefore(draggedRow, next ? target.nextSibling : target);
-    }
-  });
-
-  container.addEventListener('dragend', function () {
-    // Reset opacity after drag is completed
-    if (draggedRow) {
-      draggedRow.style.opacity = '1';
-    }
-    draggedRow = null;
-  });
-
-  // Add drag attribute to rows
-  const rows = document.querySelectorAll('.panel-row');
-  rows.forEach(row => {
-    row.setAttribute('draggable', 'true');
 
     // Click to show bin button
     row.addEventListener('click', function (e) {
