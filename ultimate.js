@@ -1,71 +1,77 @@
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('container');
 
-  // Click to show bin button and row number input
+  // Single click to show bin and row number box
   container.addEventListener('click', function (e) {
     const row = e.target.closest('.panel-row');
-    
     if (row) {
-      // Remove existing bin buttons and row number inputs
-      document.querySelectorAll('.delete-btn, .row-number').forEach(btn => btn.remove());
+      // Remove existing delete buttons and row number inputs
+      document.querySelectorAll('.delete-btn, .row-number').forEach(el => el.remove());
 
-      // Create new bin button
+      // Create bin button
       const bin = document.createElement('button');
       bin.classList.add('delete-btn');
       bin.innerHTML = '🗑️';
+      bin.style.position = 'absolute';
+      bin.style.top = '10px';
+      bin.style.right = '10px';
+      bin.style.zIndex = '10';
+      bin.style.cursor = 'pointer';
+      bin.style.background = 'transparent';
+      bin.style.border = 'none';
+      bin.style.fontSize = '18px';
+
       bin.onclick = function(event) {
-        event.stopPropagation(); // Prevent triggering the row's click event
-        row.remove(); // Remove the row
+        event.stopPropagation();
+        row.remove();
       };
       row.appendChild(bin);
 
-      // Create row number input with same size as delete button
+      // Create small dark blurred row number input
       const rowNumberInput = document.createElement('input');
       rowNumberInput.classList.add('row-number');
       rowNumberInput.type = 'number';
-      rowNumberInput.placeholder = 'Row No.';
-      rowNumberInput.value = Array.from(container.children).indexOf(row) + 1; // Set the current row number
-      rowNumberInput.style.width = '30px'; // Adjust width to be the same as the bin button
-      rowNumberInput.style.marginTop = '5px'; // Position the input below the bin icon
+      rowNumberInput.min = '1';
+      rowNumberInput.value = Array.from(container.children).indexOf(row) + 1;
+
+      // style it to look nice
+      rowNumberInput.style.position = 'absolute';
+      rowNumberInput.style.top = '40px';
+      rowNumberInput.style.right = '10px';
+      rowNumberInput.style.width = '30px';
+      rowNumberInput.style.height = '25px';
+      rowNumberInput.style.background = 'rgba(0, 0, 0, 0.5)';
+      rowNumberInput.style.backdropFilter = 'blur(4px)';
+      rowNumberInput.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+      rowNumberInput.style.borderRadius = '5px';
+      rowNumberInput.style.color = 'white';
+      rowNumberInput.style.textAlign = 'center';
+      rowNumberInput.style.fontSize = '12px';
+      rowNumberInput.style.zIndex = '10';
 
       rowNumberInput.onblur = function() {
-        const newRowNumber = parseInt(rowNumberInput.value, 10);
-        if (!isNaN(newRowNumber) && newRowNumber >= 1 && newRowNumber <= container.children.length) {
-          reorderRows(newRowNumber - 1); // Reorder rows based on the entered number
-        }
+        let newIndex = parseInt(rowNumberInput.value, 10) - 1;
+        if (isNaN(newIndex)) return;
+
+        const rows = Array.from(container.querySelectorAll('.panel-row'));
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex >= rows.length) newIndex = rows.length - 1;
+
+        container.insertBefore(row, rows[newIndex]);
       };
 
       row.appendChild(rowNumberInput);
+      row.style.position = 'relative'; // necessary to properly place bin and number box
     }
   });
 
-  // Reorder rows based on the row number entered
-  function reorderRows(newRowIndex) {
-    const rows = Array.from(container.children);
-    const rowToMove = rows.find(row => row.querySelector('.row-number').value == newRowIndex + 1);
-    if (rowToMove) {
-      // Find the position to insert the row into
-      const targetIndex = newRowIndex;
-      const targetRow = rows[targetIndex];
-      
-      // Insert the row before the target row (or at the end if targetIndex is out of bounds)
-      if (targetRow) {
-        container.insertBefore(rowToMove, targetRow);
-      } else {
-        container.appendChild(rowToMove); // If no target row exists, append to the end
-      }
-    }
-  }
-
-  // Double-click to edit text in text panel
+  // Double click to edit text
   container.addEventListener('dblclick', function (e) {
     const textPanel = e.target.closest('.text-panel');
     if (textPanel) {
-      const originalText = textPanel.innerText;
+      e.stopPropagation();
       textPanel.setAttribute('contenteditable', 'true');
       textPanel.focus();
-
-      // Optional: When done editing (on blur), disable contenteditable
       textPanel.addEventListener('blur', function handler() {
         textPanel.removeAttribute('contenteditable');
         textPanel.removeEventListener('blur', handler);
@@ -73,10 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Double-click to upload a new image in image panel
+  // Double click to upload image
   container.addEventListener('dblclick', function (e) {
-    const imagePanel = e.target.closest('.image-panel img');
-    if (imagePanel) {
+    const img = e.target.closest('.image-panel img');
+    if (img) {
+      e.stopPropagation();
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
       fileInput.accept = 'image/*';
@@ -84,12 +91,12 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.appendChild(fileInput);
       fileInput.click();
 
-      fileInput.onchange = function() {
+      fileInput.onchange = function () {
         const file = fileInput.files[0];
         if (file) {
           const reader = new FileReader();
-          reader.onload = function(e) {
-            imagePanel.src = e.target.result; // Update image source
+          reader.onload = function (e) {
+            img.src = e.target.result;
           };
           reader.readAsDataURL(file);
         }
