@@ -2,9 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('container');
 
   container.addEventListener('click', function (e) {
-    const row = e.target.closest('.panel-row');
-    if (row) {
-      // Remove existing delete buttons and number boxes
+    const clickedRow = e.target.closest('.panel-row');
+    const clickedInput = e.target.classList.contains('row-number');
+
+    if (clickedRow && !clickedInput) {
+      // Remove all existing bins and number boxes
       document.querySelectorAll('.delete-btn, .row-number').forEach(el => el.remove());
 
       // Create delete (bin) button
@@ -22,19 +24,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
       bin.onclick = function (event) {
         event.stopPropagation();
-        row.remove();
+        clickedRow.remove();
+        updateRowNumbers();
       };
-      row.appendChild(bin);
+      clickedRow.appendChild(bin);
 
       // Create number input box
       const rowNumberInput = document.createElement('input');
       rowNumberInput.classList.add('row-number');
-      rowNumberInput.type = 'text'; // allow easier editing
-      rowNumberInput.readOnly = true; // make read-only by default
-      const currentIndex = Array.from(container.children).indexOf(row) + 1; // +1 to start from 1
-      rowNumberInput.value = currentIndex;
+      rowNumberInput.type = 'text';
+      rowNumberInput.value = Array.from(container.children).indexOf(clickedRow) + 1; // +1 for human numbering
+      rowNumberInput.readOnly = true;
 
-      // Style for small dark blurred input
       Object.assign(rowNumberInput.style, {
         position: 'absolute',
         top: '40px',
@@ -50,46 +51,40 @@ document.addEventListener('DOMContentLoaded', function () {
         fontSize: '12px',
         zIndex: '10',
         outline: 'none',
+        pointerEvents: 'auto'
       });
 
-      // Allow double-click to edit
-      let clickCount = 0;
-      rowNumberInput.addEventListener('click', function (e) {
-        clickCount++;
-        setTimeout(() => {
-          if (clickCount === 2) {
-            rowNumberInput.readOnly = false;
-            rowNumberInput.focus();
-            rowNumberInput.select();
-          }
-          clickCount = 0;
-        }, 250);
+      // Handle double-click on the number box
+      rowNumberInput.addEventListener('dblclick', function (e) {
+        e.stopPropagation();
+        rowNumberInput.readOnly = false;
+        rowNumberInput.focus();
+        rowNumberInput.select();
       });
 
-      // On blur, reorder properly
+      // On blur after editing
       rowNumberInput.addEventListener('blur', function () {
         if (!rowNumberInput.readOnly) {
-          rowNumberInput.readOnly = true; // lock again after editing
+          rowNumberInput.readOnly = true;
+          let newIndex = parseInt(rowNumberInput.value, 10) - 1;
 
-          let newIndex = parseInt(rowNumberInput.value, 10) - 1; // -1 because position in array starts from 0
-          const rows = Array.from(container.querySelectorAll('.panel-row')).filter(r => r !== row); // Exclude current
+          const rows = Array.from(container.querySelectorAll('.panel-row')).filter(r => r !== clickedRow);
 
           if (isNaN(newIndex) || newIndex < 0) newIndex = 0;
           if (newIndex >= rows.length) newIndex = rows.length;
 
           if (newIndex === rows.length) {
-            container.appendChild(row);
+            container.appendChild(clickedRow);
           } else {
-            container.insertBefore(row, rows[newIndex]);
+            container.insertBefore(clickedRow, rows[newIndex]);
           }
 
-          // After moving, update all visible numbers
           updateRowNumbers();
         }
       });
 
-      row.appendChild(rowNumberInput);
-      row.style.position = 'relative';
+      clickedRow.appendChild(rowNumberInput);
+      clickedRow.style.position = 'relative';
     }
   });
 
@@ -103,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Double-click to edit text
+  // Handle double-click to edit text panels
   container.addEventListener('dblclick', function (e) {
     const textPanel = e.target.closest('.text-panel');
     if (textPanel) {
@@ -117,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Double-click to upload image
+  // Handle double-click to change images
   container.addEventListener('dblclick', function (e) {
     const img = e.target.closest('.image-panel img');
     if (img) {
