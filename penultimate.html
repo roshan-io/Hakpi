@@ -164,24 +164,24 @@
 
 
 
+
 <script>
-// Enable drag and drop reordering
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('container');
   let draggedRow = null;
 
   container.addEventListener('dragstart', function (e) {
-    // Only start dragging if the target is a panel-row
     if (e.target.classList.contains('panel-row')) {
       draggedRow = e.target;
-      setTimeout(function () {
-        draggedRow.style.opacity = '0.5'; // Make the dragged row semi-transparent
-      }, 0);
+      e.dataTransfer.effectAllowed = 'move';
+
+      // Reduce opacity of the dragged row
+      draggedRow.style.opacity = '0.5';
     }
   });
 
   container.addEventListener('dragover', function (e) {
-    e.preventDefault(); // Allow for drop
+    e.preventDefault(); // Prevent default scrolling behavior
     const target = e.target.closest('.panel-row');
     if (target && target !== draggedRow) {
       const rect = target.getBoundingClientRect();
@@ -191,7 +191,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   container.addEventListener('dragend', function () {
-    draggedRow.style.opacity = '1'; // Reset opacity after dragging
+    // Reset opacity after drag is completed
+    if (draggedRow) {
+      draggedRow.style.opacity = '1';
+    }
     draggedRow = null;
   });
 
@@ -200,32 +203,32 @@ document.addEventListener('DOMContentLoaded', function () {
   rows.forEach(row => {
     row.setAttribute('draggable', 'true');
 
-    // Click to show bin
+    // Click to show bin button
     row.addEventListener('click', function (e) {
-      // Remove existing bins
+      // Remove existing bin buttons
       document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
 
-      // Create new bin
+      // Create new bin button
       const bin = document.createElement('button');
       bin.classList.add('delete-btn');
       bin.innerHTML = '🗑️';
       bin.onclick = function(event) {
-        event.stopPropagation();
-        row.remove();
+        event.stopPropagation(); // Prevent triggering the row's click event
+        row.remove(); // Remove the row
       };
       row.appendChild(bin);
     });
 
-    // Double-click to edit text
+    // Double-click to edit text in text panel
     const textPanel = row.querySelector('.text-panel');
     if (textPanel) {
       textPanel.addEventListener('dblclick', function (e) {
-        e.stopPropagation();
+        e.stopPropagation(); // Prevent row click event
         const originalText = textPanel.innerText;
         textPanel.setAttribute('contenteditable', 'true');
         textPanel.focus();
 
-        // Optional: when done editing (on blur), disable editing
+        // Optional: When done editing (on blur), disable contenteditable
         textPanel.addEventListener('blur', function handler() {
           textPanel.removeAttribute('contenteditable');
           textPanel.removeEventListener('blur', handler);
@@ -233,11 +236,11 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // Double-click to upload new image
+    // Double-click to upload a new image in image panel
     const imagePanel = row.querySelector('.image-panel img');
     if (imagePanel) {
       imagePanel.addEventListener('dblclick', function (e) {
-        e.stopPropagation();
+        e.stopPropagation(); // Prevent row click event
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.accept = 'image/*';
@@ -250,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function () {
           if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
-              imagePanel.src = e.target.result;
+              imagePanel.src = e.target.result; // Update image source
             };
             reader.readAsDataURL(file);
           }
@@ -261,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
+
 
 
 
