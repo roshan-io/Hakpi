@@ -3,23 +3,33 @@ document.addEventListener('DOMContentLoaded', function () {
   let draggedRow = null;
   let initialTouch = null;
   let isTouch = false;
-
-  // Scroll variables
-  let isScrolling = false;
+  let draggingStarted = false;  // Flag to detect if dragging should start
+  let isScrolling = false;  // Flag to check if we're trying to scroll
+  let scrollTimeout = null;  // Used to debounce the scrolling effect
+  let dragStartPosition = null;  // To track the initial position when dragging starts
 
   // Function to handle dragging start (mouse or touch)
   function onDragStart(e) {
     e.preventDefault(); // Prevent default behavior for both touch and mouse
 
-    if (e.target.classList.contains('panel-row')) {
+    if (e.target.classList.contains('panel-row') && !draggingStarted) {
       draggedRow = e.target;
       draggedRow.style.opacity = '0.5';
-      
+      draggingStarted = true;
+      dragStartPosition = e.clientY || (isTouch && e.touches[0].clientY); // Track initial position
+
       // For touch devices, track touch start position
       if (e.type === "touchstart") {
         isTouch = true;
         initialTouch = e.touches[0];
       }
+
+      // Prevent drag from starting immediately (delay)
+      setTimeout(() => {
+        if (draggingStarted) {
+          draggedRow.style.position = 'absolute';
+        }
+      }, 200); // Add a delay of 200ms before dragging starts
     }
   }
 
@@ -27,9 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function onMove(e) {
     e.preventDefault(); // Prevent default behavior for both touch and mouse
 
-    if (draggedRow) {
+    if (draggedRow && draggingStarted) {
       const position = e.clientY || (isTouch && e.touches[0].clientY);
-      draggedRow.style.position = 'absolute';
       draggedRow.style.top = position - draggedRow.offsetHeight / 2 + 'px';
 
       // Custom scroll logic when dragging near the top or bottom of the page
@@ -42,18 +51,34 @@ document.addEventListener('DOMContentLoaded', function () {
         // Scroll down when the dragged row reaches the bottom of the window
         if (position + draggedRow.offsetHeight > windowHeight - scrollThreshold) {
           isScrolling = true;
-          window.scrollBy(0, 10); // Scroll down slowly
+          scrollPage('down');
         }
         // Scroll up when the dragged row reaches the top of the window
         else if (position < scrollThreshold) {
           isScrolling = true;
-          window.scrollBy(0, -10); // Scroll up slowly
+          scrollPage('up');
         }
         else {
           isScrolling = false; // Stop scrolling when the row is not near the top or bottom
         }
       }
+    } else if (!draggingStarted && !isScrolling) {
+      // If not dragging and not scrolling, allow normal page scroll
+      const scrollPosition = e.clientY || (isTouch && e.touches[0].clientY);
+      if (Math.abs(scrollPosition - dragStartPosition) < 5) {
+        // If drag movement is very small (like a scroll), allow scrolling
+        isScrolling = true;
+        scrollPage('down');
+      }
     }
+  }
+
+  // Function for smooth scrolling
+  function scrollPage(direction) {
+    if (scrollTimeout) clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      window.scrollBy(0, direction === 'down' ? 10 : -10); // Scroll slowly
+    }, 50); // Add a short delay to ensure smooth scroll
   }
 
   // Function to handle drop (reordering)
@@ -66,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
       draggedRow.style.position = '';
       draggedRow.style.top = '';
       draggedRow.style.opacity = '1';
+      draggingStarted = false; // Reset dragging state
       draggedRow = null;
     }
   }
@@ -76,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (draggedRow) {
       draggedRow.style.opacity = '1';
     }
+    draggingStarted = false;
     draggedRow = null;
   });
 
@@ -91,6 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
       draggedRow.style.opacity = '1';
       draggedRow.style.position = '';
       draggedRow.style.top = '';
+      draggingStarted = false;
       draggedRow = null;
     }
   });
@@ -105,62 +133,64 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
   });
 
-     // Click to show bin button
-     row.addEventListener('click', function (e) {
-       // Remove existing bin buttons
-       document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
- 
-       // Create new bin button
-       const bin = document.createElement('button');
-       bin.classList.add('delete-btn');
-       bin.innerHTML = '🗑️';
-       bin.onclick = function(event) {
-         event.stopPropagation(); // Prevent triggering the row's click event
-         row.remove(); // Remove the row
-       };
-       row.appendChild(bin);
-     });
- 
-     // Double-click to edit text in text panel
-     const textPanel = row.querySelector('.text-panel');
-     if (textPanel) {
-       textPanel.addEventListener('dblclick', function (e) {
-         e.stopPropagation(); // Prevent row click event
-         const originalText = textPanel.innerText;
-         textPanel.setAttribute('contenteditable', 'true');
-         textPanel.focus();
- 
-         // Optional: When done editing (on blur), disable contenteditable
-         textPanel.addEventListener('blur', function handler() {
-           textPanel.removeAttribute('contenteditable');
-           textPanel.removeEventListener('blur', handler);
-         });
-       });
-     }
- 
-     // Double-click to upload a new image in image panel
-     const imagePanel = row.querySelector('.image-panel img');
-     if (imagePanel) {
-       imagePanel.addEventListener('dblclick', function (e) {
-         e.stopPropagation(); // Prevent row click event
-         const fileInput = document.createElement('input');
-         fileInput.type = 'file';
-         fileInput.accept = 'image/*';
-         fileInput.style.display = 'none';
-         document.body.appendChild(fileInput);
-         fileInput.click();
- 
-         fileInput.onchange = function() {
-           const file = fileInput.files[0];
-           if (file) {
-             const reader = new FileReader();
-             reader.onload = function(e) {
-               imagePanel.src = e.target.result; // Update image source
-             };
-             reader.readAsDataURL(file);
-           }
-           document.body.removeChild(fileInput);
-         };
-       });
-     }
-   });
+  // Handle click for showing the delete button
+  const rows = document.querySelectorAll('.panel-row');
+  rows.forEach(row => {
+    row.setAttribute('draggable', 'true');
+    
+    // Handle click for showing the delete button
+    row.addEventListener('click', function () {
+      document.querySelectorAll('.delete-btn').forEach(btn => btn.remove());
+      const bin = document.createElement('button');
+      bin.classList.add('delete-btn');
+      bin.innerHTML = '🗑️';
+      bin.onclick = function(event) {
+        event.stopPropagation(); // Prevent triggering row's click event
+        row.remove(); // Remove row
+      };
+      row.appendChild(bin);
+    });
+
+    // Handle double-click to edit text
+    const textPanel = row.querySelector('.text-panel');
+    if (textPanel) {
+      textPanel.addEventListener('dblclick', function (e) {
+        e.stopPropagation(); // Prevent row click event
+        const originalText = textPanel.innerText;
+        textPanel.setAttribute('contenteditable', 'true');
+        textPanel.focus();
+
+        textPanel.addEventListener('blur', function handler() {
+          textPanel.removeAttribute('contenteditable');
+          textPanel.removeEventListener('blur', handler);
+        });
+      });
+    }
+
+    // Handle double-click to upload a new image
+    const imagePanel = row.querySelector('.image-panel img');
+    if (imagePanel) {
+      imagePanel.addEventListener('dblclick', function (e) {
+        e.stopPropagation();
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = 'image/*';
+        fileInput.style.display = 'none';
+        document.body.appendChild(fileInput);
+        fileInput.click();
+
+        fileInput.onchange = function() {
+          const file = fileInput.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              imagePanel.src = e.target.result; // Update image source
+            };
+            reader.readAsDataURL(file);
+          }
+          document.body.removeChild(fileInput);
+        };
+      });
+    }
+  });
+});
