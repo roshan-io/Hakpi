@@ -19,18 +19,22 @@ document.addEventListener('DOMContentLoaded', function () {
       };
       row.appendChild(bin);
 
-      // Create row number input
+      // Create row number input with same size as delete button
       const rowNumberInput = document.createElement('input');
       rowNumberInput.classList.add('row-number');
       rowNumberInput.type = 'number';
       rowNumberInput.placeholder = 'Row No.';
       rowNumberInput.value = Array.from(container.children).indexOf(row) + 1; // Set the current row number
+      rowNumberInput.style.width = '30px'; // Adjust width to be the same as the bin button
+      rowNumberInput.style.marginTop = '5px'; // Position the input below the bin icon
+
       rowNumberInput.onblur = function() {
         const newRowNumber = parseInt(rowNumberInput.value, 10);
         if (!isNaN(newRowNumber) && newRowNumber >= 1 && newRowNumber <= container.children.length) {
           reorderRows(newRowNumber - 1); // Reorder rows based on the entered number
         }
       };
+
       row.appendChild(rowNumberInput);
     }
   });
