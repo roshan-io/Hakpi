@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Create delete (bin) button
       const bin = document.createElement('button');
       bin.classList.add('delete-btn');
-      bin.innerHTML = '🗑️';
+      bin.innerHTML = '❌️';
       bin.style.position = 'absolute';
       bin.style.top = '10px';
       bin.style.right = '10px';
