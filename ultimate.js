@@ -144,34 +144,23 @@ document.addEventListener('DOMContentLoaded', function () {
 const container = document.getElementById('container');
 const addRowButton = document.getElementById('addRowButton');
 
-let rowCount = 0;
-
 addRowButton.addEventListener('click', () => {
-  rowCount++;
-
   const panelRow = document.createElement('div');
-  panelRow.classList.add('panel-row');
+  panelRow.className = 'panel-row';
 
   const textPanel = document.createElement('div');
-  textPanel.classList.add('panel', 'text-panel');
-  textPanel.innerText = (rowCount % 2 === 0) ? 'More text here' : 'Some text here';
+  textPanel.className = 'panel text-panel show'; // add 'show'
+  textPanel.innerText = 'New Text Panel';
 
   const imagePanel = document.createElement('div');
-  imagePanel.classList.add('panel', 'image-panel');
-  
+  imagePanel.className = 'panel image-panel show'; // add 'show'
   const img = document.createElement('img');
   img.src = 'https://www.kali.org/wallpapers/images/2025/kali-waves.png';
+  img.alt = 'Image';
   imagePanel.appendChild(img);
 
-  if (rowCount % 2 !== 0) {
-    // Odd rows: Text first, Image second
-    panelRow.appendChild(textPanel);
-    panelRow.appendChild(imagePanel);
-  } else {
-    // Even rows: Image first, Text second
-    panelRow.appendChild(imagePanel);
-    panelRow.appendChild(textPanel);
-  }
+  panelRow.appendChild(textPanel);
+  panelRow.appendChild(imagePanel);
 
   container.appendChild(panelRow);
 });
