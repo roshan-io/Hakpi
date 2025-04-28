@@ -144,27 +144,25 @@ document.addEventListener('DOMContentLoaded', function () {
 const container = document.getElementById('container');
 const addRowButton = document.getElementById('addRowButton');
 
-let rowCount = 0; // To alternate the layout
+let rowCount = 0;
 
 addRowButton.addEventListener('click', () => {
   rowCount++;
 
   const panelRow = document.createElement('div');
-  panelRow.className = 'panel-row';
+  panelRow.classList.add('panel-row');
 
-  // Create text panel
   const textPanel = document.createElement('div');
-  textPanel.className = 'panel text-panel';
-  textPanel.textContent = (rowCount % 2 === 0) ? "More text here" : "Some text here";
+  textPanel.classList.add('panel', 'text-panel');
+  textPanel.innerText = (rowCount % 2 === 0) ? 'More text here' : 'Some text here';
 
-  // Create image panel
   const imagePanel = document.createElement('div');
-  imagePanel.className = 'panel image-panel';
+  imagePanel.classList.add('panel', 'image-panel');
+  
   const img = document.createElement('img');
-  img.src = 'https://www.kali.org/wallpapers/images/2025/kali-waves.png'; // your image
+  img.src = 'https://www.kali.org/wallpapers/images/2025/kali-waves.png';
   imagePanel.appendChild(img);
 
-  // Alternate the order: Text-Image or Image-Text
   if (rowCount % 2 !== 0) {
     // Odd rows: Text first, Image second
     panelRow.appendChild(textPanel);
@@ -175,6 +173,5 @@ addRowButton.addEventListener('click', () => {
     panelRow.appendChild(textPanel);
   }
 
-  // Add the full panel row into the container
   container.appendChild(panelRow);
 });
