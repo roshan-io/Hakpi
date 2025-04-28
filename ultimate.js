@@ -138,3 +138,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+/* BUTTON */
+
+const container = document.getElementById('container');
+const addRowButton = document.getElementById('addRowButton');
+
+let rowCount = 0; // Track how many rows we have added
+
+addRowButton.addEventListener('click', () => {
+  rowCount++;
+
+  const panelRow = document.createElement('div');
+  panelRow.className = 'panel-row';
+
+  // Create text panel
+  const textPanel = document.createElement('div');
+  textPanel.className = 'panel text-panel';
+  textPanel.textContent = (rowCount % 2 === 0) ? "More text here" : "Some text here";
+
+  // Create image panel
+  const imagePanel = document.createElement('div');
+  imagePanel.className = 'panel image-panel';
+  const img = document.createElement('img');
+  img.src = 'https://www.kali.org/wallpapers/images/2025/kali-waves.png';
+  imagePanel.appendChild(img);
+
+  // Add panels to panel-row
+  panelRow.appendChild(textPanel);
+  panelRow.appendChild(imagePanel);
+
+  // Add panel-row to container
+  container.appendChild(panelRow);
+});
