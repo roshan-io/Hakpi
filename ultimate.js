@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const container = document.getElementById('container');
 const addRowButton = document.getElementById('addRowButton');
 
-let rowCount = 0; // Track how many rows we have added
+let rowCount = 0; // To alternate the layout
 
 addRowButton.addEventListener('click', () => {
   rowCount++;
@@ -161,13 +161,20 @@ addRowButton.addEventListener('click', () => {
   const imagePanel = document.createElement('div');
   imagePanel.className = 'panel image-panel';
   const img = document.createElement('img');
-  img.src = 'https://www.kali.org/wallpapers/images/2025/kali-waves.png';
+  img.src = 'https://www.kali.org/wallpapers/images/2025/kali-waves.png'; // your image
   imagePanel.appendChild(img);
 
-  // Add panels to panel-row
-  panelRow.appendChild(textPanel);
-  panelRow.appendChild(imagePanel);
+  // Alternate the order: Text-Image or Image-Text
+  if (rowCount % 2 !== 0) {
+    // Odd rows: Text first, Image second
+    panelRow.appendChild(textPanel);
+    panelRow.appendChild(imagePanel);
+  } else {
+    // Even rows: Image first, Text second
+    panelRow.appendChild(imagePanel);
+    panelRow.appendChild(textPanel);
+  }
 
-  // Add panel-row to container
+  // Add the full panel row into the container
   container.appendChild(panelRow);
 });
