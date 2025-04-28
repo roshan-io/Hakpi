@@ -41,25 +41,32 @@
   overflow: hidden;
 }
 
-<style>
-.add-row-btn {
-  margin: 20px auto;
-  display: block;
-  padding: 10px 20px;
-  font-size: 20px;
-  border: none;
-  border-radius: 10px;
-  background: #007BFF;
-  color: white;
-  cursor: pointer;
-  z-index: 99999; 
-  transition: background 0.3s;
+
+.add-row-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
 }
 
-.add-row-btn:hover {
-  background: #0056b3;
+#addRowButton {
+  padding: 15px 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background: rgba(0,0,0, 0.1); /* Transparent white */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-</style>
+
+#addRowButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
 </style>
 
 
@@ -184,7 +191,11 @@
 
 
 <!-- button -->
-<button id="addRowButton" class="add-row-btn">➕️ Add Row</button>
+
+
+<div class="add-row-container">
+  <button id="addRowButton">Add Row</button>
+</div>
 
 
    <script src="ultimate.js"> </script>
