@@ -230,3 +230,10 @@ a:hover {
   font-weight: normal;
   font-size: 14px;
 }
+
+@media (max-width: 649px) {
+  .panel {
+    width: 90vw; /* Use 90% of the viewport width */
+    max-width: 100%;
+  }
+}
