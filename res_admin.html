@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakpi.io</title>
+    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="cascading.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+
+
+<style>
+/* Bin button styles */
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background:transparent;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Make panel-row position relative */
+.panel-row {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 10px;
+
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+.add-row-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  margin-bottom: 50px;
+  gap: 20px;
+}
+
+
+
+
+#updateButton,
+#addRowButton {
+  font-size: 1.25rem; /* 20px = 1.25rem */
+  font-weight: bold;
+  padding: 0.9375rem 2.5rem; /* 15px = 0.9375rem, 40px = 2.5rem */
+  color: white;
+  border: 0.125rem solid transparent; /* 2px = 0.125rem */
+  border-radius: 1.5625rem; /* 25px = 1.5625rem */
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  transition: all 0.4s ease-in-out;
+  text-transform: uppercase;
+  z-index: 99999;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: -0.125rem;
+  left: -0.125rem;
+  right: -0.125rem;
+  bottom: -0.125rem;
+  background: linear-gradient(45deg, #ff00ff, #ff6600);
+  border-radius: 1.5625rem;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: 0.0625rem;
+  left: 0.0625rem;
+  right: 0.0625rem;
+  bottom: 0.0625rem;
+  background: #0a0a0a;
+  border-radius: 1.5625rem;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+}
+
+.button:hover::after {
+  background: linear-gradient(45deg, #ff00ff, #ff6600);
+}
+
+.button:hover {
+  box-shadow: 0 0 0.9375rem rgba(255, 0, 255, 0.6), 0 0 1.875rem rgba(255, 102, 0, 0.6);
+}
+
+
+
+
+</style>
+
+
+
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+
+
+
+        <!-- script for menu -->
+
+
+<div class="top-bar">
+        <img src="3.14.png"  class="logo" /> 
+
+    <div class="menu-icon" id="menuIcon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="redirect.html" onclick="closeMenu()">Services</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <div class="content" id="content">
+    <h1>Welcome</h1>
+    <p> This Site is under-development . Yet to be published  </p>
+
+</div>
+
+
+
+
+        <!--script for panels -->
+
+
+  <div id="blur-backdrop"></div>
+
+
+<!-- panels -->
+
+<div id="container">
+
+
+<!-- row 1 -->
+
+<div class="panel-row">
+
+  <div class="panel text-panel">
+        Some text here
+  </div>
+
+  <div class="panel image-panel">
+          <img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png">
+   </div>
+
+</div>
+
+
+<!-- row 2 -->
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 3 -->
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 4 -->
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 5 -->
+
+
+<div class="panel-row">
+  <div class="panel text-panel">Some text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+<!-- row 6 -->
+
+
+<div class="panel-row">
+  <div class="panel text-panel">More text here</div>
+  <div class="panel image-panel"><img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png"></div>
+</div>
+
+
+
+
+
+</div>
+
+
+<!-- button -->
+
+
+<div class="add-row-container">
+  <button id="addRowButton" class="button" >Add Row</button>
+  <button id="updateButton" class="button" >Update</button>
+</div>
+
+
+   <script src="ultimate.js"> </script>
+
+   <script src="script.js"> </script>
+
+    </body>                                                                                             </html>
