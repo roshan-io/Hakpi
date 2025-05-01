@@ -20,7 +20,7 @@
     .container {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 20px;
   flex-wrap: wrap;
   padding: 20px;
@@ -39,17 +39,8 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
       width: 250px;
-      flex-direction: column;
+      height: 10vh;
     }
-
-/* Equal height trick */
-.container > .card {
-  display: flex;
-  flex-direction: column;
-}
-.container {
-  align-items: stretch; /* Match card height to tallest */
-}
 
 
     h3 {
