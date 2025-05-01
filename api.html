@@ -41,6 +41,17 @@
       width: 250px;
       flex-direction: column;
     }
+
+/* Equal height trick */
+.container > .card {
+  display: flex;
+  flex-direction: column;
+}
+.container {
+  align-items: stretch; /* Match card height to tallest */
+}
+
+
     h3 {
       margin: 0;
       font-size: 1.5rem;
