@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USD to INR Exchange Rate</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 250px;
+    }
+    h3 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    #usdRate {
+      font-size: 1.5rem;
+      color: #4CAF50;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>USD to INR Exchange Rate</h3>
+    <div id="usdRate">Loading...</div>
+  </div>
+
+  <script>
+    function fetchUSD() {
+      fetch('https://api.exchangerate-api.com/v4/latest/USD')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.rates && data.rates.INR) {
+            document.getElementById('usdRate').innerText = `₹ ${data.rates.INR.toLocaleString('en-IN')}`;
+          } else {
+            document.getElementById('usdRate').innerText = 'Unavailable';
+          }
+        })
+        .catch(err => {
+          document.getElementById('usdRate').innerText = 'Error fetching rate';
+          console.error(err);
+        });
+    }
+
+    fetchUSD();
+    setInterval(fetchUSD, 60000);
+  </script>
+</body>
+</html>
