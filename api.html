@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gold Price</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+      margin: 0;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 250px;
+    }
+    .rate {
+      font-size: 1.5rem;
+      color: #4CAF50;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>Gold Price (10 grams in INR)</h3>
+    <div class="rate" id="goldRate">Loading...</div>
+  </div>
+
+  <script>
+    function fetchGold() {
+      fetch('https://api.metals.dev/v1/spot?currency=INR&metal=XAU')
+        .then(res => res.json())
+        .then(data => {
+          const rate = data?.rates?.XAU;
+          if (rate) {
+            // 1 ounce = 31.1035 grams, calculate the price for 10 grams
+            const pricePerGram = rate / 31.1035;
+            const priceFor10Grams = pricePerGram * 10;
+            document.getElementById('goldRate').innerText = `₹ ${priceFor10Grams.toLocaleString('en-IN')}`;
+          } else {
+            document.getElementById('goldRate').innerText = 'Unavailable';
+          }
+        })
+        .catch(err => {
+          document.getElementById('goldRate').innerText = 'Error fetching rate';
+          console.error(err);
+        });
+    }
+
+    fetchGold();
+    setInterval(fetchGold, 60000);
+  </script>
+</body>
+</html>
