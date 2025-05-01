@@ -4,72 +4,74 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crypto Prices</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: black;
-      margin: 0;
-      overflow: hidden;
-    }
+  
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
+    margin: 0;
+    overflow: hidden;
+    color: #e0e0e0;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 100%;
+  }
+
+  .card {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    width: 250px;
+    height: 8vh;
+    color: #f0f0f0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #ffffff;
+  }
+
+  #cryptoRates {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+
+  #cryptoRates li {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+
+  #cryptoRates span {
+    font-weight: bold;
+    color: #00e676;
+  }
+
+  #usdRate {
+    font-size: 1.5rem;
+    color: #00e676;
+    margin-top: 10px;
+  }
+</style>
 
 
-    .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-  height: 100%;
-}
-
-    
-
-
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      width: 250px;
-      height: 8vh;
-    }
-
-
-    h3 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-    #cryptoRates {
-      list-style-type: none;
-      padding: 0;
-      margin: 10px 0;
-    }
-    #cryptoRates li {
-      font-size: 1.1rem;
-      margin: 5px 0;
-    }
-    #cryptoRates span {
-      font-weight: bold;
-      color: #4CAF50;
-    }
-   
-
-        #usdRate {
-      font-size: 1.5rem;
-      color: #4CAF50;
-      margin-top: 10px;
-    }
-
-
-  </style>
+  
 </head>
 <body>
 
