@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="style.css" />
   
   <style>
+    
+    #bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+    
     :root {
       --bg: #0e1117;
       --card: #161b22;
@@ -54,6 +64,15 @@
       margin: 0;
       border-bottom: 1px solid var(--border);
     }
+
+.card, .header {
+  background: rgba(22, 27, 34, 0.6); /* semi-transparent background */
+  backdrop-filter: blur(12px); /* blur effect */
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* subtle border */
+}
+
+
 
     .big-card {
       grid-column: span 2;
