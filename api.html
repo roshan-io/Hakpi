@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gold Price</title>
+  <title>Crypto Prices</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -22,45 +22,52 @@
       text-align: center;
       width: 250px;
     }
-    .rate {
+    h3 {
+      margin: 0;
       font-size: 1.5rem;
+    }
+    #cryptoRates {
+      list-style-type: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+    #cryptoRates li {
+      font-size: 1.1rem;
+      margin: 5px 0;
+    }
+    #cryptoRates span {
+      font-weight: bold;
       color: #4CAF50;
-      margin-top: 10px;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h3>Gold Price (10 grams in INR)</h3>
-    <div class="rate" id="goldRate">Loading...</div>
+    <h3>Crypto Prices (INR)</h3>
+    <ul id="cryptoRates">
+      <li>Bitcoin: <span id="btc">Loading...</span></li>
+      <li>Ethereum: <span id="eth">Loading...</span></li>
+      <li>Dogecoin: <span id="doge">Loading...</span></li>
+    </ul>
   </div>
 
   <script>
-    function fetchGold() {
-      fetch('https://api.metals.dev/v1/spot?currency=INR&metal=XAU')
+    function fetchCryptos() {
+      fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,dogecoin&vs_currencies=inr')
         .then(res => res.json())
         .then(data => {
-          console.log(data);  // Log the full API response for debugging
-
-          if (data && data.rates && data.rates.XAU) {
-            const rate = data.rates.XAU;
-            // 1 ounce = 31.1035 grams, calculate the price for 10 grams
-            const pricePerGram = rate / 31.1035;
-            const priceFor10Grams = pricePerGram * 10;
-            document.getElementById('goldRate').innerText = `₹ ${priceFor10Grams.toLocaleString('en-IN')}`;
-          } else {
-            document.getElementById('goldRate').innerText = 'Unavailable';
-            console.error("Error: Data or rate not found in response.");
-          }
+          document.getElementById('btc').innerText = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
+          document.getElementById('eth').innerText = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
+          document.getElementById('doge').innerText = `₹ ${data.dogecoin.inr.toLocaleString('en-IN')}`;
         })
         .catch(err => {
-          document.getElementById('goldRate').innerText = 'Error fetching rate';
-          console.error("Error fetching data: ", err);
+          document.getElementById('cryptoRates').innerHTML = '<li>Error loading data</li>';
+          console.error(err);
         });
     }
 
-    fetchGold();
-    setInterval(fetchGold, 60000);
+    fetchCryptos();
+    setInterval(fetchCryptos, 60000);
   </script>
 </body>
 </html>
