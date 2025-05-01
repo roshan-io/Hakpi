@@ -40,20 +40,22 @@
       fetch('https://api.metals.dev/v1/spot?currency=INR&metal=XAU')
         .then(res => res.json())
         .then(data => {
-          console.log(data);  // Log the API response for debugging
-          const rate = data?.rates?.XAU;
-          if (rate) {
+          console.log(data);  // Log the full API response for debugging
+
+          if (data && data.rates && data.rates.XAU) {
+            const rate = data.rates.XAU;
             // 1 ounce = 31.1035 grams, calculate the price for 10 grams
             const pricePerGram = rate / 31.1035;
             const priceFor10Grams = pricePerGram * 10;
             document.getElementById('goldRate').innerText = `₹ ${priceFor10Grams.toLocaleString('en-IN')}`;
           } else {
             document.getElementById('goldRate').innerText = 'Unavailable';
+            console.error("Error: Data or rate not found in response.");
           }
         })
         .catch(err => {
           document.getElementById('goldRate').innerText = 'Error fetching rate';
-          console.error(err);
+          console.error("Error fetching data: ", err);
         });
     }
 
