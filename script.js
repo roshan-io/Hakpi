@@ -137,27 +137,4 @@ document.querySelectorAll('.panel').forEach(panel => {
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('fullscreenToggle');
-  const icon = document.getElementById('fsIcon');
 
-  function updateIcon() {
-    if (document.fullscreenElement) {
-      icon.classList.add('exit-mode');
-    } else {
-      icon.classList.remove('exit-mode');
-    }
-  }
-
-  toggle.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(err => {
-        console.error("Fullscreen failed:", err);
-      });
-    } else {
-      document.exitFullscreen();
-    }
-  });
-
-  document.addEventListener('fullscreenchange', updateIcon);
-});
