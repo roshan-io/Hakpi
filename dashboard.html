@@ -180,6 +180,33 @@
   margin-top: 10px;
   text-align: center;
 }
+
+  .fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      backdrop-filter: blur(6px);
+      transition: background 0.3s;
+    }
+
+    .fullscreen-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .fullscreen-btn span {
+      font-size: 20px;
+      pointer-events: none;
+    }
   
   
   </style>
@@ -242,7 +269,9 @@
     </div>
 
 
-<button onclick="goFullscreen()">Go Fullscreen</button>
+<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
+  <span id="fsIcon">⛶</span>
+</div>
 
 
   </div>
