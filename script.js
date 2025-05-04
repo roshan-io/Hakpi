@@ -137,21 +137,3 @@ document.querySelectorAll('.panel').forEach(panel => {
 
 
 // full screen toggle
-document.addEventListener('DOMContentLoaded', () => {
-const toggle = document.getElementById('fullscreenToggle');
-  const icon = document.getElementById('fsIcon');
-
-  function updateIcon() {
-    icon.textContent = document.fullscreenElement ? '🡽' : '⛶'; // Use compress/expand icons
-  }
-
-  toggle.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  });
-
-  document.addEventListener('fullscreenchange', updateIcon);
-});
