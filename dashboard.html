@@ -321,26 +321,42 @@
   setInterval(fetchUSD, 60000);
 </script>
 
+
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-const toggle = document.getElementById('fullscreenToggle');
+  const toggle = document.getElementById('fullscreenToggle');
   const icon = document.getElementById('fsIcon');
 
+  // Update the icon (you can change it later to show compress/expand icons)
   function updateIcon() {
-    icon.textContent = document.fullscreenElement ?  '⛶' : '⛶'; // Use compress/expand icons
+    icon.textContent = document.fullscreenElement ? '⛶' : '⛶';
   }
 
+  // Handle click to enter or exit fullscreen
   toggle.addEventListener('click', () => {
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
+      document.documentElement.requestFullscreen().then(() => {
+        localStorage.setItem('wantsFullscreen', 'true');
+      });
     } else {
-      document.exitFullscreen();
+      document.exitFullscreen().then(() => {
+        localStorage.removeItem('wantsFullscreen');
+      });
     }
   });
+
+  // Restore fullscreen on page load if user previously enabled it
+  if (localStorage.getItem('wantsFullscreen') === 'true') {
+    // Must wait for a user gesture, so we show a helper button if needed
+    toggle.click(); // works only if toggle is inside a user-gesture event like a button click
+    // OR you can show a prompt to click again
+  }
 
   document.addEventListener('fullscreenchange', updateIcon);
 });
 </script>
+
 
  <script src="script.js"></script>
 
