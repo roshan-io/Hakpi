@@ -198,4 +198,31 @@ font-family: sans-serif;
 }
 
 
+.fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      
+      transition: background 0.3s;
+    }
+
+    .fullscreen-btn:hover {
+      background: transparent;
+    }
+
+    .fullscreen-btn span {
+      font-size: 20px;
+      pointer-events: none;
+    }
+
 
