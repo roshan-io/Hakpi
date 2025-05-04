@@ -130,6 +130,9 @@
 
 </div>
 
+<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
+  <span id="fsIcon">⛶</span>
+</div>
 
 
 
@@ -209,7 +212,26 @@
 
     </footer>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+const toggle = document.getElementById('fullscreenToggle');
+  const icon = document.getElementById('fsIcon');
 
+  function updateIcon() {
+    icon.textContent = document.fullscreenElement ?  '⛶' : '⛶'; // Use compress/expand icons
+  }
+
+  toggle.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', updateIcon);
+});
+</script>
 
    <script src="script.js"> </script>
 
