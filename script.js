@@ -132,3 +132,24 @@ document.querySelectorAll('.panel').forEach(panel => {
   css.rel = 'stylesheet';
   css.href = 'style.css?v=' + new Date().getTime();
   document.head.appendChild(css);
+
+
+
+// full screen toggle
+
+const toggle = document.getElementById('fullscreenToggle');
+  const icon = document.getElementById('fsIcon');
+
+  function updateIcon() {
+    icon.textContent = document.fullscreenElement ? '🡽' : '⛶'; // Use compress/expand icons
+  }
+
+  toggle.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', updateIcon);
