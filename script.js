@@ -128,6 +128,7 @@ document.querySelectorAll('.panel').forEach(panel => {
 // auto-reload
 
 
+
   const css = document.createElement('link');
   css.rel = 'stylesheet';
   css.href = 'style.css?v=' + new Date().getTime();
@@ -136,7 +137,7 @@ document.querySelectorAll('.panel').forEach(panel => {
 
 
 // full screen toggle
-
+document.addEventListener('DOMContentLoaded', () => {
 const toggle = document.getElementById('fullscreenToggle');
   const icon = document.getElementById('fsIcon');
 
@@ -153,3 +154,4 @@ const toggle = document.getElementById('fullscreenToggle');
   });
 
   document.addEventListener('fullscreenchange', updateIcon);
+});
