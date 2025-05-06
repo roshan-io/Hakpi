@@ -167,6 +167,9 @@ font-family: sans-serif;
       text-align: center;
       transition: filter 0.3s ease;
     }
+.content p1 {
+        font-size: "1.5rem" ;
+}
 
     .content.blurred {
       filter: blur(5px);
