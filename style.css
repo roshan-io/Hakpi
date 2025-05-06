@@ -168,11 +168,20 @@ font-family: sans-serif;
       transition: filter 0.3s ease;
       
     }
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
 .content p1 {
-        font-size: clamp(1.2rem, 2vw + 0.5rem, 2.5rem);
-  white-space: nowrap; /* Forces one line */
-  overflow: hidden;
-  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: #00faff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px #00faff, 0 0 10px #00faff, 0 0 20px #00c6ff;
+  background: linear-gradient(90deg, #00faff, #007bff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
 }
 
 
