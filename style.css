@@ -174,7 +174,7 @@ font-family: sans-serif;
 .content p1 {
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.2rem, 3.5vw, 2.2rem); 
-  color: #00faff;
+  color: #FC0085;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-shadow: 0 0 5px #00faff, 0 0 10px #00faff, 0 0 20px #00c6ff;
