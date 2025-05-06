@@ -171,7 +171,7 @@ font-family: sans-serif;
 
 .content p1 {
   font-family: 'Audiowide', sans-serif;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 
@@ -184,7 +184,9 @@ font-family: sans-serif;
    .content p1{
            font-size: 1.2rem;
         }
-
+   .content p {
+          font-size: 9px;
+      }
 
 
 }
