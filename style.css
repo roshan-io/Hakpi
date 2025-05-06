@@ -168,6 +168,9 @@ font-family: sans-serif;
       transition: filter 0.3s ease;
       
     }
+.content p1 {
+        font-size: 2rem;
+}
 
 
     .content.blurred {
