@@ -173,13 +173,7 @@ font-family: sans-serif;
 
 .content p1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 3vw;
-  color: #ff1fab;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0;
+  
 }
 
 @media (min-width: 1000px) {
@@ -188,7 +182,7 @@ font-family: sans-serif;
   }
 }
 .content p {
-        font-size: 1.2vw;
+        font-size: 1.6vw;
 }
 
 
