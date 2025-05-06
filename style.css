@@ -172,14 +172,13 @@ font-family: sans-serif;
 .content p1 {
   font-family: 'Audiowide', sans-serif;
   font-size: 1.3rem;
-  background: linear-gradient(to right, #FF7DFF, #FF8080);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #E8FF9E;
 }
 
 
 .content p {
         font-family: 'Exo 2', sans-serif;
+        color: #C2FFDF;
 }
 
 @media (max-width: 600px) {
