@@ -169,7 +169,9 @@ font-family: sans-serif;
       
     }
 .content p1 {
-        font-size: 2rem;
+        font-size: clamp(1.2rem, 2vw + 0.5rem, 2.5rem);
+  white-space: nowrap; /* Forces one line */
+  overflow: hidden;
 }
 
 
