@@ -172,7 +172,7 @@ font-family: sans-serif;
 .content p1 {
   font-family: 'Audiowide', sans-serif;
   font-size: 1.3rem;
-  background: linear-gradient(to right, #FF7DFF, #f28b82);
+  background: linear-gradient(to right, #FF7DFF, #FF8080);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
