@@ -172,14 +172,10 @@ font-family: sans-serif;
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 .content p1 {
   font-family: 'Audiowide', cursive;
-  text-transform: uppercase;
+  
 }
 
-@media (min-width: 1000px) {
-  .futuristic-heading {
-    font-size: 3rem; /* cap max size */
-  }
-}
+
 .content p {
         font-size: 1.6vw;
 }
