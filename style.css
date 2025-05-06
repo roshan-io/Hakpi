@@ -176,7 +176,6 @@ font-family: sans-serif;
   font-size: 3vw;
   color: #FC0085;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -187,6 +186,9 @@ font-family: sans-serif;
   .futuristic-heading {
     font-size: 3rem; /* cap max size */
   }
+}
+.content p {
+        font-size: 0.7vw;
 }
 
 
