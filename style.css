@@ -204,7 +204,7 @@ font-family: sans-serif;
       right: 20px;
       width: 44px;
       height: 44px;
-      background: transparent;
+      background-color: rgba(255,255,255,0.08);
       
       border-radius: 10px;
       display: flex;
