@@ -171,12 +171,22 @@ font-family: sans-serif;
 
 .content p1 {
   font-family: 'Audiowide', sans-serif;
-  
+  font-size: 1rem;
 }
 
 
 .content p {
         font-family: 'Exo 2', sans-serif;
+}
+
+@media (max-width: 600px) {
+
+   .content p1{
+           font-size: 1.2rem;
+        }
+
+
+
 }
 
 
