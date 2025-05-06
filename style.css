@@ -169,7 +169,6 @@ font-family: sans-serif;
       
     }
 
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 .content p1 {
   font-family: 'Audiowide', sans-serif;
   
@@ -177,7 +176,7 @@ font-family: sans-serif;
 
 
 .content p {
-        
+        font-family: 'Exo 2', sans-serif;
 }
 
 
