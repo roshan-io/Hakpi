@@ -173,15 +173,20 @@ font-family: sans-serif;
 
 .content p1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1.2rem, 3.5vw, 2.2rem); 
+  font-size: 6vw;
   color: #FC0085;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  text-shadow: 0 0 5px #00faff, 0 0 10px #00faff, 0 0 20px #00c6ff;
-  background: linear-gradient(90deg, #00faff, #007bff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+@media (min-width: 1000px) {
+  .futuristic-heading {
+    font-size: 3rem; /* cap max size */
+  }
 }
 
 
