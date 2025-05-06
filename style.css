@@ -169,10 +169,9 @@ font-family: sans-serif;
       
     }
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 .content p1 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Audiowide', cursive;
   text-transform: uppercase;
 }
 
