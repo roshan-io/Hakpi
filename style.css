@@ -178,7 +178,7 @@ font-family: sans-serif;
 
 .content p {
         font-family: 'Exo 2', sans-serif;
-        color: #C2FFDF;
+        color: #c7fffe;
 }
 
 @media (max-width: 600px) {
@@ -188,7 +188,7 @@ font-family: sans-serif;
         }
    .content p {
           font-size: 14px;
-          color: #C2FFDF;
+          color: #c7fffe;
         }
 
 
