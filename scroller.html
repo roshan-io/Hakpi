@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scroll Wheel Length Measurer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #121212;
+      color: #fff;
+      padding: 30px;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .output {
+      margin-top: 30px;
+      font-size: 1.6em;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #0ff3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Scroll Wheel : Length Measurer</h1>
+
+  <label for="scrollMM">Distance per Scroll Tick (mm):</label><br>
+  <input type="number" id="scrollMM" value="3.4" step="0.1"><br>
+
+  <div class="output" id="output">Scroll the mouse wheel to start measuring...</div>
+
+  <script>
+    let totalScrollTicks = 0;
+
+    window.addEventListener('wheel', (e) => {
+      const scrollMM = parseFloat(document.getElementById('scrollMM').value) || 1;
+
+      // Normalize scroll direction: positive or negative tick
+      const delta = Math.sign(e.deltaY);
+      totalScrollTicks += delta;
+
+      const totalDistance = totalScrollTicks * scrollMM;
+      document.getElementById('output').innerText =
+        `Scroll-based Distance: ${totalDistance.toFixed(2)} mm`;
+    });
+  </script>
+
+</body>
+</html>
