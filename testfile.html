@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    .panel-bg-zone {
+    .canvas-wrapper {
       position: relative;
       z-index: 1;
     }
@@ -21,9 +21,9 @@
       top: 0;
       left: 0;
       z-index: 0;
-      pointer-events: none;
       width: 100%;
       height: 100%;
+      pointer-events: none;
     }
 
     #container {
@@ -65,8 +65,8 @@
   <!-- Optional blur -->
   <div id="blur-backdrop"></div>
 
-  <!-- 🔷 Panels Section with Scoped Canvas -->
-  <div class="panel-bg-zone">
+  <!-- 🧠 PANEL SECTION WITH CANVAS BEHIND -->
+  <div class="canvas-wrapper">
     <canvas id="bgCanvas"></canvas>
 
     <div id="container">
@@ -116,41 +116,40 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <!-- Links and columns go here (unchanged) -->
-      <div class="copyright">
+      <!-- Keep your footer content unchanged -->
+      <div class="copyright"> 
         © KaliPi Services Limited 2025. All rights reserved.
       </div>
     </div>
-    <img src="3.14.png" alt="Footer Logo" class="footer-logo" />
+    <img src="3.14.png" alt="Footer Logo" class="footer-logo">
   </footer>
 
-  <!-- Canvas script (scoped sizing) -->
+  <!-- 📜 Canvas Line Script -->
   <script>
     const canvas = document.getElementById("bgCanvas");
     const ctx = canvas.getContext("2d");
 
     function resizeCanvas() {
-      const panelZone = document.querySelector(".panel-bg-zone");
-      canvas.width = panelZone.clientWidth;
-      canvas.height = panelZone.clientHeight;
-      drawLines();
+      const container = document.getElementById("container");
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
     }
 
     function drawLines() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "rgba(0, 255, 255, 0.1)";
-      ctx.lineWidth = 1;
 
       const spacing = 40;
+      ctx.strokeStyle = "rgba(0, 255, 255, 0.07)";
+      ctx.lineWidth = 1;
 
-      for (let x = 0; x < canvas.width; x += spacing) {
+      for (let x = 0; x <= canvas.width; x += spacing) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, canvas.height);
         ctx.stroke();
       }
 
-      for (let y = 0; y < canvas.height; y += spacing) {
+      for (let y = 0; y <= canvas.height; y += spacing) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(canvas.width, y);
@@ -158,11 +157,20 @@
       }
     }
 
-    window.addEventListener("load", resizeCanvas);
+    function animate() {
+      drawLines();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("load", () => {
+      resizeCanvas();
+      animate();
+    });
+
     window.addEventListener("resize", resizeCanvas);
   </script>
 
-  <!-- Optional fullscreen behavior -->
+  <!-- Fullscreen Toggle Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const toggle = document.getElementById('fullscreenToggle');
@@ -191,6 +199,9 @@
       document.addEventListener('fullscreenchange', updateIcon);
     });
   </script>
+
+  <!-- Optional: Your existing script -->
+  <script src="script.js"></script>
 
 </body>
 </html>
