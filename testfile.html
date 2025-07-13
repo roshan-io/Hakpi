@@ -7,7 +7,82 @@
     <link rel="stylesheet" href="style.css" />  
     <link rel="stylesheet" href="cascading.css" />  
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet">  </head>  
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet">  
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.2);
+    }
+
+    .title-glow {
+      background: linear-gradient(to right, #00f0ff, #ff00e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grid-container {
+      max-width: 1280px;
+      width: 100%;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      padding: 0 1.5rem;
+    }
+
+    .heading-accent {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-1 {
+      background-image: linear-gradient(90deg, #00ffe7, #0075ff);
+    }
+
+    .gradient-2 {
+      background-image: linear-gradient(90deg, #ff00c8, #ff9500);
+    }
+
+    .gradient-3 {
+      background-image: linear-gradient(90deg, #aaff00, #00ff88);
+    }
+
+    .gradient-4 {
+      background-image: linear-gradient(90deg, #ff3131, #ff9d00);
+    }
+
+    .gradient-5 {
+      background-image: linear-gradient(90deg, #ff00ff, #00f0ff);
+    }
+
+    .gradient-6 {
+      background-image: linear-gradient(90deg, #b300ff, #7700ff);
+    }
+  </style>
+
+
+</head>  
 <body>  
 
 
