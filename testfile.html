@@ -1,20 +1,32 @@
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Hakpi.io</title>  
-    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">  
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="cascading.css" />  
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">  
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet">  
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Launchpad | Hakpi</title>
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="cascading.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       background: radial-gradient(circle at top left, #0f172a, #020617);
       font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
 
     .glass-panel {
@@ -56,10 +68,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .gradient-1 {
-      background-image: linear-gradient(90deg, #00ffe7, #0075ff);
-    }
-
     .gradient-2 {
       background-image: linear-gradient(90deg, #ff00c8, #ff9500);
     }
@@ -79,122 +87,153 @@
     .gradient-6 {
       background-image: linear-gradient(90deg, #b300ff, #7700ff);
     }
+
+    /* Top bar styles */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 50;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    .menu-icon {
+      width: 30px;
+      cursor: pointer;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 3px;
+      background: white;
+      margin: 5px 0;
+      border-radius: 3px;
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 60px;
+      right: 0;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      width: 200px;
+      padding: 20px;
+      z-index: 40;
+      display: none;
+    }
+
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu-panel ul li {
+      margin: 15px 0;
+    }
+
+    .menu-panel ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(5px);
+      z-index: 30;
+    }
   </style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
 
-
-</head>  
-<body>  
-
-
-
-
-    <!-- script for menu -->
-
-<div class="top-bar">  
-        <img src="3.14.png"  class="logo" />   <div class="menu-icon" id="menuIcon">  
-  <span></span>  
-  <span></span>  
-  <span></span>  
+<!-- Top Bar Menu -->
+<div class="top-bar">
+  <img src="3.14.png" class="logo" />
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
 
-  </div>    <div class="menu-panel" id="menuPanel">  
-    <ul>  
-      <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>  
-      <li><a href="about.html" onclick="closeMenu()">About</a></li>  
-      <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>  
-      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>  
-    </ul>  
-  </div>    <div class="overlay" id="overlay" onclick="closeMenu()"></div>    <div class="content" id="content">  
-    <p1>A BRIEF INSIGHT INTO MY RASPBERRY PI JOURNEY</p1>  
-    <p> It's All About Tinkering and Creation</p>  </div>   <!--script for panels -->
+<!-- Menu Panel -->
+<div class="menu-panel" id="menuPanel">
+  <ul>
+    <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
+    <li><a href="about.html" onclick="closeMenu()">About</a></li>
+    <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>
+    <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-  <div class="min-h-screen w-full flex items-center justify-center px-4 py-10">
-    <div class="w-full max-w-7xl flex flex-col items-center justify-center">
+<!-- Grid Content -->
+<div class="min-h-screen w-full flex items-center justify-center px-4 py-20 pt-32">
+  <div class="w-full max-w-7xl flex flex-col items-center justify-center">
 
-      <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
+    <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
 
-      <div class="grid-container mb-10">
-
-        <!-- Card 1 -->
-        <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-2">Scrollie Wheelie</h2>
-          <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
-        </a>
-
-        <!-- Card 2 -->
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-2">Project Beta</h2>
-          <p class="text-white/70 text-sm">Another brief intro here.</p>
-        </a>
-
-        <!-- Card 3 -->
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-3">Project Gamma</h2>
-          <p class="text-white/70 text-sm">Yet another tool or page.</p>
-        </a>
-
-        <!-- Card 4 -->
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-4">Project Delta</h2>
-          <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
-        </a>
-
-        <!-- Card 5 -->
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-5">Project Omega</h2>
-          <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
-        </a>
-
-        <!-- Card 6 -->
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-6">Project Echo</h2>
-          <p class="text-white/70 text-sm">Yet another powerful hack.</p>
-        </a>
-
-      </div>
+    <div class="grid-container mb-10">
+      <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-2">Scrollie Wheelie</h2>
+        <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
+      </a>
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-2">Project Beta</h2>
+        <p class="text-white/70 text-sm">Another brief intro here.</p>
+      </a>
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-3">Project Gamma</h2>
+        <p class="text-white/70 text-sm">Yet another tool or page.</p>
+      </a>
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-4">Project Delta</h2>
+        <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
+      </a>
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-5">Project Omega</h2>
+        <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
+      </a>
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-6">Project Echo</h2>
+        <p class="text-white/70 text-sm">Yet another powerful hack.</p>
+      </a>
     </div>
   </div>
-
-
-
-<!-- Fullscreen Toggle -->
-<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
-  <span id="fsIcon">⛶</span>
 </div>
 
+<!-- JS for menu -->
+<script>
+  const menuIcon = document.getElementById("menuIcon");
+  const menuPanel = document.getElementById("menuPanel");
+  const overlay = document.getElementById("overlay");
 
+  menuIcon.addEventListener("click", () => {
+    const isVisible = menuPanel.style.display === "block";
+    menuPanel.style.display = isVisible ? "none" : "block";
+    overlay.style.display = isVisible ? "none" : "block";
+  });
 
-<script>  
-document.addEventListener('DOMContentLoaded', () => {  
-  const toggle = document.getElementById('fullscreenToggle');  
-  const icon = document.getElementById('fsIcon');  
+  function closeMenu() {
+    menuPanel.style.display = "none";
+    overlay.style.display = "none";
+  }
+</script>
 
-  // Update the icon (you can change it later to show compress/expand icons)  
-  function updateIcon() {  
-    icon.textContent = document.fullscreenElement ? '⛶' : '⛶';  
-  }  
-
-  // Handle click to enter or exit fullscreen  
-  toggle.addEventListener('click', () => {  
-    if (!document.fullscreenElement) {  
-      document.documentElement.requestFullscreen().then(() => {  
-        localStorage.setItem('wantsFullscreen', 'true');  
-      });  
-    } else {  
-      document.exitFullscreen().then(() => {  
-        localStorage.removeItem('wantsFullscreen');  
-      });  
-    }  
-  });  
-
-  // Restore fullscreen on page load if user previously enabled it  
-  if (localStorage.getItem('wantsFullscreen') === 'true') {  
-    // Must wait for a user gesture, so we show a helper button if needed  
-    toggle.click(); // works only if toggle is inside a user-gesture event like a button click  
-    // OR you can show a prompt to click again  
-  }  
-
-  document.addEventListener('fullscreenchange', updateIcon);  
-});  
-</script>     <script src="script.js"> </script>
-</body>                                                                                             </html>
+</body>
+</html>
