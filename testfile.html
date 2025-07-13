@@ -1,0 +1,221 @@
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Hakpi.io</title>  
+    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">  
+    <link rel="stylesheet" href="style.css" />  
+    <link rel="stylesheet" href="cascading.css" />  
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet">  </head>  
+<body>  
+<canvas id="bgCanvas"></canvas>
+
+
+
+
+    <!-- script for menu -->
+
+<div class="top-bar">  
+        <img src="3.14.png"  class="logo" />   <div class="menu-icon" id="menuIcon">  
+  <span></span>  
+  <span></span>  
+  <span></span>  
+</div>
+
+  </div>    <div class="menu-panel" id="menuPanel">  
+    <ul>  
+      <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>  
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>  
+      <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>  
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>  
+    </ul>  
+  </div>    <div class="overlay" id="overlay" onclick="closeMenu()"></div>    <div class="content" id="content">  
+    <p1>A BRIEF INSIGHT INTO MY RASPBERRY PI JOURNEY</p1>  
+    <p> It's All About Tinkering and Creation</p>  </div>   <!--script for panels -->
+
+
+<div id="blur-backdrop"></div>
+
+<!-- Panels -->
+<div id="container">
+
+  <!-- Row 1 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="images/image11.jpg">
+    </div>
+    <div class="panel text-panel">
+      Some text here
+    </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="images/image9.jpg">
+    </div>
+    <div class="panel text-panel">
+      More text here
+    </div>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="images/image3.jpg">
+    </div>
+    <div class="panel text-panel">
+      Some text here
+    </div>
+  </div>
+
+  <!-- Row 4 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="images/image12.jpg">
+    </div>
+    <div class="panel text-panel">
+      More text here
+    </div>
+  </div>
+
+  <!-- Row 5 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="images/image2.jpg">
+    </div>
+    <div class="panel text-panel">
+      Some text here
+    </div>
+  </div>
+
+  <!-- Row 6 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png">
+    </div>
+    <div class="panel text-panel">
+      More text here
+    </div>
+  </div>
+
+  <!-- Row 7 -->
+  <div class="panel-row">
+    <div class="panel image-panel">
+      <img src="https://www.kali.org/wallpapers/images/2025/kali-waves.png">
+    </div>
+    <div class="panel text-panel">
+      Some text here
+    </div>
+  </div>
+
+
+</div>
+
+
+<!-- Fullscreen Toggle -->
+<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
+  <span id="fsIcon">⛶</span>
+</div>
+
+<!-- footer -->  
+        <footer>  
+        <div class="container">  
+            <div class="links">  
+                <h3>Links</h3>  
+                <ul>  
+                    <li><a href="https://roshan-io.github.io/Hakpi/">Home</a></li>  
+                    <li><a href="contact.html">Contact Us</a></li>  
+                    <li><a href="about.html">About Us</a></li>  
+                    <li><a href="404.html">Our 404 Page</a></li>  
+                    <li><a href="#">Tool Documentation</a></li>  
+                    <li><a href="#">System Status</a></li>  
+                    <li><a href="#">Archived Releases</a></li>  
+                </ul>  
+            </div>  
+            <div class="platforms">  
+                <h3>Platforms</h3>  
+                <ul>  
+                    <li><a href="https://www.offsec.com/">OffSec</a></li>  
+                    <li><a href="https://www.raspberrypi.com/">Raspberrypi</a></li>  
+                    <li><a href="https://ngrok.com/"><i class="icon"></i>Ngrok</a></li>  
+                    <li><a href="https://www.docker.com/"><i class="icon"></i>Docker</a></li>  
+                    <li><a href="https://codepen.io/"><i class="icon"></i>CodePen</a></li>  
+                    <li><a href="https://httpd.apache.org/"><i class="icon"></i>Apache</a></li>  
+                    <li><a href="https://robu.in/"><i class="icon"></i>Robu</a></li>  
+                    <li><a href="https://play.google.com/store/apps/details?id=com.termux"><i class="icon"></i>Termux App</a></li>  </ul>  
+        </div>  
+        <div class="development">  
+            <h3>Development</h3>  
+            <ul>  
+                <li><a href="#">Bug Tracker</a></li>  
+                <li><a href="#">Network Mirror</a></li>  
+                <li><a href="#">Package Tracker</a></li>  
+                <li><a href="#"><i class="icon"></i> GitLab</a></li>  
+            </ul>  
+        </div>  
+        <div class="community">  
+            <h3>Community</h3>  
+            <ul>  
+                <li><a href="#"><i class="icon"></i> Discord</a></li>  
+                <li><a href="#">Support Forum</a></li>  
+            </ul>  
+        </div>  
+        <div class="follow-us">  
+            <h3>Follow Us</h3>  
+            <ul>  
+                <li><a href="#"><i class="icon"></i> Facebook</a></li>  
+                <li><a href="#"><i class="icon"></i> Instagram</a></li>  
+                <li><a href="#"><i class="icon"></i> Mastodon</a></li>  
+                <li><a href="#"><i class="icon"></i> Twitter</a></li>  
+
+            </ul>  
+        </div>  
+        <div class="policies">  
+            <h3>Policies</h3>  
+            <ul>  
+                <li><a href="terms.html">Cookie Policy</a></li>  
+                <li><a href="terms.html">Privacy Policy</a></li>  
+                <li><a href="terms.html">Trademark Policy</a></li>  
+            </ul>  
+        </div>  
+    </div>
+
+  <img src="3.14.png" alt="Footer Logo" class="footer-logo">  <div class="copyright">   
+           © KaliPi Services Limited 2025. All rights reserved.  
+</div>  </footer>
+
+<script>  
+document.addEventListener('DOMContentLoaded', () => {  
+  const toggle = document.getElementById('fullscreenToggle');  
+  const icon = document.getElementById('fsIcon');  
+
+  // Update the icon (you can change it later to show compress/expand icons)  
+  function updateIcon() {  
+    icon.textContent = document.fullscreenElement ? '⛶' : '⛶';  
+  }  
+
+  // Handle click to enter or exit fullscreen  
+  toggle.addEventListener('click', () => {  
+    if (!document.fullscreenElement) {  
+      document.documentElement.requestFullscreen().then(() => {  
+        localStorage.setItem('wantsFullscreen', 'true');  
+      });  
+    } else {  
+      document.exitFullscreen().then(() => {  
+        localStorage.removeItem('wantsFullscreen');  
+      });  
+    }  
+  });  
+
+  // Restore fullscreen on page load if user previously enabled it  
+  if (localStorage.getItem('wantsFullscreen') === 'true') {  
+    // Must wait for a user gesture, so we show a helper button if needed  
+    toggle.click(); // works only if toggle is inside a user-gesture event like a button click  
+    // OR you can show a prompt to click again  
+  }  
+
+  document.addEventListener('fullscreenchange', updateIcon);  
+});  
+</script>     <script src="script.js"> </script>  </body>                                                                                             </html>
