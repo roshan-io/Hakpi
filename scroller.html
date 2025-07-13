@@ -1,41 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Scroll Wheel Length Measurer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #121212;
-      color: #fff;
-      padding: 30px;
+    * {
+      box-sizing: border-box;
     }
 
-    input {
-      padding: 8px;
-      font-size: 16px;
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #00f0ff, #ff00e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    label {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    input[type="number"] {
+      padding: 0.6rem;
+      font-size: 1rem;
       margin-top: 10px;
-      border-radius: 5px;
+      border-radius: 10px;
       border: none;
+      outline: none;
+      background: #1e293b;
+      color: #fff;
+      width: 80%;
+      max-width: 300px;
     }
 
     .output {
-      margin-top: 30px;
-      font-size: 1.6em;
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #0ff3;
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .dialog-box {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      padding: 1.2rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+      margin-bottom: 2rem;
+      animation: pulse 2s infinite;
+    }
+
+    .dialog-box span {
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .oo-eyes {
+      display: inline-block;
+      margin-left: 0.5rem;
+      font-weight: bold;
+      color: #00ffe7;
+      text-shadow: 0 0 5px #0ff;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.15);
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(0, 255, 255, 0.3);
+      }
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .output {
+        font-size: 1.1rem;
+      }
+
+      .dialog-box span {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
+  <div class="dialog-box">
+    <span>Connect your mouse to initiate length tracking </span>
+  </div>
+
   <h1>Scroll Wheel : Length Measurer</h1>
 
-  <label for="scrollMM">Distance per Scroll Tick (mm):</label><br>
-  <input type="number" id="scrollMM" value="3.4" step="0.1"><br>
+  <label for="scrollMM">Distance per Scroll Tick (in mm)</label>
+  <input type="number" id="scrollMM" value="3.4" step="0.1">
 
   <div class="output" id="output">Scroll the mouse wheel to start measuring...</div>
 
@@ -44,11 +130,8 @@
 
     window.addEventListener('wheel', (e) => {
       const scrollMM = parseFloat(document.getElementById('scrollMM').value) || 1;
-
-      // Normalize scroll direction: positive or negative tick
       const delta = Math.sign(e.deltaY);
       totalScrollTicks += delta;
-
       const totalDistance = totalScrollTicks * scrollMM;
       document.getElementById('output').innerText =
         `Scroll-based Distance: ${totalDistance.toFixed(2)} mm`;
