@@ -16,6 +16,10 @@
       font-family: 'Orbitron', sans-serif;
       background: radial-gradient(circle at top left, #0f172a, #020617);
       color: #ffffff;
+      min-height: 100vh;
+    }
+
+    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -80,13 +84,7 @@
       letter-spacing: 0.5px;
     }
 
-    .oo-eyes {
-      display: inline-block;
-      margin-left: 0.5rem;
-      font-weight: bold;
-      color: #00ffe7;
-      text-shadow: 0 0 5px #0ff;
-    }
+   
 
     @keyframes pulse {
       0%, 100% {
@@ -97,33 +95,54 @@
       }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+      }
+
       h1 {
         font-size: 1.6rem;
       }
 
-      .output {
-        font-size: 1.1rem;
-      }
-
       .dialog-box span {
         font-size: 1rem;
+      }
+
+      .output {
+        font-size: 1.1rem;
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 1rem;
+      }
+    }
+
+    @media (min-height: 600px) and (min-width: 640px) {
+      body {
+        overflow: hidden;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="dialog-box">
-    <span>Connect your mouse to initiate length tracking </span>
+  <div class="container">
+
+    <div class="dialog-box">
+      <span>Connect your mouse to initiate length tracking </span>
+    </div>
+
+    <h1>Scroll Wheel : Length Measurer</h1>
+
+    <label for="scrollMM">Distance per Scroll Tick (in mm)</label>
+    <input type="number" id="scrollMM" value="3.4" step="0.1">
+
+    <div class="output" id="output">Scroll the mouse wheel to start measuring...</div>
+
   </div>
-
-  <h1>Scroll Wheel : Length Measurer</h1>
-
-  <label for="scrollMM">Distance per Scroll Tick (in mm)</label>
-  <input type="number" id="scrollMM" value="3.4" step="0.1">
-
-  <div class="output" id="output">Scroll the mouse wheel to start measuring...</div>
 
   <script>
     let totalScrollTicks = 0;
