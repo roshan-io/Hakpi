@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Launchpad | Hakpi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html, body {
@@ -12,8 +15,179 @@
       padding: 0;
       background: radial-gradient(circle at top left, #0f172a, #020617);
       font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
     }
 
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* === TOP BAR MENU STYLES === */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      width: 30px;
+      height: 22px;
+      position: relative;
+      cursor: pointer;
+      z-index: 1001;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-icon span {
+      background: white;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      left: 0;
+      transition: 0.4s;
+      border-radius: 2px;
+    }
+
+    .menu-icon span:nth-child(1) { top: 0; }
+    .menu-icon span:nth-child(2) { top: 9px; }
+    .menu-icon span:nth-child(3) { top: 18px; }
+
+    .menu-icon.open span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .menu-icon.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-icon.open span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background: rgba(30, 30, 30, 0.98);
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: height 0.5s ease, opacity 0.4s ease;
+      z-index: 999;
+    }
+
+    .menu-panel.open {
+      height: 220px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-panel li a {
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      width: 100%;
+      transition: background 0.3s ease;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+
+    .menu-panel li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .content {
+      padding-top: 70px;
+      text-align: center;
+      transition: filter 0.3s ease;
+    }
+
+    .content p1 {
+      font-family: 'Audiowide', sans-serif;
+      font-size: 1.4rem;
+      color: #c7fffe;
+    }
+
+    .content p {
+      font-family: 'Exo 2', sans-serif;
+      color: #c7fffe;
+    }
+
+    .content.blurred {
+      filter: blur(5px);
+    }
+
+    @media (max-width: 600px) {
+      .menu-icon {
+        width: 26px;
+        height: 20px;
+      }
+
+      .menu-panel li a {
+        font-size: 18px;
+        padding: 14px;
+      }
+
+      .content p1 {
+        font-size: 1.4rem;
+      }
+
+      .content p {
+        font-size: 14px;
+      }
+    }
+
+    .logo {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
+
+    /* === GLASS PANEL STYLES === */
     .glass-panel {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(12px);
@@ -53,72 +227,69 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .gradient-1 {
-      background-image: linear-gradient(90deg, #00ffe7, #0075ff);
-    }
-
-    .gradient-2 {
-      background-image: linear-gradient(90deg, #ff00c8, #ff9500);
-    }
-
-    .gradient-3 {
-      background-image: linear-gradient(90deg, #aaff00, #00ff88);
-    }
-
-    .gradient-4 {
-      background-image: linear-gradient(90deg, #ff3131, #ff9d00);
-    }
-
-    .gradient-5 {
-      background-image: linear-gradient(90deg, #ff00ff, #00f0ff);
-    }
-
-    .gradient-6 {
-      background-image: linear-gradient(90deg, #b300ff, #7700ff);
-    }
+    .gradient-2 { background-image: linear-gradient(90deg, #ff00c8, #ff9500); }
+    .gradient-3 { background-image: linear-gradient(90deg, #aaff00, #00ff88); }
+    .gradient-4 { background-image: linear-gradient(90deg, #ff3131, #ff9d00); }
+    .gradient-5 { background-image: linear-gradient(90deg, #ff00ff, #00f0ff); }
+    .gradient-6 { background-image: linear-gradient(90deg, #b300ff, #7700ff); }
   </style>
 </head>
 <body>
 
-  <!-- Full height wrapper, allows scroll if needed -->
-  <div class="min-h-screen w-full flex items-center justify-center px-4 py-10">
+<!-- Canvas background -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- Top Bar Menu -->
+<div class="top-bar">
+  <img src="3.14.png" class="logo" />
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<!-- Slide Menu Panel -->
+<div class="menu-panel" id="menuPanel">
+  <ul>
+    <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
+    <li><a href="about.html" onclick="closeMenu()">About</a></li>
+    <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>
+    <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- Page Content -->
+<div class="content" id="content">
+
+
+  <div class="min-h-screen w-full flex items-center justify-center px-4 py-20 pt-16">
     <div class="w-full max-w-7xl flex flex-col items-center justify-center">
-
       <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
-
       <div class="grid-container mb-10">
 
-        <!-- Card 1 -->
+        <!-- Grid Cards -->
         <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-2">Scrollie Wheelie</h2>
           <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
         </a>
-
-        <!-- Card 2 -->
         <a href="#" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-2">Project Beta</h2>
           <p class="text-white/70 text-sm">Another brief intro here.</p>
         </a>
-
-        <!-- Card 3 -->
         <a href="#" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-3">Project Gamma</h2>
           <p class="text-white/70 text-sm">Yet another tool or page.</p>
         </a>
-
-        <!-- Card 4 -->
         <a href="#" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-4">Project Delta</h2>
           <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
         </a>
-
-        <!-- Card 5 -->
         <a href="#" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-5">Project Omega</h2>
           <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
         </a>
-
-        <!-- Card 6 -->
         <a href="#" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-6">Project Echo</h2>
           <p class="text-white/70 text-sm">Yet another powerful hack.</p>
@@ -127,6 +298,34 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Top Menu Script -->
+<script>
+  const menuIcon = document.getElementById("menuIcon");
+  const menu = document.getElementById("menuPanel");
+  const overlay = document.getElementById("overlay");
+  const content = document.getElementById("content");
+
+  menuIcon.addEventListener("click", () => {
+    const isOpen = menu.classList.contains("open");
+    if (isOpen) {
+      closeMenu();
+    } else {
+      menu.classList.add("open");
+      overlay.classList.add("show");
+      content.classList.add("blurred");
+      menuIcon.classList.add("open");
+    }
+  });
+
+  function closeMenu() {
+    menu.classList.remove("open");
+    overlay.classList.remove("show");
+    content.classList.remove("blurred");
+    menuIcon.classList.remove("open");
+  }
+</script>
 
 </body>
 </html>
