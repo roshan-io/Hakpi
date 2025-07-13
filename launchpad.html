@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Showcase | Hakpi</title>
+  <title>Launchpad | Hakpi</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet"> 
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       overflow: hidden;
+      height: 100%;
       background: radial-gradient(circle at top left, #0f172a, #020617);
-      font-family: 'Audiowide, sans-serif;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .glass-panel {
@@ -34,45 +36,92 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    .grid-container {
+      max-width: 1280px;
+      width: 100%;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      padding: 0 1.5rem;
+    }
+
+    .heading-accent {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-1 {
+      background-image: linear-gradient(90deg, #00ffe7, #0075ff);
+    }
+
+    .gradient-2 {
+      background-image: linear-gradient(90deg, #ff00c8, #ff9500);
+    }
+
+    .gradient-3 {
+      background-image: linear-gradient(90deg, #aaff00, #00ff88);
+    }
+
+    .gradient-4 {
+      background-image: linear-gradient(90deg, #ff3131, #ff9d00);
+    }
+
+    .gradient-5 {
+      background-image: linear-gradient(90deg, #ff00ff, #00f0ff);
+    }
+
+    .gradient-6 {
+      background-image: linear-gradient(90deg, #b300ff, #7700ff);
+    }
   </style>
 </head>
-<body class="min-h-screen w-full flex items-center justify-center px-4 py-10">
+<body>
 
-  <div class="w-full max-w-7xl">
-    <h1 class="text-4xl md:text-5xl text-center font-bold mb-12 title-glow"> 🏎 The Grid </h1>
+  <div class="w-full h-full flex flex-col items-center justify-center text-white text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow">🚀 Launchpad</h1>
 
-    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid-container">
 
-      <!-- Showcase Card -->
-      <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="text-2xl mb-2">Scroll Wheelie</h2>
+      <!-- Card 1 -->
+           <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-2">Scroll Wheelie</h2>
         <p class="text-white/70 text-sm">Tuen your mouse scroll wheel into a length measurement tool.                                      </p>
+          </a>
+
+
+      <!-- Card 2 -->
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="heading-accent gradient-2">Project Beta</h2>
+        <p class="text-white/70 text-sm">Another brief intro here.</p>
       </a>
 
+      <!-- Card 3 -->
       <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="text-2xl mb-2">Project Title 2</h2>
-        <p class="text-white/70 text-sm">You can change the title, description, and link easily.</p>
+        <h2 class="heading-accent gradient-3">Project Gamma</h2>
+        <p class="text-white/70 text-sm">Yet another tool or page.</p>
       </a>
 
+      <!-- Card 4 -->
       <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="text-2xl mb-2">Project Title 3</h2>           
-        <p class="text-white/70 text-sm">Maybe a custom tool, experiment, or subpage.</p>
+        <h2 class="heading-accent gradient-4">Project Delta</h2>
+        <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
       </a>
 
-      <!-- More Cards -->
+      <!-- Card 5 -->
       <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="text-2xl mb-2">Project Title 4</h2>
-        <p class="text-white/70 text-sm">Link to a cool tool or micro-project.</p>
+        <h2 class="heading-accent gradient-5">Project Omega</h2>
+        <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
       </a>
 
+      <!-- Card 6 -->
       <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="text-2xl mb-2">Project Title 5</h2>
-        <p class="text-white/70 text-sm">Description placeholder.</p>
-      </a>
-
-      <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="text-2xl mb-2">Project Title 6</h2>
-        <p class="text-white/70 text-sm">You can extend the layout infinitely.</p>
+        <h2 class="heading-accent gradient-6">Project Echo</h2>
+        <p class="text-white/70 text-sm">Yet another powerful hack.</p>
       </a>
 
     </div>
