@@ -10,8 +10,6 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      height: 100%;
       background: radial-gradient(circle at top left, #0f172a, #020617);
       font-family: 'Orbitron', sans-serif;
     }
@@ -82,48 +80,51 @@
 </head>
 <body>
 
-  <div class="w-full h-full flex flex-col items-center justify-center text-white text-center">
-    <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow">🚀 The Grid</h1>
+  <!-- Full height wrapper, allows scroll if needed -->
+  <div class="min-h-screen w-full flex items-center justify-center px-4 py-10">
+    <div class="w-full max-w-7xl flex flex-col items-center justify-center">
 
-    <div class="grid-container">
+      <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
 
-      <!-- Card 1 -->
-           <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="heading-accent gradient-2">Scroll Wheelie</h2>
-        <p class="text-white/70 text-sm">Tuen your mouse scroll wheel into a length measurement tool.                                      </p>
-          </a>
+      <div class="grid-container mb-10">
 
+        <!-- Card 1 -->
+        <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-2">Scroll Wheelie</h2>
+          <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
+        </a>
 
-      <!-- Card 2 -->
-      <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="heading-accent gradient-2">Project Beta</h2>
-        <p class="text-white/70 text-sm">Another brief intro here.</p>
-      </a>
+        <!-- Card 2 -->
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-2">Project Beta</h2>
+          <p class="text-white/70 text-sm">Another brief intro here.</p>
+        </a>
 
-      <!-- Card 3 -->
-      <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="heading-accent gradient-3">Project Gamma</h2>
-        <p class="text-white/70 text-sm">Yet another tool or page.</p>
-      </a>
+        <!-- Card 3 -->
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-3">Project Gamma</h2>
+          <p class="text-white/70 text-sm">Yet another tool or page.</p>
+        </a>
 
-      <!-- Card 4 -->
-      <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="heading-accent gradient-4">Project Delta</h2>
-        <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
-      </a>
+        <!-- Card 4 -->
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-4">Project Delta</h2>
+          <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
+        </a>
 
-      <!-- Card 5 -->
-      <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="heading-accent gradient-5">Project Omega</h2>
-        <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
-      </a>
+        <!-- Card 5 -->
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-5">Project Omega</h2>
+          <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
+        </a>
 
-      <!-- Card 6 -->
-      <a href="#" class="glass-panel p-6 block text-white no-underline">
-        <h2 class="heading-accent gradient-6">Project Echo</h2>
-        <p class="text-white/70 text-sm">Yet another powerful hack.</p>
-      </a>
+        <!-- Card 6 -->
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-6">Project Echo</h2>
+          <p class="text-white/70 text-sm">Yet another powerful hack.</p>
+        </a>
 
+      </div>
     </div>
   </div>
 
