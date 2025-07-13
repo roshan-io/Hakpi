@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Showcase | Hakpi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-panel:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.2);
+    }
+
+    .title-glow {
+      background: linear-gradient(to right, #00f0ff, #ff00e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="min-h-screen w-full flex items-center justify-center px-4 py-10">
+
+  <div class="w-full max-w-7xl">
+    <h1 class="text-4xl md:text-5xl text-center font-bold mb-12 title-glow">🧠 My Showcase</h1>
+
+    <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+
+      <!-- Showcase Card -->
+      <a href="" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="text-2xl mb-2">Scroll Wheelie</h2>
+        <p class="text-white/70 text-sm">Tuen your mouse scroll wheel into a length measurement tool.                                      </p>
+      </a>
+
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="text-2xl mb-2">Project Title 2</h2>
+        <p class="text-white/70 text-sm">You can change the title, description, and link easily.</p>
+      </a>
+
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="text-2xl mb-2">Project Title 3</h2>           
+        <p class="text-white/70 text-sm">Maybe a custom tool, experiment, or subpage.</p>
+      </a>
+
+      <!-- More Cards -->
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="text-2xl mb-2">Project Title 4</h2>
+        <p class="text-white/70 text-sm">Link to a cool tool or micro-project.</p>
+      </a>
+
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="text-2xl mb-2">Project Title 5</h2>
+        <p class="text-white/70 text-sm">Description placeholder.</p>
+      </a>
+
+      <a href="#" class="glass-panel p-6 block text-white no-underline">
+        <h2 class="text-2xl mb-2">Project Title 6</h2>
+        <p class="text-white/70 text-sm">You can extend the layout infinitely.</p>
+      </a>
+
+    </div>
+  </div>
+
+</body>
+</html>
