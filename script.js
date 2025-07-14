@@ -103,7 +103,7 @@ function animate() {
   draw();
   requestAnimationFrame(animate);
 }
-animate();
+//animate();
 
 // script for panels 
 
