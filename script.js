@@ -31,7 +31,7 @@
 // script for bg
 
 
-//const canvas = document.getElementById('bgCanvas');
+const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let lines = [];
     const numLines = 100;
