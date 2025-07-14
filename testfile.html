@@ -1,300 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakpi.io</title>
-    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="cascading.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-    </head>
-
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Launchpad | Hakpi</title>
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      font-family: 'Orbitron', sans-serif;
+      overflow-x: hidden;
+    }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Orbitron", sans-serif;
-  }
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
 
+    /* === TOP BAR MENU STYLES === */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: #001130;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
 
-#bgCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  filter: blur(5px);
-  pointer-events: none;
-}
+    .menu-icon {
+      width: 30px;
+      height: 22px;
+      position: relative;
+      cursor: pointer;
+      z-index: 1001;
+      transition: transform 0.3s ease;
+    }
 
+    .menu-icon span {
+      background: white;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      left: 0;
+      transition: 0.4s;
+      border-radius: 2px;
+    }
 
+    .menu-icon span:nth-child(1) { top: 0; }
+    .menu-icon span:nth-child(2) { top: 9px; }
+    .menu-icon span:nth-child(3) { top: 18px; }
 
-body {
-  background: #000;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: "Orbitron", sans-serif;
-  font-weight: bold;
-}
+    .menu-icon.open span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
 
-.main-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .menu-icon.open span:nth-child(2) {
+      opacity: 0;
+    }
 
-  .ring {
-    position: relative;
-    width: 88%;
-    aspect-ratio: 1;
-    max-width: 600px;
-    display: flex;
-    justify-content: center;
-    margin: 0;
-    align-items: center;
-    flex-direction: column;
-  }
+    .menu-icon.open span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
 
-  .ring i {
-    position: absolute;
-    inset: 0;
-    border: 6px solid var(--clr);
-    filter: drop-shadow(0 0 20px var(--clr));
-    transition: 0.5s;
-  }
+    .menu-panel {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background: #0f172a;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: height 0.5s ease, opacity 0.4s ease;
+      z-index: 999;
+    }
 
-  .ring i:nth-child(1) {
-    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-    animation: animate 12s linear infinite;
-  }
+    .menu-panel.open {
+      height: 220px;
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-  .ring i:nth-child(2) {
-    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
-    animation: animate 18s linear infinite;
-  }
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
 
-  .ring i:nth-child(3) {
-    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
-    animation: animate2 24s linear infinite;
-  }
+    .menu-panel li a {
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      width: 100%;
+      transition: background 0.3s ease;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
 
-  @keyframes animate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+    .menu-panel li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-  @keyframes animate2 {
-    0% { transform: rotate(360deg); }
-    100% { transform: rotate(0deg); }
-  }
+    .overlay {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+    }
 
-  .login {
-    position: absolute;
-    width: 300px;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-  }
+    .overlay.show {
+      display: block;
+    }
 
-  .login h2 {
-    font-size: 2em;
-    color: #fff;
-  }
+    .content {
+      padding-top: 70px;
+      text-align: center;
+      transition: filter 0.3s ease;
+    }
 
-  .login .inputBx {
-    position: relative;
-    width: 100%;
-  }
+    .content p1 {
+      font-family: 'Audiowide', sans-serif;
+      font-size: 1.4rem;
+      color: #c7fffe;
+    }
 
-  .login .inputBx input {
-    position: relative;
-    width: 100%;
-    padding: 12px 20px;
-    background: transparent;
-    border: 2px solid #fff;
-    border-radius: 40px;
-    font-size: 1.2em;
-    color: #fff;
-    box-shadow: none;
-    outline: none;
-  }
+    .content p {
+      font-family: 'Exo 2', sans-serif;
+      color: #c7fffe;
+    }
 
-  .login .inputBx input[type="submit"] {
-    width: 100%;
-    background: linear-gradient(45deg, #ff357a, #fff172);
-    border: none;
-    cursor: pointer;
-  }
+    .content.blurred {
+      filter: blur(5px);
+    }
 
-  .login .inputBx input::placeholder {
-    color: rgba(255, 255, 255, 0.75);
-  }
+    @media (max-width: 600px) {
+      .menu-icon {
+        width: 26px;
+        height: 20px;
+      }
 
-  .login .links {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-  }
+      .menu-panel li a {
+        font-size: 18px;
+        padding: 14px;
+      }
 
-  .login .links a {
-    color: #fff;
-    text-decoration: none;
-  }
+      .content p1 {
+        font-size: 1.4rem;
+      }
 
-  .ring span {
-    color: #00f9ff;
-    font-size: clamp(1.5rem, 5vw, 3rem);
-    text-align: center;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-family: 'Orbitron', sans-serif;
-    padding: 10px 20px;
-  /*   background-color: rgba(0, 0, 0, 0.5); */
-    display: block;
-  }
+      .content p {
+        font-size: 14px;
+      }
+    }
 
-  body {
-    background: #000;
-    min-height: 100vh;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    padding: 20px clamp(10px, 5vw, 60px);
-    overflow-x: hidden;
-  }
+    .logo {
+      height: 30px;
+      width: auto;
+      object-fit: contain;
+      image-rendering: pixelated;
+    }
 
-  .page-content {
-    flex-grow: 1;
-  }
+    /* === GLASS PANEL STYLES === */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1.5rem;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-  .page-content1 {
-    width: 100%;
-    position: relative;
-    transition: filter 0.3s ease;
-    z-index: 1;
-  }
+    .glass-panel:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(0, 255, 255, 0.2);
+    }
 
-  .page-content.blur {
-    filter: blur(8px);
-    pointer-events: none;
-    user-select: none;
-    z-index: 1;
-  }
+    .title-glow {
+      background: linear-gradient(to right, #00f0ff, #ff00e0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    flex-grow: 1;
-  }
+    .grid-container {
+      max-width: 1280px;
+      width: 100%;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      padding: 0 1.5rem;
+    }
 
+    .heading-accent {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-.page-content {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  position: relative;
-}
-  button {
-    width: 100%;
-    height: 40px;
-    background: #0ef;
-    box-shadow: 0 0 10px #0ef;
-    font-size: 16px;
-    color: #000;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 30px;
-    border: none;
-    outline: none;
-    margin-top: 20px;
-  }
-
-  .note {
-    color: #aaa;
-    font-size: 14px;
-    text-align: center;
-    margin-top: -10px;
-    margin-bottom: 20px;
-  }
-</style>
-
-
+    .gradient-2 { background-image: linear-gradient(90deg, #ff00c8, #ff9500); }
+    .gradient-3 { background-image: linear-gradient(90deg, #aaff00, #00ff88); }
+    .gradient-4 { background-image: linear-gradient(90deg, #ff3131, #ff9d00); }
+    .gradient-5 { background-image: linear-gradient(90deg, #ff00ff, #00f0ff); }
+    .gradient-6 { background-image: linear-gradient(90deg, #b300ff, #7700ff); }
+  </style>
+</head>
 <body>
 
-    <canvas id="bgCanvas"></canvas>
+<!-- Canvas background -->
+<canvas id="bgCanvas"></canvas>
 
-
-
-
-        <!-- script for menu -->
-
-
+<!-- Top Bar Menu -->
 <div class="top-bar">
-           <a href="https://roshan-io.github.io/Hakpi/"> <img src="3.14.png"  class="logo" /> </a> 
+  <img src="3.14.png" class="logo" />
+  <div class="menu-icon" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
 
-    <div class="menu-icon" id="menuIcon">
-      <span></span>
-      <span></span>
-      <span></span>
+<!-- Slide Menu Panel -->
+<div class="menu-panel" id="menuPanel">
+  <ul>
+    <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
+    <li><a href="about.html" onclick="closeMenu()">About</a></li>
+    <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>
+    <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+  </ul>
+</div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<!-- Page Content -->
+<div class="content" id="content">
+
+
+  <div class="min-h-screen w-full flex items-center justify-center px-4 py-20 pt-16">
+    <div class="w-full max-w-7xl flex flex-col items-center justify-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
+      <div class="grid-container mb-10">
+
+        <!-- Grid Cards -->
+        <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-2">Scrollie Wheelie</h2>
+          <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
+        </a>
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-2">Project Beta</h2>
+          <p class="text-white/70 text-sm">Another brief intro here.</p>
+        </a>
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-3">Project Gamma</h2>
+          <p class="text-white/70 text-sm">Yet another tool or page.</p>
+        </a>
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-4">Project Delta</h2>
+          <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
+        </a>
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-5">Project Omega</h2>
+          <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
+        </a>
+        <a href="#" class="glass-panel p-6 block text-white no-underline">
+          <h2 class="heading-accent gradient-6">Project Echo</h2>
+          <p class="text-white/70 text-sm">Yet another powerful hack.</p>
+        </a>
+
+      </div>
     </div>
   </div>
-
-  <div class="menu-panel" id="menuPanel">
-    <ul>
-      <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
-      <li><a href="about.html" onclick="closeMenu()">About</a></li>
-      <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>
-      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
-    </ul>
-  </div>
-
-  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-
-  <div class="page-content" id="pageContent">
-
-
-
-<div class="ring">
-  <i style="--clr:#00ff0a;"></i>
-  <i style="--clr:#ff0057;"></i>
-  <i style="--clr:#fffd44;"></i>
-
-  <span> Hi, I am </span>
-  <span> SHEIK ROSHAN </span>
-
 </div>
-
-
-</div>
-
-
-
-  <!-- <script src="script.js"> </script> -->
 
 <!-- Top Menu Script -->
 <script>
@@ -323,5 +327,5 @@ body {
   }
 </script>
 
-</body>                                                                                            
+</body>
 </html>
