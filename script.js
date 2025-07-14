@@ -66,7 +66,7 @@ function initLines() {
   }
 }
 
-//function update() {
+function update() {
   for (const line of lines) {
     line.x += line.speed;
     line.y -= line.speed;
@@ -80,7 +80,7 @@ function initLines() {
   }
 }
 
-function draw() {
+//function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.lineWidth = 4;
   ctx.lineCap = 'round';
@@ -98,7 +98,7 @@ function draw() {
   }
 }
 
-//function animate() {
+function animate() {
   update();
   draw();
   requestAnimationFrame(animate);
