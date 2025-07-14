@@ -209,29 +209,234 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .grid-container {
-      max-width: 1280px;
-      width: 100%;
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      padding: 0 1.5rem;
-    }
+ 
+  @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 
-    .heading-accent {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Orbitron", sans-serif;
+  }
 
-    .gradient-2 { background-image: linear-gradient(90deg, #ff00c8, #ff9500); }
-    .gradient-3 { background-image: linear-gradient(90deg, #aaff00, #00ff88); }
-    .gradient-4 { background-image: linear-gradient(90deg, #ff3131, #ff9d00); }
-    .gradient-5 { background-image: linear-gradient(90deg, #ff00ff, #00f0ff); }
-    .gradient-6 { background-image: linear-gradient(90deg, #b300ff, #7700ff); }
+
+#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+
+
+body {
+  background: #000;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Orbitron", sans-serif;
+  font-weight: bold;
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+  .ring {
+    position: relative;
+    width: 88%;
+    aspect-ratio: 1;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .ring i {
+    position: absolute;
+    inset: 0;
+    border: 6px solid var(--clr);
+    filter: drop-shadow(0 0 20px var(--clr));
+    transition: 0.5s;
+  }
+
+  .ring i:nth-child(1) {
+    border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+    animation: animate 12s linear infinite;
+  }
+
+  .ring i:nth-child(2) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate 18s linear infinite;
+  }
+
+  .ring i:nth-child(3) {
+    border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+    animation: animate2 24s linear infinite;
+  }
+
+  @keyframes animate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes animate2 {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  .login {
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .login h2 {
+    font-size: 2em;
+    color: #fff;
+  }
+
+  .login .inputBx {
+    position: relative;
+    width: 100%;
+  }
+
+  .login .inputBx input {
+    position: relative;
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    font-size: 1.2em;
+    color: #fff;
+    box-shadow: none;
+    outline: none;
+  }
+
+  .login .inputBx input[type="submit"] {
+    width: 100%;
+    background: linear-gradient(45deg, #ff357a, #fff172);
+    border: none;
+    cursor: pointer;
+  }
+
+  .login .inputBx input::placeholder {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .login .links {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+
+  .login .links a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .ring span {
+    color: #00f9ff;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    padding: 10px 20px;
+  /*   background-color: rgba(0, 0, 0, 0.5); */
+    display: block;
+  }
+
+  body {
+    background: #000;
+    min-height: 100vh;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px clamp(10px, 5vw, 60px);
+    overflow-x: hidden;
+  }
+
+  .page-content {
+    flex-grow: 1;
+  }
+
+  .page-content1 {
+    width: 100%;
+    position: relative;
+    transition: filter 0.3s ease;
+    z-index: 1;
+  }
+
+  .page-content.blur {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+
+.page-content {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+  button {
+    width: 100%;
+    height: 40px;
+    background: #0ef;
+    box-shadow: 0 0 10px #0ef;
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+  }
+
+  .note {
+    color: #aaa;
+    font-size: 14px;
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+  }
+
   </style>
 </head>
 <body>
@@ -264,40 +469,7 @@
 <div class="content" id="content">
 
 
-  <div class="min-h-screen w-full flex items-center justify-center px-4 py-20 pt-16">
-    <div class="w-full max-w-7xl flex flex-col items-center justify-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
-      <div class="grid-container mb-10">
-
-        <!-- Grid Cards -->
-        <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-2">Scrollie Wheelie</h2>
-          <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
-        </a>
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-2">Project Beta</h2>
-          <p class="text-white/70 text-sm">Another brief intro here.</p>
-        </a>
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-3">Project Gamma</h2>
-          <p class="text-white/70 text-sm">Yet another tool or page.</p>
-        </a>
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-4">Project Delta</h2>
-          <p class="text-white/70 text-sm">A fancy web experiment or tool.</p>
-        </a>
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-5">Project Omega</h2>
-          <p class="text-white/70 text-sm">Hidden features, perhaps?</p>
-        </a>
-        <a href="#" class="glass-panel p-6 block text-white no-underline">
-          <h2 class="heading-accent gradient-6">Project Echo</h2>
-          <p class="text-white/70 text-sm">Yet another powerful hack.</p>
-        </a>
-
-      </div>
-    </div>
-  </div>
+ 
 </div>
 
 <!-- Top Menu Script -->
