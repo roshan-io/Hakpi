@@ -80,7 +80,7 @@ function update() {
   }
 }
 
-//function draw() {
+function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.lineWidth = 4;
   ctx.lineCap = 'round';
@@ -103,7 +103,7 @@ function animate() {
   draw();
   requestAnimationFrame(animate);
 }
-//animate();
+animate();
 
 // script for panels 
 
