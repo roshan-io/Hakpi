@@ -31,7 +31,7 @@
 // script for bg
 
 
-const canvas = document.getElementById('bgCanvas');
+//const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
     let lines = [];
     const numLines = 100;
@@ -66,7 +66,7 @@ function initLines() {
   }
 }
 
-function update() {
+//function update() {
   for (const line of lines) {
     line.x += line.speed;
     line.y -= line.speed;
@@ -98,12 +98,12 @@ function draw() {
   }
 }
 
-function animate() {
+//function animate() {
   update();
   draw();
   requestAnimationFrame(animate);
 }
-animate();
+//animate();
 
 // script for panels 
 
