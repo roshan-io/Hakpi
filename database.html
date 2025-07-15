@@ -261,10 +261,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding-top: 80px;
-  padding-left: 16px;
-  padding-right: 16px;
+  min-height: calc(100vh - 50px);
+  padding: 0 16px ;
   box-sizing: border-box;
 }
 
@@ -272,6 +270,7 @@ body {
   .page-wrapper {
     display: block;
     padding-top: 80px ;
+    overflow: auto;
   }
 }
   </style>
