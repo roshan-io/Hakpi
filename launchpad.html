@@ -16,7 +16,7 @@
       background: radial-gradient(circle at top left, #0f172a, #020617);
       font-family: 'Orbitron', sans-serif;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y: hidden;
       touch-action: manipulation;
     }
 
@@ -169,6 +169,14 @@
         
         
       }
+
+    @media (max-width: 725px) {
+       body{
+             overflow-y:auto;
+      }
+
+
+     }
 
       .menu-panel li a {
         font-size: 18px;
