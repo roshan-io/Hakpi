@@ -15,8 +15,7 @@
       padding: 0;
       background: radial-gradient(circle at top left, #0f172a, #020617);
       font-family: 'Orbitron', sans-serif;
-      overflow-x: hidden;
-      overflow-y : auto;
+     
     }
 
     #bgCanvas {
@@ -213,15 +212,6 @@
     .gradient-5 { background-image: linear-gradient(90deg, #ff00ff, #00f0ff); }
     .gradient-6 { background-image: linear-gradient(90deg, #b300ff, #7700ff); }
 
-    .page-wrapper {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 1rem;
-      min-height: calc(100vh - 50px);
-      padding-top: 50px;
-    }
 
     .inner-container {
       width: 100%;
@@ -275,7 +265,15 @@
   
   @media (max-width: 768px){
     .page-wrapper{
-      padding-top: 50px;
+      min-height: auto;
+      align-items: centre;
+      padding-top: 85px !important ;
+    }
+    body{
+      overflow-y: auto !important;
+    }
+    .inner-container {
+      padding-top: 5px !important ;
     }
   }
   
@@ -306,7 +304,7 @@
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="page-wrapper content" id="content">
-  <div class="page-wrapper">
+  
     <div class="inner-container">
       <h1 class="title-heading title-glow text-center">🚀 The Grid</h1>
       <div class="grid-container">
@@ -334,9 +332,17 @@
           <h2 class="heading-accent gradient-6">Project Echo</h2>
           <p class="text-white/70 text-sm">Yet another powerful hack.</p>
         </a>
+        
+        
+        
+        
+        
+        
+        
+        
       </div>
     </div>
-  </div>
+ 
 </div>
 
 <script>
