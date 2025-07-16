@@ -16,7 +16,7 @@
       background: radial-gradient(circle at top left, #0f172a, #020617);
       font-family: 'Orbitron', sans-serif;
       overflow-x: hidden;
-      overflow-y: auto;
+      overflow-y : auto;
     }
 
     #bgCanvas {
@@ -28,7 +28,6 @@
       z-index: -1;
     }
 
-    /* === TOP BAR MENU STYLES === */
     .top-bar {
       position: fixed;
       top: 0;
@@ -161,27 +160,6 @@
       filter: blur(5px);
     }
 
-    @media (max-width: 600px) {
-      .menu-icon {
-        width: 26px;
-        height: 20px;
-        
-      }
-
-      .menu-panel li a {
-        font-size: 18px;
-        padding: 14px;
-      }
-
-      .content p1 {
-        font-size: 1.4rem;
-      }
-
-      .content p {
-        font-size: 14px;
-      }
-    }
-
     .logo {
       height: 30px;
       width: auto;
@@ -189,7 +167,6 @@
       image-rendering: pixelated;
     }
 
-    /* === GLASS PANEL STYLES === */
     .glass-panel {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(12px);
@@ -218,6 +195,7 @@
       gap: 2rem;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       padding: 0 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
     .heading-accent {
@@ -234,16 +212,82 @@
     .gradient-4 { background-image: linear-gradient(90deg, #ff3131, #ff9d00); }
     .gradient-5 { background-image: linear-gradient(90deg, #ff00ff, #00f0ff); }
     .gradient-6 { background-image: linear-gradient(90deg, #b300ff, #7700ff); }
+
+    .page-wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1rem;
+      min-height: calc(100vh - 50px);
+      padding-top: 50px;
+    }
+
+    .inner-container {
+      width: 100%;
+      max-width: 1120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .title-heading {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .title-heading {
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .menu-icon {
+        width: 26px;
+        height: 20px;
+      }
+
+      .menu-panel li a {
+        font-size: 18px;
+        padding: 14px;
+      }
+
+      .content p1 {
+        font-size: 1.4rem;
+      }
+
+      .content p {
+        font-size: 14px;
+      }
+    }
+  
+  .page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 50px);
+  padding: 0 16px ;
+  box-sizing: border-box;
+}
+  
+  @media (max-width: 768px){
+    .page-wrapper{
+      padding-top: 50px;
+    }
+  }
+  
+  
   </style>
 </head>
 <body>
 
-<!-- Canvas background -->
 <canvas id="bgCanvas"></canvas>
 
-<!-- Top Bar Menu -->
 <div class="top-bar">
-  <a href="https://roshan-io.github.io/Hakpi/"> <img src="3.14.png"  class="logo" /> </a> 
+  <a href="https://roshan-io.github.io/Hakpi/"><img src="3.14.png" class="logo" /></a>
   <div class="menu-icon" id="menuIcon">
     <span></span>
     <span></span>
@@ -251,7 +295,6 @@
   </div>
 </div>
 
-<!-- Slide Menu Panel -->
 <div class="menu-panel" id="menuPanel">
   <ul>
     <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
@@ -262,29 +305,19 @@
 </div>
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-<!-- Page Content -->
-<div class="content" id="content">
-
-<div class="w-full flex items-center justify-center px-4 min-h-[calc(100vh-50px)] pt-[50px]">
-    <div class="w-full max-w-7xl flex flex-col items-center justify-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-10 title-glow text-center">🚀 The Grid</h1>
-      <div class="grid-container mb-10">
-
-        <!-- Grid Cards -->
-
-
+<div class="page-wrapper content" id="content">
+  <div class="page-wrapper">
+    <div class="inner-container">
+      <h1 class="title-heading title-glow text-center">🚀 The Grid</h1>
+      <div class="grid-container">
         <a href="database.html" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-2">Database</h2>
           <p class="text-white/70 text-sm">All Files Here </p>
         </a>
         <a href="scroller.html" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-2">Scrollie Wheelie</h2>
-          <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement.   tool.</p>
+          <p class="text-white/70 text-sm">Turn your mouse scroll wheel into a length measurement tool.</p>
         </a>
-
-
-
-
         <a href="#" class="glass-panel p-6 block text-white no-underline">
           <h2 class="heading-accent gradient-3">Project Gamma</h2>
           <p class="text-white/70 text-sm">Yet another tool or page.</p>
@@ -301,13 +334,11 @@
           <h2 class="heading-accent gradient-6">Project Echo</h2>
           <p class="text-white/70 text-sm">Yet another powerful hack.</p>
         </a>
-
       </div>
     </div>
   </div>
 </div>
 
-<!-- Top Menu Script -->
 <script>
   const menuIcon = document.getElementById("menuIcon");
   const menu = document.getElementById("menuPanel");
