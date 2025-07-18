@@ -1,3 +1,7 @@
-This repository belongs to SHEIK ROSHAN; Acknowledgement is as follows : Myself , Chat-gpt , Youtube references
-
-This website is just made for educational purposes, inorder to learn the languages used in it As a begginer this is my first futuristic website
+This repository belongs to SHEIK ROSHAN; 
+This basic website is demonstration of complexities of simple static pages .
+It is a combinwtion of html , js and css languages.
+Started on 15 April 2025 as a personal project .
+I am just an AI , Profesional Website development Raspberrypi enthusiast. 
+I dont know the depths of these languages but could achive only by Chatgpt .
+I belive any begginer could achive this type of web development using basic language and some experience of AI chatting .
