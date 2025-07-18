@@ -281,6 +281,16 @@
     }
   }
   
+
+  .star {
+      position: absolute;
+      width: 0.2vh;
+      height: 0.2vh;
+      background: white;
+      border-radius: 50%;
+      opacity: 1;
+      transition: opacity 1s ease-in-out;
+    }
   
   </style>
 </head>
@@ -378,6 +388,66 @@
     content.classList.remove("blurred");
     menuIcon.classList.remove("open");
   }
+</script>
+
+
+
+<script>
+  const starPositions = [
+    { x: '10%', y: '10%' },
+    { x: '20%', y: '5%' },
+    { x: '30%', y: '8%' },
+    { x: '40%', y: '12%' },
+    { x: '50%', y: '6%' },
+    { x: '60%', y: '10%' },
+    { x: '70%', y: '7%' },
+    { x: '80%', y: '9%' },
+    { x: '90%', y: '5%' },
+    { x: '15%', y: '15%' },
+    { x: '35%', y: '13%' },
+    { x: '55%', y: '11%' },
+    { x: '75%', y: '14%' },
+    { x: '85%', y: '6%' },
+    { x: '25%', y: '18%' }
+  ];
+
+  const stars = [];
+
+  // Create and place stars
+  starPositions.forEach(pos => {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = pos.x;
+    star.style.top = pos.y;
+    document.body.appendChild(star);
+    stars.push(star);
+  });
+
+  function dimRandomStars() {
+    const available = [...stars];
+    const group = [];
+
+    // Pick 3 random stars
+    for (let i = 0; i < 3; i++) {
+      const index = Math.floor(Math.random() * available.length);
+      group.push(available.splice(index, 1)[0]);
+    }
+
+    // Dim the selected 3
+    group.forEach(star => {
+      star.style.opacity = 0.2;
+    });
+
+    // Restore them to full brightness after a while
+    setTimeout(() => {
+      group.forEach(star => {
+        star.style.opacity = 1;
+      });
+    }, 1000);
+  }
+
+  // Start animation loop
+  setInterval(dimRandomStars, 800);
 </script>
 
 </body>
