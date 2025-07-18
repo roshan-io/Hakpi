@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Template | Hakpi</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: linear-gradient(to bottom, #000a00 0%, #001a19 30%, #001a19 100%);
+      font-family: 'Orbitron', sans-serif;
+      color: #c7fffe;
+      overflow: hidden;
+    }
+
+    body {
+      padding: 20px;
+    }
+
+    /* Top bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background:  #000a00; /* Slightly darker black */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      width: 30px;
+      height: 22px;
+      position: relative;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-icon span {
+      background: white;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      left: 0;
+      transition: 0.4s;
+      border-radius: 2px;
+    }
+
+    .menu-icon span:nth-child(1) { top: 0; }
+    .menu-icon span:nth-child(2) { top: 9px; }
+    .menu-icon span:nth-child(3) { top: 18px; }
+
+    .menu-icon.open span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .menu-icon.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-icon.open span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background: #0a0a0a;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: height 0.5s ease, opacity 0.4s ease;
+      z-index: 999;
+    }
+
+    .menu-panel.open {
+      height: 220px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-panel li a {
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      width: 100%;
+      transition: background 0.3s ease;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+
+    .menu-panel li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .content {
+      padding-top: 80px;
+      transition: filter 0.3s ease;
+      align-items: center;
+    }
+
+    .content.blurred {
+      filter: blur(5px);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      align-items: center;
+    }
+
+    .page-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 50px);
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+   
+
+    html {
+      box-sizing: border-box;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+  
+  
+    .stats-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid #00ffe1;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #00ffe1aa;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
+      font-weight: 500;
+      color: #ffffff;
+      font-size: 1.4em;
+    }
+
+    .stat {
+      margin: 8px 0;
+      font-size: 0.95em;
+      line-height: 1.4em;
+    }
+
+    .label {
+      color: #888;
+    }
+  
+  
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="https://roshan-io.github.io/Hakpi/">
+      <img src="3.14.png" alt="Logo" style="height: 30px;" />
+    </a>
+    <div class="menu-icon" id="menuIcon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- Slide Menu Panel -->
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <!-- Empty Page Wrapper for Content -->
+  <div class="page-wrapper content" id="content">
+    <div class="container">
+      <!-- 🔧 Add your content here -->
+      
+      
+       <div class="stats-box">
+    <h2> System Statistics</h2>
+    <div class="stat"><span class="label">Platform:</span> <span id="platform"></span></div>
+    <div class="stat"><span class="label">Browser:</span> <span id="browser"></span></div>
+    <div class="stat"><span class="label">Resolution:</span> <span id="screen"></span></div>
+    <div class="stat"><span class="label">Color Depth:</span> <span id="colorDepth"></span></div>
+    <div class="stat"><span class="label">Pixel Depth:</span> <span id="pixelDepth"></span></div>
+    <div class="stat"><span class="label">Battery:</span> <span id="battery">Detecting...</span></div>
+    <div class="stat"><span class="label">Connection:</span> <span id="connection"></span></div>
+    <div class="stat"><span class="label">Speed:</span> <span id="speed"></span></div>
+    <div class="stat"><span class="label">Online:</span> <span id="online"></span></div>
+    <div class="stat"><span class="label">Timezone:</span> <span id="timezone"></span></div>
+  </div>
+    </div>
+  </div>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    const menuIcon = document.getElementById("menuIcon");
+    const menu = document.getElementById("menuPanel");
+    const overlay = document.getElementById("overlay");
+    const content = document.getElementById("content");
+
+    menuIcon.addEventListener("click", () => {
+      const isOpen = menu.classList.contains("open");
+      if (isOpen) {
+        closeMenu();
+      } else {
+        menu.classList.add("open");
+        overlay.classList.add("show");
+        content.classList.add("blurred");
+        menuIcon.classList.add("open");
+      }
+    });
+
+    function closeMenu() {
+      menu.classList.remove("open");
+      overlay.classList.remove("show");
+      content.classList.remove("blurred");
+      menuIcon.classList.remove("open");
+    }
+  </script>
+   <script>
+    // Platform
+    document.getElementById("platform").innerText = navigator.userAgentData?.platform || navigator.platform;
+
+    // Browser
+    let browser = "Unknown";
+    if (navigator.userAgentData?.brands) {
+      const brand = navigator.userAgentData.brands.find(b => b.brand !== "Not A Brand");
+      browser = `${brand.brand} ${brand.version}`;
+    } else {
+      browser = navigator.userAgent;
+    }
+    document.getElementById("browser").innerText = browser;
+
+    // Screen info
+    document.getElementById("screen").innerText = `${screen.width} x ${screen.height}`;
+    document.getElementById("colorDepth").innerText = `${screen.colorDepth}-bit`;
+    document.getElementById("pixelDepth").innerText = `${screen.pixelDepth}-bit`;
+
+    // Online status
+    document.getElementById("online").innerText = navigator.onLine ? "✅ Online" : "❌ Offline";
+
+    // Timezone
+    document.getElementById("timezone").innerText = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    // Battery
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        const level = (battery.level * 100).toFixed(0);
+        document.getElementById("battery").innerText = `${level}% ${battery.charging ? "⚡ Charging" : ""}`;
+      });
+    } else {
+      document.getElementById("battery").innerText = "Unavailable";
+    }
+
+    // Connection
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn) {
+      document.getElementById("connection").innerText = conn.effectiveType || "Unknown";
+      document.getElementById("speed").innerText = conn.downlink ? `${conn.downlink} Mbps` : "N/A";
+    } else {
+      document.getElementById("connection").innerText = "Unavailable";
+      document.getElementById("speed").innerText = "Unavailable";
+    }
+  </script>
+</body>
+</html>
