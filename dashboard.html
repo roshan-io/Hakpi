@@ -2,22 +2,188 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium&display=swap" rel="stylesheet">
   <title>Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
 
+ 
   <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: linear-gradient(to bottom, #000a00 0%, #020617 30%, #020617 100%);
+      font-family: 'Orbitron', sans-serif;
+      color: #c7fffe;
+      overflow: hidden;
+    }
 
-   canvas#bgCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
+    body {
+      padding: 20px;
+    }
 
-    :root {
+    /* Top bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background:  #000a00; /* Slightly darker black */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      width: 30px;
+      height: 22px;
+      position: relative;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-icon span {
+      background: white;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      left: 0;
+      transition: 0.4s;
+      border-radius: 2px;
+    }
+
+    .menu-icon span:nth-child(1) { top: 0; }
+    .menu-icon span:nth-child(2) { top: 9px; }
+    .menu-icon span:nth-child(3) { top: 18px; }
+
+    .menu-icon.open span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .menu-icon.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-icon.open span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    .menu-panel {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      background: #0a0a0a;
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: height 0.5s ease, opacity 0.4s ease;
+      z-index: 999;
+    }
+
+    .menu-panel.open {
+      height: 220px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .menu-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .menu-panel li a {
+      display: block;
+      padding: 15px 20px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      width: 100%;
+      transition: background 0.3s ease;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+
+    .menu-panel li a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 50px);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 500;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .content {
+      padding-top: 80px;
+      transition: filter 0.3s ease;
+      align-items: center;
+    }
+
+    .content.blurred {
+      filter: blur(5px);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 16px;
+      align-items: center;
+    }
+
+    .page-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 50px);
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+
+   
+
+    html {
+      box-sizing: border-box;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    *, *::before, *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      width: 100%;
+      overflow-x: hidden;
+    }
+ 
+      :root {
       --bg: #0e1117;
       --card: #161b22;
       --text: #c9d1d9;
@@ -35,8 +201,6 @@
       background: black;
       color: var(--text);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 0;
-      margin: 0;
     }
 
     .dashboard {
@@ -61,18 +225,16 @@
       justify-content: space-between;
       align-items: center;
       padding: 0.25rem;
-      margin: 0;
       border-bottom: 1px solid var(--border);
     }
 
-.card, .header {
-  background: rgba(22, 27, 34, 0.6); /* semi-transparent background */
-  backdrop-filter: blur(12px); /* blur effect */
-  -webkit-backdrop-filter: blur(12px); /* Safari support */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* subtle border */
-}
-
-
+    .header h2 {
+      background: linear-gradient(to right, #4582ED, #D56673);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.3rem;
+      font-family: 'Roboto', sans-serif;
+    }
 
     .big-card {
       grid-column: span 2;
@@ -84,234 +246,393 @@
       grid-row: span 2;
     }
 
-    .user-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .user-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-    }
-
-    .users-heading {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
-    /* Clock styling */
     .clock-container {
+      padding-top: 2.3rem;
       text-align: center;
       color: var(--accent);
+      align-items: centre;
     }
 
-    .time {
-      font-size: 4rem;
-      font-weight: bold;
-      color: white;
-      display: inline-block;
-    }
-
-    .period {
-      font-size: 1.2rem;
-      margin-left: 0.5rem;
-      color: var(--text);
-      display: inline-block;
-    }
 
     .date {
       font-size: 1.2rem;
       margin-top: 0.5rem;
       color: var(--text);
     }
+  
+  
+  
+  .time-period {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.time {
+  font-size: 4rem;
+  font-weight: bold;
+  color: white;
+  font-family: 'Audiowide'  , sans-serif;
+}
+
+.period {
+  font-size: 1rem;
+  color: var(--text);
+}
 
     @media (max-width: 1024px) {
       .dashboard {
         grid-template-columns: repeat(2, 1fr);
       }
+    }
 
-     /* .second-column {
-        grid-row: span 2;
-      }*/
-    } 
+    .card.second-column,
+    #cryptoCard,
+    #usdCard {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 0;
+      
+    }
 
+    #cryptoRates {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #cryptoRates li {
+      font-size: 1.1rem;
+      margin: 5px 0;
+      text-align: center;
+    }
+
+    #cryptoRates span {
+      font-weight: bold;
+      color: #00e676;
+    }
+
+    #usdRate {
+      font-size: 2.5rem;
+      color: #00e676;
+      margin-top: 10px;
+      text-align: center;
+    }
+  
+
+    .ram-percentage {
+      font-size: 24px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-top: 10px;
+    }
+
+
+    .weather-card {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 0 12px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .weather-city {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #94a3b8;
+    }
+
+    .weather-temp {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(to right, #6ea8ff, #ff7c94);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .weather-desc {
+      font-size: 16px;
+      margin-top: 5px;
+      color: #cbd5e1;
+      text-transform: capitalize;
+    }
+
+    .humidity {
+      font-size: 16px;
+      color: #94a3b8;
+      margin-top: 5px;
+    }
   
   
-/* Center content inside the crypto and USD cards */
-.card.second-column,
-#cryptoCard,
-#usdCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+   .github-card {
+  text-align: center;
+  padding-bottom: 0.5rem;
 }
 
-/* Remove bullets from crypto list */
-#cryptoRates {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* Style crypto list items */
-#cryptoRates li {
+.github-card h3 {
   font-size: 1.1rem;
-  margin: 5px 0;
+  color: #58a6ff;
+  margin-bottom: 0.5rem;
+}
+ 
+
+.github-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  
+  
+}  
+  
+  
+  .system-info {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  line-height: 1.6;
   text-align: center;
+  margin-top: 0.1rem;
+  padding: 0rem;
+  border-radius: 12px;
+  font-family: 'Roboto', sans-serif;
+}
+ 
+  
+  .loading-text {
+  
+  transform: translate(-50%, -50%);
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: #aaa;
+  pointer-events: none;
+  z-index: 1;
+  }
+  
+  a {
+  all: unset;
+  cursor: pointer;
+  text-decoration: none;
+  color: #94a3b8;
+}
+  
+ .card.github-card {
+  position: relative;
+  padding: 1em;
+  padding-bottom: 1.5em; /* allows space for the absolute link without increasing card height */
+  font-family: 'Orbitron', sans-serif;
 }
 
-/* Style values */
-#cryptoRates span {
-  font-weight: bold;
-  color: #00e676;
+.system-info {
+  margin: 0;
+  font-size: 0.9em;
+  color: #ccc;
 }
 
-#usdRate {
-  font-size: 2rem;
-  color: #00e676;
-  margin-top: 10px;
-  text-align: center;
+/* Stylish bottom-right floating link */
+.more-link {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 0.75em;
+  color: #8af;
+  text-decoration: none;
+  opacity: 0.8;
+  pointer-events: auto;
 }
 
-  
-  
-  
+
   </style>
 </head>
 <body>
-
-    
-
-  <div class="dashboard">
-
-<canvas id="bgCanvas"></canvas>
-
-
-
-    <div class="header">
-      <h2>DASHBOARD</h2>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="https://roshan-io.github.io/Hakpi/">
+      <img src="3.14.png" alt="Logo" style="height: 30px;" />
+    </a>
+    <div class="menu-icon" id="menuIcon">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    <div class="card">VISITS</div>
-    <div class="card">FEED BACKS</div>
-    <div class="card">UPTIME</div>
-    <div class="card clock-container">
-      <div id="time" class="time"></div>
-      <div id="period" class="period"></div>
-      <div id="date" class="date"></div>
-    </div>
-
-    <div class="card second-column">
-  <h3>Crypto Prices (INR)</h3>
-  <ul id="cryptoRates">
-    <li>Bitcoin: <span id="btc">Loading...</span></li>
-    <li>Ethereum: <span id="eth">Loading...</span></li>
-    <li>Dogecoin: <span id="doge">Loading...</span></li>
-  </ul>
-</div>
-
-<div class="card second-column">
-  <h3>USD Exchange Rate</h3>
-  <div id="usdRate">Loading...</div>
-</div>
-    
-    
-    <div class="card second-column">CPU</div>
-    <div class="card second-column">RAM</div>
-
-    <div class="card big-card"></div>
-    <div class="card double-height">
-      <div class="users-heading">USERS</div>
-      <div class="user-list">
-        <div class="user-item"><span>JHON DOE</span><span>05-8</span></div>
-        <div class="user-item"><span>RICK ERICK</span><span>19-3</span></div>
-        <div class="user-item"><span>STEVE SMITH</span><span>06-5</span></div>
-        <div class="user-item"><span>BRUCE</span><span>11-4</span></div>
-        <div class="user-item"><span>ALICE JOHNSON</span><span>02-7</span></div>
-        <div class="user-item"><span>MARK WILLIAMS</span><span>09-6</span></div>
-        <div class="user-item"><span>EMILY DAVIS</span><span>15-9</span></div>
-        <div class="user-item"><span>DAVID BROWN</span><span>22-1</span></div>
-        <div class="user-item"><span>LAURA JONES</span><span>03-3</span></div>
-        <div class="user-item"><span>KEVIN MARTIN</span><span>14-10</span></div>
-      </div>
-    </div>
-
-
-<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
-  <span id="fsIcon">⛶</span>
-</div>
-
-
   </div>
 
+  <!-- Slide Menu Panel -->
+  <div class="menu-panel" id="menuPanel">
+    <ul>
+      <li><a href="https://roshan-io.github.io/Hakpi/" onclick="closeMenu()">Home</a></li>
+      <li><a href="about.html" onclick="closeMenu()">About</a></li>
+      <li><a href="launchpad.html" onclick="closeMenu()">Launchpad</a></li>
+      <li><a href="contact.html" onclick="closeMenu()">Contact</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <!-- Empty Page Wrapper for Content -->
+  <div class="page-wrapper content" id="content">
+    <div class="container">
+      <!-- 🔧 Add your content here -->
+      
+<div class="dashboard">
+ 
+  
+  <!-- div class="card" -->
+  <div class="card weather-card">
+    <div class="weather-city" id="city">Loading...</div>
+    <div class="weather-temp" id="temp">--°C</div>
+    <div class="weather-desc" id="desc">--</div>
+    <div class="humidity" id="humidity">Humidity: --%</div>
+  </div>
+
+  <div class="card clock-container">
+ <div class="time-period">
+  <span id="time" class="time">--:--</span>
+  <span id="period" class="period">--</span>
+ </div>
+    <div id="date" class="date">--</div>
+  </div>
+
+  <div class="card second-column">
+    <h3 style="font-family: 'Orbitron', sans-serif;">Crypto Prices (INR)</h3>
+    <ul id="cryptoRates">
+      <li>Bitcoin: <span id="btc" style="font-family: 'Audiowide', sans-serif;">Loading...</span></li>
+      <li>Ethereum: <span id="eth" style="font-family: 'Audiowide', sans-serif;">Loading...</span></li>
+      <li>Monero: <span id="xmr" style="font-family: 'Audiowide', sans-serif;">Loading...</span></li>
+    </ul>
+  </div>
+
+  <div class="card second-column">
+    <h3 style="font-family: 'Orbitron', sans-serif;">USD Exchange Rate</h3>
+    <div id="usdRate" style="font-family: 'Audiowide', sans-serif;">Loading...</div>
+  </div>
+
+   <!-- Include this inside your .dashboard after the USD Exchange Rate card -->
+<div class="card second-column github-card">
+  <h3 style="font-family: 'Audiowide', sans-serif;">🔥 GitHub Streak</h3>
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=roshan-io&theme=dark&hide_border=true" alt="GitHub streak" class="github-img" />
+</div>
+
+<div class="card second-column github-card">
+    <span class="loading-text">Language composition....</span>
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=roshan-io&layout=compact&theme=github_dark&hide_border=true" alt="Top languages" class="github-img" onload="this.parentElement.querySelector('.loading-text').style.display='none';" />
+</div>
+  
+  <div id="sysinfo-container">
+  <div class="card second-column github-card">
+    <h3 style="font-family: 'Audiowide', sans-serif;">System Info</h3>
+    <p id="sysinfo" class="system-info"></p>
+    <a href="systats.html" class="more-link">More stats &gt;</a>
+  </div>
+</div>
+  
+  
+  
+  
+
+  </div>
+</div>
 
 
+    </div>
+  </div>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    const menuIcon = document.getElementById("menuIcon");
+    const menu = document.getElementById("menuPanel");
+    const overlay = document.getElementById("overlay");
+    const content = document.getElementById("content");
+
+    menuIcon.addEventListener("click", () => {
+      const isOpen = menu.classList.contains("open");
+      if (isOpen) {
+        closeMenu();
+      } else {
+        menu.classList.add("open");
+        overlay.classList.add("show");
+        content.classList.add("blurred");
+        menuIcon.classList.add("open");
+      }
+    });
+
+    function closeMenu() {
+      menu.classList.remove("open");
+      overlay.classList.remove("show");
+      content.classList.remove("blurred");
+      menuIcon.classList.remove("open");
+    }
+  </script>
+    
+<!-- JavaScript -->
+<script>
+  function updateClock() {
+    const timeElement = document.getElementById('time');
+    const periodElement = document.getElementById('period');
+    const dateElement = document.getElementById('date');
+
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+
+    timeElement.textContent = `${hours}:${minutes}`;
+    periodElement.textContent = period;
+    dateElement.textContent = now.toLocaleDateString(undefined, {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
 
   
 
-  <script>
-    function updateClock() {
-      const timeElement = document.getElementById('time');
-      const periodElement = document.getElementById('period');
-      const dateElement = document.getElementById('date');
+    const city = "Sarapaka"; // Change to your city or pincode
 
-      const now = new Date();
-
-      let hours = now.getHours();
-      let minutes = now.getMinutes();
-      const period = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // The hour '0' should be '12'
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-
-      const timeString = `${hours}:${minutes}`;
-      const dateString = `${now.getDate()} ${now.toLocaleString('default', { month: 'long' })} ${now.getFullYear()}`;
-
-      timeElement.textContent = timeString;
-      periodElement.textContent = period;
-      dateElement.textContent = dateString;
-    }
-
-    setInterval(updateClock, 1000);
-    updateClock(); // Initial call to display the time immediately
-  </script>
-
-   
-<script>
-  function fetchCryptos() {
-    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,dogecoin&vs_currencies=inr')
+    fetch(`https://wttr.in/${city}?format=j1`)
       .then(res => res.json())
       .then(data => {
-        document.getElementById('btc').innerText = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
-        document.getElementById('eth').innerText = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
-        document.getElementById('doge').innerText = `₹ ${data.dogecoin.inr.toLocaleString('en-IN')}`;
+        const weather = data.current_condition[0];
+        document.getElementById("city").textContent = city;
+        document.getElementById("temp").textContent = `${weather.temp_C}°C`;
+        document.getElementById("desc").textContent = weather.weatherDesc[0].value;
+        document.getElementById("humidity").textContent = `Humidity: ${weather.humidity}%`;
       })
       .catch(err => {
-        document.getElementById('cryptoRates').innerHTML = '<li>Error loading data</li>';
+        document.getElementById("city").textContent = "Failed to load";
+        document.getElementById("temp").textContent = "--°C";
+        document.getElementById("desc").textContent = "Check network or wttr.in";
+        document.getElementById("humidity").textContent = "Humidity: --%";
         console.error(err);
       });
-  }
 
+
+  // Crypto
+function fetchCryptos() {
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,monero&vs_currencies=inr')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('btc').innerText = `₹ ${data.bitcoin.inr.toLocaleString('en-IN')}`;
+      document.getElementById('eth').innerText = `₹ ${data.ethereum.inr.toLocaleString('en-IN')}`;
+      document.getElementById('xmr').innerText = `₹ ${data.monero.inr.toLocaleString('en-IN')}`;
+    });
+}
+
+// Auto refresh every 30 seconds
+setInterval(fetchCryptos, 30000);
+fetchCryptos(); // Initial call
+
+  // USD rate
   function fetchUSD() {
     fetch('https://api.exchangerate-api.com/v4/latest/USD')
       .then(res => res.json())
       .then(data => {
-        if (data && data.rates && data.rates.INR) {
-          document.getElementById('usdRate').innerText = `₹ ${data.rates.INR.toLocaleString('en-IN')}`;
-        } else {
-          document.getElementById('usdRate').innerText = 'Unavailable';
-        }
-      })
-      .catch(err => {
-        document.getElementById('usdRate').innerText = 'Error fetching rate';
-        console.error(err);
+        document.getElementById('usdRate').innerText = `₹ ${data.rates.INR.toLocaleString('en-IN')}`;
       });
   }
 
@@ -319,46 +640,20 @@
   fetchUSD();
   setInterval(fetchCryptos, 60000);
   setInterval(fetchUSD, 60000);
+
+
 </script>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const toggle = document.getElementById('fullscreenToggle');
-  const icon = document.getElementById('fsIcon');
-
-  // Update the icon (you can change it later to show compress/expand icons)
-  function updateIcon() {
-    icon.textContent = document.fullscreenElement ? '⛶' : '⛶';
-  }
-
-  // Handle click to enter or exit fullscreen
-  toggle.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().then(() => {
-        localStorage.setItem('wantsFullscreen', 'true');
-      });
-    } else {
-      document.exitFullscreen().then(() => {
-        localStorage.removeItem('wantsFullscreen');
-      });
-    }
-  });
-
-  // Restore fullscreen on page load if user previously enabled it
-  if (localStorage.getItem('wantsFullscreen') === 'true') {
-    // Must wait for a user gesture, so we show a helper button if needed
-    toggle.click(); // works only if toggle is inside a user-gesture event like a button click
-    // OR you can show a prompt to click again
-  }
-
-  document.addEventListener('fullscreenchange', updateIcon);
-});
+  const sys = `
+    <strong>Platform:</strong> ${navigator.platform}<br>
+    <strong>RAM:</strong> ${navigator.deviceMemory || 'N/A'} GB<br>
+    <strong>Cores:</strong> ${navigator.hardwareConcurrency || 'N/A'}
+  `;
+  document.getElementById("sysinfo").innerHTML = sys;
 </script>
 
-
- <script src="script.js"></script>
 
 </body>
 </html>
