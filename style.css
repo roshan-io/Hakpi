@@ -104,7 +104,7 @@ html, body {
       top: 50px;
       left: 0;
       width: 100%;
-      background: rgba(30, 30, 30, 0.98);
+      background: #111;
       height: 0;
       overflow: hidden;
       opacity: 0;
