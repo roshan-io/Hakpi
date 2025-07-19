@@ -299,10 +299,9 @@
   </script>
  
 <script>
-  // Set basic device stats
+  // Set basic system stats
   document.getElementById("platform").innerText = navigator.userAgentData?.platform || navigator.platform;
 
-  // Browser name
   if (navigator.userAgentData?.brands) {
     const brand = navigator.userAgentData.brands.find(b => b.brand !== "Not A Brand");
     document.getElementById("browser").innerText = `${brand.brand} ${brand.version}`;
@@ -310,17 +309,11 @@
     document.getElementById("browser").innerText = navigator.userAgent;
   }
 
-  // Screen resolution & pixel depth
   document.getElementById("screen").innerText = `${screen.width} x ${screen.height}`;
   document.getElementById("pixelDepth").innerText = `${screen.pixelDepth}-bit`;
-
-  // Online status
   document.getElementById("online").innerText = navigator.onLine ? "✅ Online" : "❌ Offline";
-
-  // Timezone
   document.getElementById("timezone").innerText = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  // Battery info
   if (navigator.getBattery) {
     navigator.getBattery().then(battery => {
       const level = (battery.level * 100).toFixed(0);
@@ -330,7 +323,6 @@
     document.getElementById("battery").innerText = "Unavailable";
   }
 
-  // Connection info
   const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
   if (conn) {
     document.getElementById("connection").innerText = conn.effectiveType || "Unknown";
@@ -340,7 +332,7 @@
     document.getElementById("speed").innerText = "Unavailable";
   }
 
-  // GPU Info using WebGL
+  // GPU Info
   function getGPUInfo() {
     try {
       const canvas = document.createElement('canvas');
@@ -351,43 +343,28 @@
       const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'Unavailable';
       const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Unavailable';
       document.getElementById("gpu").innerText = `${vendor}, ${renderer}`;
-    } catch (e) {
+    } catch {
       document.getElementById("gpu").innerText = "Not supported";
     }
   }
 
-  // Memory usage (Chrome-only)
-  function getMemoryUsage() {
-    if ('memory' in performance) {
-      const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(1);
-      const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(1);
-      document.getElementById("memory").innerText = `${used} / ${total} MB`;
-    } else {
-      document.getElementById("memory").innerText = "Unavailable";
-    }
-  }
-
-  // FPS Measurement
+  // FPS Counter
   let fpsHistory = [];
-  let lastFrameTime = performance.now();
-  function trackFPS(now) {
-    const delta = now - lastFrameTime;
-    lastFrameTime = now;
+  let lastFrame = performance.now();
+  function measureFPS(now) {
+    const delta = now - lastFrame;
+    lastFrame = now;
     const fps = 1000 / delta;
     fpsHistory.push(fps);
     if (fpsHistory.length > 60) fpsHistory.shift();
-
-    const avgFPS = Math.round(fpsHistory.reduce((a, b) => a + b, 0) / fpsHistory.length);
-    document.getElementById("fps").innerText = `${avgFPS} FPS`;
-
-    requestAnimationFrame(trackFPS);
+    const avg = Math.round(fpsHistory.reduce((a, b) => a + b, 0) / fpsHistory.length);
+    document.getElementById("fps").innerText = `${avg} FPS`;
+    requestAnimationFrame(measureFPS);
   }
 
-  // Initialize all
+  // Start everything
   getGPUInfo();
-  getMemoryUsage();
-  requestAnimationFrame(trackFPS);
+  requestAnimationFrame(measureFPS);
 </script>
-
 </body>
 </html>
