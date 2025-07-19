@@ -53,7 +53,7 @@ html, body {
   left: 0;
   right: 0;
   height: 50px;
-  background: #111;
+  background: #000;
   display: flex;
   justify-content: space-between; /* changed from flex-end */
   align-items: center;
@@ -104,7 +104,7 @@ html, body {
       top: 50px;
       left: 0;
       width: 100%;
-      background: #111;
+      background: #000;
       height: 0;
       overflow: hidden;
       opacity: 0;
