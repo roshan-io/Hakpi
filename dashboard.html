@@ -26,6 +26,33 @@
       padding: 20px;
     }
 
+   @media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+     
+}
+
+   @media (min-width: 768px) {
+      .title-heading {
+        font-size: 3rem;
+      }
+      body{
+         overflow: hidden;
+       }
+    }
+    @media (max-width: 768px){
+    .page-wrapper{
+      min-height: auto;
+      align-items: centre;
+      padding-top: 85px !important ;
+    }
+    
+    .inner-container {
+      padding-top: 5px !important ;
+    }
+  }
+
     /* Top bar */
     .top-bar {
       position: fixed;
