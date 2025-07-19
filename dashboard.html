@@ -455,9 +455,29 @@
       padding-top: 5px !important ;
     }
   }
+
+ .header {
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Audiowide', sans-serif;
+  font-size: 2rem;
+  color: #58a6ff;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+  z-index: 99;
+  margin: 0;
+  padding: 0;
+}
+
+
   </style>
 </head>
 <body>
+
+
+    <div class="header"> <h2> DASHBOARD</h2> </div>
   <!-- Top Bar -->
   <div class="top-bar">
     <a href="https://roshan-io.github.io/Hakpi/">
@@ -470,6 +490,8 @@
     </div>
   </div>
 
+
+
   <!-- Slide Menu Panel -->
   <div class="menu-panel" id="menuPanel">
     <ul>
@@ -481,8 +503,11 @@
   </div>
   <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-  <!-- Empty Page Wrapper for Content -->
-  <div class="page-wrapper content" id="content">
+ 
+
+ <!-- Empty Page Wrapper for Content -->
+ 
+ <div class="page-wrapper content" id="content">
     <div class="container">
       <!-- 🔧 Add your content here -->
       
