@@ -293,100 +293,98 @@
       menuIcon.classList.remove("open");
     }
   </script>
-   <script>
-    // Platform
-    document.getElementById("platform").innerText = navigator.userAgentData?.platform || navigator.platform;
-
-    // Browser
-    let browser = "Unknown";
-    if (navigator.userAgentData?.brands) {
-      const brand = navigator.userAgentData.brands.find(b => b.brand !== "Not A Brand");
-      browser = `${brand.brand} ${brand.version}`;
-    } else {
-      browser = navigator.userAgent;
-    }
-    document.getElementById("browser").innerText = browser;
-
-    // Screen info
-    document.getElementById("screen").innerText = `${screen.width} x ${screen.height}`;
-    document.getElementById("colorDepth").innerText = `${screen.colorDepth}-bit`;
-    document.getElementById("pixelDepth").innerText = `${screen.pixelDepth}-bit`;
-
-    // Online status
-    document.getElementById("online").innerText = navigator.onLine ? "✅ Online" : "❌ Offline";
-
-    // Timezone
-    document.getElementById("timezone").innerText = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-    // Battery
-    if (navigator.getBattery) {
-      navigator.getBattery().then(battery => {
-        const level = (battery.level * 100).toFixed(0);
-        document.getElementById("battery").innerText = `${level}% ${battery.charging ? "⚡ Charging" : ""}`;
-      });
-    } else {
-      document.getElementById("battery").innerText = "Unavailable";
-    }
-
-    // Connection
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (conn) {
-      document.getElementById("connection").innerText = conn.effectiveType || "Unknown";
-      document.getElementById("speed").innerText = conn.downlink ? `${conn.downlink} Mbps` : "N/A";
-    } else {
-      document.getElementById("connection").innerText = "Unavailable";
-      document.getElementById("speed").innerText = "Unavailable";
-    }
-  </script>
-
+ 
 <script>
-  // GPU Info
-  function getGPUInfo() {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    if (!gl) {
-      document.getElementById('gpu').innerText = 'Not supported';
-      return;
-    }
+  // Set basic device stats
+  document.getElementById("platform").innerText = navigator.userAgentData?.platform || navigator.platform;
 
-    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-    const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'Unavailable';
-    const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Unavailable';
-
-    document.getElementById('gpu').innerText = `${vendor}, ${renderer}`;
+  // Browser name
+  if (navigator.userAgentData?.brands) {
+    const brand = navigator.userAgentData.brands.find(b => b.brand !== "Not A Brand");
+    document.getElementById("browser").innerText = `${brand.brand} ${brand.version}`;
+  } else {
+    document.getElementById("browser").innerText = navigator.userAgent;
   }
 
-  // Memory Info
-  function getMemoryInfo() {
+  // Screen resolution & pixel depth
+  document.getElementById("screen").innerText = `${screen.width} x ${screen.height}`;
+  document.getElementById("pixelDepth").innerText = `${screen.pixelDepth}-bit`;
+
+  // Online status
+  document.getElementById("online").innerText = navigator.onLine ? "✅ Online" : "❌ Offline";
+
+  // Timezone
+  document.getElementById("timezone").innerText = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Battery info
+  if (navigator.getBattery) {
+    navigator.getBattery().then(battery => {
+      const level = (battery.level * 100).toFixed(0);
+      document.getElementById("battery").innerText = `${level}% ${battery.charging ? "⚡ Charging" : ""}`;
+    });
+  } else {
+    document.getElementById("battery").innerText = "Unavailable";
+  }
+
+  // Connection info
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn) {
+    document.getElementById("connection").innerText = conn.effectiveType || "Unknown";
+    document.getElementById("speed").innerText = conn.downlink ? `${conn.downlink} Mbps` : "N/A";
+  } else {
+    document.getElementById("connection").innerText = "Unavailable";
+    document.getElementById("speed").innerText = "Unavailable";
+  }
+
+  // GPU Info using WebGL
+  function getGPUInfo() {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) throw new Error("WebGL unsupported");
+
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'Unavailable';
+      const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Unavailable';
+      document.getElementById("gpu").innerText = `${vendor}, ${renderer}`;
+    } catch (e) {
+      document.getElementById("gpu").innerText = "Not supported";
+    }
+  }
+
+  // Memory usage (Chrome-only)
+  function getMemoryUsage() {
     if ('memory' in performance) {
       const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(1);
       const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(1);
-      document.getElementById('memory').innerText = `${used} / ${total} MB`;
+      document.getElementById("memory").innerText = `${used} / ${total} MB`;
     } else {
-      document.getElementById('memory').innerText = 'Unavailable';
+      document.getElementById("memory").innerText = "Unavailable";
     }
   }
 
-  // FPS (Refresh Rate)
+  // FPS Measurement
   let fpsHistory = [];
-  let lastTime = performance.now();
-  function measureFPS(now) {
-    const delta = now - lastTime;
-    lastTime = now;
-    const fps = Math.round(1000 / delta);
+  let lastFrameTime = performance.now();
+  function trackFPS(now) {
+    const delta = now - lastFrameTime;
+    lastFrameTime = now;
+    const fps = 1000 / delta;
     fpsHistory.push(fps);
     if (fpsHistory.length > 60) fpsHistory.shift();
 
-    const avgFPS = Math.round(fpsHistory.reduce((a, b) => a + b) / fpsHistory.length);
-    document.getElementById('fps').innerText = `${avgFPS} FPS`;
+    const avgFPS = Math.round(fpsHistory.reduce((a, b) => a + b, 0) / fpsHistory.length);
+    document.getElementById("fps").innerText = `${avgFPS} FPS`;
 
-    requestAnimationFrame(measureFPS);
+    requestAnimationFrame(trackFPS);
   }
 
-  // Run all
+  // Initialize all
   getGPUInfo();
-  getMemoryInfo();
-  requestAnimationFrame(measureFPS);
+  getMemoryUsage();
+  requestAnimationFrame(trackFPS);
 </script>
+
+
 </body>
 </html>
