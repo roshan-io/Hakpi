@@ -221,29 +221,7 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
 
-    .header {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.25rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .header h2 {
-      background: linear-gradient(to right, #4582ED, #D56673);
-      -webkit-background-clip: text;
-        font-family: 'Audiowide', sans-serif;
-  font-size: 2.5rem;
-  text-align: center;
-  margin: 20px auto 10px auto;
-  letter-spacing: 1px;
-  text-shadow: 0 0 8px #58a6ff88;
-  pointer-events: none;
-  user-select: none;
-    }
-
-    .big-card {
+     .big-card {
       grid-column: span 2;
       grid-row: span 2;
     }
@@ -513,8 +491,7 @@
   
   <!-- div class="card" -->
 
-  <div class="header"> <h2> DASHBOARD</h2> </div>
-
+  
   <div class="card weather-card">
     <div class="weather-city" id="city">Loading...</div>
     <div class="weather-temp" id="temp">--°C</div>
