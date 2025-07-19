@@ -248,16 +248,21 @@
       
        <div class="stats-box">
     <h2> System Statistics</h2>
-    <div class="stat"><span class="label">Platform:</span> <span id="platform"></span></div>
-    <div class="stat"><span class="label">Browser:</span> <span id="browser"></span></div>
-    <div class="stat"><span class="label">Resolution:</span> <span id="screen"></span></div>
-    <div class="stat"><span class="label">Color Depth:</span> <span id="colorDepth"></span></div>
-    <div class="stat"><span class="label">Pixel Depth:</span> <span id="pixelDepth"></span></div>
-    <div class="stat"><span class="label">Battery:</span> <span id="battery">Detecting...</span></div>
-    <div class="stat"><span class="label">Connection:</span> <span id="connection"></span></div>
-    <div class="stat"><span class="label">Speed:</span> <span id="speed"></span></div>
-    <div class="stat"><span class="label">Online:</span> <span id="online"></span></div>
-    <div class="stat"><span class="label">Timezone:</span> <span id="timezone"></span></div>
+  
+<div class="stat"><span class="label">Platform:</span> <span id="platform"></span></div>
+<div class="stat"><span class="label">Browser:</span> <span id="browser"></span></div>
+<div class="stat"><span class="label">Resolution:</span> <span id="screen"></span></div>
+<div class="stat"><span class="label">Pixel Depth:</span> <span id="pixelDepth"></span></div>
+<div class="stat"><span class="label">Battery:</span> <span id="battery">Detecting...</span></div>
+<div class="stat"><span class="label">Connection:</span> <span id="connection"></span></div>
+<div class="stat"><span class="label">Speed:</span> <span id="speed"></span></div>
+<div class="stat"><span class="label">Online:</span> <span id="online"></span></div>
+<div class="stat"><span class="label">Timezone:</span> <span id="timezone"></span></div>
+<div class="stat"><span class="label">GPU:</span> <span id="gpu">Detecting...</span></div>
+<div class="stat"><span class="label">Memory:</span> <span id="memory">Detecting...</span></div>
+<div class="stat"><span class="label">Refresh Rate:</span> <span id="fps">Calculating...</span></div>
+
+
   </div>
     </div>
   </div>
@@ -333,5 +338,55 @@
       document.getElementById("speed").innerText = "Unavailable";
     }
   </script>
+
+<script>
+  // GPU Info
+  function getGPUInfo() {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) {
+      document.getElementById('gpu').innerText = 'Not supported';
+      return;
+    }
+
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'Unavailable';
+    const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'Unavailable';
+
+    document.getElementById('gpu').innerText = `${vendor}, ${renderer}`;
+  }
+
+  // Memory Info
+  function getMemoryInfo() {
+    if ('memory' in performance) {
+      const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(1);
+      const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(1);
+      document.getElementById('memory').innerText = `${used} / ${total} MB`;
+    } else {
+      document.getElementById('memory').innerText = 'Unavailable';
+    }
+  }
+
+  // FPS (Refresh Rate)
+  let fpsHistory = [];
+  let lastTime = performance.now();
+  function measureFPS(now) {
+    const delta = now - lastTime;
+    lastTime = now;
+    const fps = Math.round(1000 / delta);
+    fpsHistory.push(fps);
+    if (fpsHistory.length > 60) fpsHistory.shift();
+
+    const avgFPS = Math.round(fpsHistory.reduce((a, b) => a + b) / fpsHistory.length);
+    document.getElementById('fps').innerText = `${avgFPS} FPS`;
+
+    requestAnimationFrame(measureFPS);
+  }
+
+  // Run all
+  getGPUInfo();
+  getMemoryInfo();
+  requestAnimationFrame(measureFPS);
+</script>
 </body>
 </html>
