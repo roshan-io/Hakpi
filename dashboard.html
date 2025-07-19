@@ -232,10 +232,14 @@
 
     .header h2 {
       background: linear-gradient(to right, #4582ED, #D56673);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-size: 2.3rem;
-      font-family: 'Roboto', sans-serif;
+        font-family: 'Audiowide', sans-serif;
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 20px auto 10px auto;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #58a6ff88;
+  pointer-events: none;
+  user-select: none;
     }
 
     .big-card {
@@ -398,7 +402,7 @@
   line-height: 1.6;
   text-align: center;
   margin-top: 0.1rem;
-  padding: 0rem;
+  padding: 1rem;
   border-radius: 12px;
   font-family: 'Roboto', sans-serif;
 }
@@ -507,6 +511,9 @@
  
   
   <!-- div class="card" -->
+
+  <div class="header"> <h2> DASHBOARD</h2> </div>
+
   <div class="card weather-card">
     <div class="weather-city" id="city">Loading...</div>
     <div class="weather-temp" id="temp">--°C</div>
