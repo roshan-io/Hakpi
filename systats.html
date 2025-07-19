@@ -264,7 +264,6 @@
 <div class="stat"><span class="label">Online:</span> <span id="online"></span></div>
 <div class="stat"><span class="label">Timezone:</span> <span id="timezone"></span></div>
 <div class="stat"><span class="label">GPU:</span> <span id="gpu">Detecting...</span></div>
-<div class="stat"><span class="label">Memory:</span> <span id="memory">Detecting...</span></div>
 <div class="stat"><span class="label">Refresh Rate:</span> <span id="fps">Calculating...</span></div>
 
 
@@ -357,16 +356,7 @@
     }
   }
 
-  // Memory usage (Chrome-only)
-  function getMemoryUsage() {
-    if ('memory' in performance) {
-      const used = (performance.memory.usedJSHeapSize / 1048576).toFixed(1);
-      const total = (performance.memory.totalJSHeapSize / 1048576).toFixed(1);
-      document.getElementById("memory").innerText = `${used} / ${total} MB`;
-    } else {
-      document.getElementById("memory").innerText = "Unavailable";
-    }
-  }
+ 
 
   // FPS Measurement
   let fpsHistory = [];
