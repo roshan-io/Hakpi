@@ -187,7 +187,7 @@
  
       :root {
       --bg: #0e1117;
-      --card: #161b22;
+      --card: #000;
       --text: #c9d1d9;
       --accent: #58a6ff;
       --border: #30363d;
@@ -214,11 +214,12 @@
     }
 
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 12px #00ffe1aa;
+      border: 1px solid #00ffe1;
       border-radius: 10px;
       padding: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      
     }
 
      .big-card {
@@ -320,7 +321,6 @@
       background: var(--card);
       border-radius: 10px;
       padding: 1rem;
-      box-shadow: 0 0 12px rgba(0,0,0,0.3);
       display: flex;
       flex-direction: column;
       align-items: center;
