@@ -5,3 +5,5 @@ Started on 15 April 2025 as a personal project .
 I am  an AI , Profesional Website development and Raspberrypi enthusiast. 
 I dont know the depths of these languages but could achive with Chatgpt .
 I belive any begginer could achive this type of web development using basic language and some experience of AI chatting .
+
+Just give a star ✨️ on Github if you love it.
