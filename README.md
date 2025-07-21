@@ -1,4 +1,4 @@
-This repository belongs to SHEIK ROSHAN; 
+I am Sheik Roshan a casual IT developer . 
 
 This basic website is demonstration of complexities of simple static pages .
 
@@ -14,4 +14,4 @@ I dont know the depths of these languages but could achive with Chatgpt .
 
 I belive any begginer could achive this type of web development using basic language and some experience of AI chatting .
 
-Just give a star ✨️ on Github if you love it.
+Just give a Star ✨️ on Github if you love it.
