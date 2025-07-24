@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Assistant Redirect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b0b1a;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    #voiceBtn {
+      background: linear-gradient(135deg, #00f0ff, #3c40ff);
+      border: none;
+      padding: 1rem 2rem;
+      color: white;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #voiceBtn:hover {
+      box-shadow: 0 0 15px #00f0ff;
+    }
+
+    #status {
+      margin-top: 30px;
+      font-size: 1rem;
+      opacity: 0.75;
+      max-width: 90%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Talk to Assistant</h1>
+  <button id="voiceBtn">Start Listening</button>
+  <div id="status">Say something like: "I want to read the terms"</div>
+
+  <script>
+    const voiceBtn = document.getElementById("voiceBtn");
+    const status = document.getElementById("status");
+
+    // ✅ Your actual URLs here:
+    const commands = {
+      "terms": "https://roshan-io.github.io/Hakpi/terms.html",
+      "privacy": "https://roshan-io.github.io/Hakpi/terms.html",
+      "contact": "https://roshan-io.github.io/Hakpi/contact.html",
+      "home": "https://roshan-io.github.io/Hakpi/",
+      "about": "https://roshan-io.github.io/Hakpi/about.html",
+      "launchpad": "https://roshan-io.github.io/Hakpi/launchpad.html",
+      "stat": "https://roshan-io.github.io/Hakpi/systats.html",
+      "dash": "https://roshan-io.github.io/Hakpi/dashboard.html"
+    };
+
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      window.speechSynthesis.speak(utterance);
+      status.textContent = text;
+    }
+
+    function handleCommand(transcript) {
+      const text = transcript.toLowerCase();
+      for (let keyword in commands) {
+        if (text.includes(keyword)) {
+          speak(`Redirecting to ${keyword} page...`);
+          setTimeout(() => {
+            window.location.href = commands[keyword];
+          }, 1500);
+          return;
+        }
+      }
+      speak("Sorry, I didn't understand that. Please try again.");
+    }
+
+    voiceBtn.onclick = () => {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      if (!SpeechRecognition) {
+        alert("Your browser does not support Speech Recognition.");
+        return;
+      }
+
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = true;
+      recognition.continuous = false;
+
+      let finalTranscript = '';
+
+      recognition.onstart = () => {
+        status.textContent = "Listening... 🎧";
+      };
+
+      recognition.onresult = (event) => {
+        let interim = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            interim += event.results[i][0].transcript;
+          }
+        }
+        status.textContent = interim ? `You’re saying: "${interim}"` : `Heard: "${finalTranscript}"`;
+      };
+
+      recognition.onerror = (e) => {
+        speak("There was an error: " + e.error);
+      };
+
+      recognition.onend = () => {
+        if (finalTranscript.trim() !== '') {
+          handleCommand(finalTranscript.trim());
+        } else {
+          speak("I didn't catch that. Please try again.");
+        }
+      };
+
+      recognition.start();
+    };
+  </script>
+
+</body>
+</html>
