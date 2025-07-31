@@ -12,6 +12,6 @@ I am  an AI , Profesional Website development and Raspberrypi enthusiast.
 
 I dont know the depths of these languages but could achive with Chatgpt .
 
-I belive any begginer could achive this type of web development using basic language and some experience of AI chatting .
+I belive any begginer could achive this type of web development using basic language and some experience of AI handling .
 
 Just give a Star ✨️ on Github if you love it.
