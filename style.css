@@ -282,8 +282,8 @@ font-family: sans-serif;
     }
 
     #status {
-      position: absolute;
-      bottom: 100px;
+      position: fixed;
+      bottom: 50px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 1rem;
@@ -293,4 +293,5 @@ font-family: sans-serif;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 8px;
       max-width: 90%;
+      display: none;
     }
