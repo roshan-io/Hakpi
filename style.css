@@ -224,7 +224,7 @@ font-family: sans-serif;
   -webkit-image-rendering: pixelated; /* For webkit browsers */
 }
 
-
+/*
 .fullscreen-btn {
       position: fixed;
       bottom: 20px;
@@ -251,5 +251,5 @@ font-family: sans-serif;
       font-size: 20px;
       pointer-events: none;
     }
-
+*/
 
