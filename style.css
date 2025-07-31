@@ -253,3 +253,44 @@ font-family: sans-serif;
     }
 */
 
+
+    #voiceBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #00f0ff, #3c40ff);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    #voiceBtn:hover {
+      box-shadow: 0 0 20px #00f0ff;
+    }
+
+    #voiceBtn i {
+      font-size: 24px;
+      color: white;
+    }
+
+    #status {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      opacity: 0.8;
+      text-align: center;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      max-width: 90%;
+    }
