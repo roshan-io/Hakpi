@@ -201,7 +201,8 @@ document.querySelectorAll('.panel').forEach(panel => {
       let finalTranscript = "";
 
       recognition.onstart = () => {
-        status.textContent = "Listening... 🎧";
+        status.textContent = "Listening... ";
+        status.style.display = "block";
       };
 
       recognition.onresult = (event) => {
@@ -221,6 +222,7 @@ document.querySelectorAll('.panel').forEach(panel => {
       };
 
       recognition.onend = () => {
+        status.style.display = "none";
         if (finalTranscript.trim() !== "") {
           handleCommand(finalTranscript.trim());
         } else {
