@@ -19,7 +19,7 @@
     }
     *{box-sizing:border-box}
     html,body{
-      height:100%;
+      height:100dvh;   /* ✅ dynamic safe height */
       margin:0;
       background:
         radial-gradient(1000px 700px at 20% -10%, #0f172a 0%, transparent 60%),
@@ -39,7 +39,7 @@
     }
     .card{
       width:min(680px, 96vw);
-      height:min(92vh, 760px);
+      height:min(92dvh, 760px);   /* ✅ vh -> dvh */
       background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
       border:1px solid rgba(255,255,255,0.1);
       border-radius:24px;
@@ -50,6 +50,14 @@
       overflow:hidden;
       position:relative;
     }
+
+    /* Landscape fix */
+    @media (orientation: landscape) {
+      .card {
+        height: 86dvh; /* ✅ slightly smaller so it never clips */
+      }
+    }
+
     .header{
       padding:14px 18px;
       display:flex;
@@ -70,129 +78,45 @@
       border:1px solid rgba(56,189,248,0.35);
       padding:6px 10px; border-radius:999px;
     }
-    .content{
-      flex:1; display:flex; flex-direction:column;
-      padding:18px; gap:14px; overflow:hidden;
-    }
-    .stage{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .stage .title{
-      font-size:18px; font-weight:700; color:var(--ink);
-    }
-    .progress{
-      height:8px; flex:1;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.1);
-      border-radius:999px; overflow:hidden; margin-left:14px; margin-right:10px;
-    }
+    .content{ flex:1; display:flex; flex-direction:column; padding:18px; gap:14px; overflow:hidden; }
+    .stage{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .stage .title{ font-size:18px; font-weight:700; color:var(--ink); }
+    .progress{ height:8px; flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:999px;
+      overflow:hidden; margin-left:14px; margin-right:10px; }
     .bar{height:100%; width:0%; background:linear-gradient(90deg, var(--cyan), #22d3ee)}
     .meta{font-size:12px; color:var(--muted)}
-    .question-box{
-      flex:1; display:flex; flex-direction:column; justify-content:center; gap:14px;
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:16px; padding:16px;
-      background:rgba(255,255,255,0.04);
-      overflow:hidden;
-    }
-    .qtext{
-      font-size:20px; line-height:1.35; color:#dbeafe; /* light indigo */
-      margin-bottom:4px;
-    }
-    .options{
-      display:grid; grid-template-columns:1fr; gap:12px;
-    }
-    .option{
-      padding:12px 14px; border-radius:12px;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      cursor:pointer; user-select:none;
-      transition:transform .06s ease, background .2s ease, border .2s ease, opacity .2s ease;
-      position:relative;
-      text-align:left;
-      font-size:16px;
-    }
+    .question-box{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:14px;
+      border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; background:rgba(255,255,255,0.04); overflow:hidden; }
+    .qtext{ font-size:20px; line-height:1.35; color:#dbeafe; margin-bottom:4px; }
+    .options{ display:grid; grid-template-columns:1fr; gap:12px; }
+    .option{ padding:12px 14px; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+      cursor:pointer; user-select:none; transition:transform .06s ease, background .2s ease, border .2s ease, opacity .2s ease;
+      position:relative; text-align:left; font-size:16px; }
     .option:hover{ transform:translateY(-1px); background:rgba(56,189,248,0.14); }
     .option.disabled{ opacity:.45; }
-    .option.correct{
-      background:rgba(16,185,129,0.16);
-      border-color:rgba(16,185,129,0.8);
-      color:var(--ok);
-    }
-    .option.correct::after{
-      content:"✔";
-      position:absolute; right:12px; top:50%; transform:translateY(-50%);
-      font-weight:800;
-    }
-    .option.wrong{
-      background:rgba(239,68,68,0.16);
-      border-color:rgba(239,68,68,0.8);
-      color:var(--bad);
-    }
-    .option.wrong::after{
-      content:"✖";
-      position:absolute; right:12px; top:50%; transform:translateY(-50%);
-      font-weight:800;
-    }
-    .controls{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .btn{
-      appearance:none; border:none; border-radius:12px;
-      padding:10px 16px; font-weight:700; cursor:pointer;
-      background:var(--cyan); color:#0b1220; letter-spacing:.3px;
-      transition:filter .15s ease, transform .06s ease;
-    }
-
-    /* your custom row alignment */
-    .button-row {
-      display: flex;
-      justify-content: space-between; /* Restart left, Next right */
-      align-items: center;
-      margin-top: 15px;
-      width: 100%; /* keeps full row width */
-    }
-    .btn.nxt { margin-left: auto; } /* pushes Next to far right */
-
+    .option.correct{ background:rgba(16,185,129,0.16); border-color:rgba(16,185,129,0.8); color:var(--ok); }
+    .option.correct::after{ content:"✔"; position:absolute; right:12px; top:50%; transform:translateY(-50%); font-weight:800; }
+    .option.wrong{ background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.8); color:var(--bad); }
+    .option.wrong::after{ content:"✖"; position:absolute; right:12px; top:50%; transform:translateY(-50%); font-weight:800; }
+    .controls{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .btn{ appearance:none; border:none; border-radius:12px; padding:10px 16px; font-weight:700; cursor:pointer;
+      background:var(--cyan); color:#0b1220; letter-spacing:.3px; transition:filter .15s ease, transform .06s ease; }
+    .button-row { display:flex; justify-content:space-between; align-items:center; margin-top:15px; width:100%; }
+    .btn.nxt { margin-left:auto; }
     .btn:hover{ filter:brightness(1.05); }
     .btn:active{ transform:translateY(1px); }
-    .btn.ghost{
-      background:transparent; color:var(--ink);
-      border:1px solid rgba(255,255,255,0.18);
-    }
-    /* visual + interaction lock for disabled state */
-    .btn:disabled{
-      opacity:.55;
-      cursor:not-allowed;
-      filter:none;
-    }
-    .status{
-      font-size:13px; color:var(--muted);
-    }
-    .center{
-      height:100%; display:flex; flex-direction:column;
-      align-items:center; justify-content:center; gap:16px; text-align:center;
-    }
-    .big{
-      font-size: 2rem; font-weight:800; color:#a5f3fc;
-    }
+    .btn.ghost{ background:transparent; color:var(--ink); border:1px solid rgba(255,255,255,0.18); }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; filter:none; }
+    .status{ font-size:13px; color:var(--muted); }
+    .center{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; text-align:center; }
+    .big{ font-size: 2rem; font-weight:800; color:#a5f3fc; }
     .small{ font-size:14px; color:var(--muted); }
-    .levels-row{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
-    }
-    .lvlbtn{
-      padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.16);
-      background:rgba(56,189,248,0.08); color:var(--ink); cursor:pointer; font-weight:700;
-    }
+    .levels-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+    .lvlbtn{ padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.16);
+      background:rgba(56,189,248,0.08); color:var(--ink); cursor:pointer; font-weight:700; }
     @media(min-width:720px){
-      html,body{
-      height:95%;
-      }
       .options{ grid-template-columns:1fr 1fr; }
     }
-
-
-
   </style>
 </head>
 <body>
@@ -208,15 +132,14 @@
         </div>
         <div class="chip">Fighter Jets </div>
       </div>
-
-      <div class="content" id="app">
-        <!-- dynamic -->
-      </div>
+      <div class="content" id="app"></div>
     </div>
   </div>
 
-  <script>
-/* ------------------------------
+<script>
+/* ------------ Quiz JS unchanged ------------ */
+// (Your entire JS from original stays exactly same)
+  /* ------------------------------
    DATA: 100 Qs split L1(33) L2(33) L3(34)
    Each item: { q, options: [a,b,c,d], answer: index }
 --------------------------------*/
@@ -524,7 +447,9 @@ function endLevel(){
 // bootstrap
 initSelections();
 mountStart();
-
-  </script>
+  
+</script>
+  
+  
 </body>
 </html>
