@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hakpi | Futuristic Fighter Jet Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg1:#020617; /* slate-950 */
+      --bg2:#0b1022;
+      --glass:rgba(255,255,255,0.06);
+      --glass2:rgba(255,255,255,0.1);
+      --cyan:#38bdf8;
+      --cyan-2:#0ea5e9;
+      --ok:#10b981;
+      --bad:#ef4444;
+      --ink:#e2e8f0;
+      --muted:#94a3b8;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      background:
+        radial-gradient(1000px 700px at 20% -10%, #0f172a 0%, transparent 60%),
+        radial-gradient(800px 600px at 120% 20%, #0b132e 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--ink);
+      font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      overflow:hidden; /* no scroll */
+    }
+    .wrap{
+      height:100%;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+    }
+    .card{
+      width:min(680px, 96vw);
+      height:min(92vh, 760px);
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:24px;
+      box-shadow:0 0 40px rgba(56,189,248,0.18);
+      backdrop-filter: blur(14px);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      position:relative;
+    }
+    .header{
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:700; letter-spacing:0.4px;
+      color:var(--cyan);
+    }
+    .chip{
+      font-size:12px;
+      color:var(--ink);
+      background:rgba(56,189,248,0.08);
+      border:1px solid rgba(56,189,248,0.35);
+      padding:6px 10px; border-radius:999px;
+    }
+    .content{
+      flex:1; display:flex; flex-direction:column;
+      padding:18px; gap:14px; overflow:hidden;
+    }
+    .stage{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .stage .title{
+      font-size:18px; font-weight:700; color:var(--ink);
+    }
+    .progress{
+      height:8px; flex:1;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:999px; overflow:hidden; margin-left:14px; margin-right:10px;
+    }
+    .bar{height:100%; width:0%; background:linear-gradient(90deg, var(--cyan), #22d3ee)}
+    .meta{font-size:12px; color:var(--muted)}
+    .question-box{
+      flex:1; display:flex; flex-direction:column; justify-content:center; gap:14px;
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px; padding:16px;
+      background:rgba(255,255,255,0.04);
+      overflow:hidden;
+    }
+    .qtext{
+      font-size:20px; line-height:1.35; color:#dbeafe; /* light indigo */
+      margin-bottom:4px;
+    }
+    .options{
+      display:grid; grid-template-columns:1fr; gap:12px;
+    }
+    .option{
+      padding:12px 14px; border-radius:12px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      cursor:pointer; user-select:none;
+      transition:transform .06s ease, background .2s ease, border .2s ease, opacity .2s ease;
+      position:relative;
+      text-align:left;
+      font-size:16px;
+    }
+    .option:hover{ transform:translateY(-1px); background:rgba(56,189,248,0.14); }
+    .option.disabled{ opacity:.45; }
+    .option.correct{
+      background:rgba(16,185,129,0.16);
+      border-color:rgba(16,185,129,0.8);
+      color:var(--ok);
+    }
+    .option.correct::after{
+      content:"✔";
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      font-weight:800;
+    }
+    .option.wrong{
+      background:rgba(239,68,68,0.16);
+      border-color:rgba(239,68,68,0.8);
+      color:var(--bad);
+    }
+    .option.wrong::after{
+      content:"✖";
+      position:absolute; right:12px; top:50%; transform:translateY(-50%);
+      font-weight:800;
+    }
+    .controls{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .btn{
+      appearance:none; border:none; border-radius:12px;
+      padding:10px 16px; font-weight:700; cursor:pointer;
+      background:var(--cyan); color:#0b1220; letter-spacing:.3px;
+      transition:filter .15s ease, transform .06s ease;
+    }
+
+    /* your custom row alignment */
+    .button-row {
+      display: flex;
+      justify-content: space-between; /* Restart left, Next right */
+      align-items: center;
+      margin-top: 15px;
+      width: 100%; /* keeps full row width */
+    }
+    .btn.nxt { margin-left: auto; } /* pushes Next to far right */
+
+    .btn:hover{ filter:brightness(1.05); }
+    .btn:active{ transform:translateY(1px); }
+    .btn.ghost{
+      background:transparent; color:var(--ink);
+      border:1px solid rgba(255,255,255,0.18);
+    }
+    /* visual + interaction lock for disabled state */
+    .btn:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      filter:none;
+    }
+    .status{
+      font-size:13px; color:var(--muted);
+    }
+    .center{
+      height:100%; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:16px; text-align:center;
+    }
+    .big{
+      font-size: 2rem; font-weight:800; color:#a5f3fc;
+    }
+    .small{ font-size:14px; color:var(--muted); }
+    .levels-row{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    }
+    .lvlbtn{
+      padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.16);
+      background:rgba(56,189,248,0.08); color:var(--ink); cursor:pointer; font-weight:700;
+    }
+    @media(min-width:720px){
+      html,body{
+      height:95%;
+      }
+      .options{ grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="brand">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M12 6v6l4 2" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          HAKPI QUIZ
+        </div>
+        <div class="chip">Fighter Jets </div>
+      </div>
+
+      <div class="content" id="app">
+        <!-- dynamic -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+/* ------------------------------
+   DATA: 100 Qs split L1(33) L2(33) L3(34)
+   Each item: { q, options: [a,b,c,d], answer: index }
+--------------------------------*/
+
+// Level 1: Q1–Q33
+const L1 = [
+  {q:"Which fighter jet is nicknamed the 'Raptor'?", options:["F-22","F-35","F-16","F-14"], answer:0},
+  {q:"The Dassault Rafale’s name translates to:", options:["Thunderstorm","Gust of wind","Lightning","Eagle strike"], answer:1},
+  {q:"The first operational stealth fighter was:", options:["F-117 Nighthawk","F-22 Raptor","Su-57 Felon","J-20 Mighty Dragon"], answer:0},
+  {q:"NATO reporting name for Sukhoi Su-57:", options:["Flanker","Felon","Fulcrum","Foxhound"], answer:1},
+  {q:"Which jet is capable of V/STOL?", options:["F-16 Fighting Falcon","F-35B Lightning II","MiG-29","Mirage 2000"], answer:1},
+  {q:"The F-35C variant is designed for:", options:["Carrier operations","Export market","Stealth reconnaissance","Close air support"], answer:0},
+  {q:"Which fighter was nicknamed 'The Flying Tennis Court'?", options:["F-14 Tomcat","Su-27 Flanker","MiG-25 Foxbat","F-111 Aardvark"], answer:1},
+  {q:"Max speed of MiG-25 Foxbat?", options:["Mach 2.0","Mach 2.5","Mach 3.2","Mach 4.0"], answer:2},
+  {q:"The J-20 fighter’s nickname is:", options:["Black Eagle","Mighty Dragon","Iron Phoenix","Thunder Hawk"], answer:1},
+  {q:"Why was the SR-71 Blackbird nearly impossible to intercept?", options:["Stealth","Extreme speed & altitude","Maneuverability","Radar jamming"], answer:1},
+  {q:"Which aircraft features in the iconic 'Top Gun' quote?", options:["F-14 Tomcat","F-18 Hornet","F-22 Raptor","F-35 Lightning II"], answer:0},
+  {q:"Who developed Eurofighter Typhoon?", options:["USA","Russia","Joint European program","Japan"], answer:2},
+  {q:"India’s indigenous fighter jet is:", options:["Tejas","Mirage 2000","Su-30MKI","MiG-21 Bison"], answer:0},
+  {q:"Which aircraft replaced the F-14 Tomcat in the US Navy?", options:["F/A-18 Super Hornet","F-35C","F-16","F-22"], answer:0},
+  {q:"The F-16 Fighting Falcon is also nicknamed:", options:["Viper","Eagle","Hornet","Lightning"], answer:0},
+  {q:"The MiG-29’s NATO reporting name is:", options:["Foxbat","Fulcrum","Fencer","Flanker"], answer:1},
+  {q:"Which aircraft struck the 'Highway of Death' in the Gulf War?", options:["F-117","A-10","F-15E","All of the above"], answer:3},
+  {q:"Which aircraft famously used a swing-wing design?", options:["F-111 Aardvark","MiG-23 Flogger","F-14 Tomcat","All of the above"], answer:3},
+  {q:"What’s unique about the F-117’s design?", options:["Supersonic speed","Flat, faceted stealth surfaces","Canards","VTOL"], answer:1},
+  {q:"Which Soviet jet countered the F-15?", options:["Su-27","MiG-29","MiG-31","Yak-141"], answer:0},
+  {q:"Which modern jet is known as “Super Sukhoi”?", options:["Su-30SM","Su-35S","Su-34","Su-57"], answer:1},
+  {q:"The F-15 Eagle’s famous record:", options:["50–5","100–0","104–0","200–2"], answer:2},
+  {q:"Which aircraft is nicknamed 'Growler'?", options:["F-15","EA-18G","MiG-29","Mirage 2000"], answer:1},
+  {q:"Which 'fighter companion' concept drone?", options:["X-47B","Loyal Wingman","MQ-9 Reaper","Global Hawk"], answer:1},
+  {q:"The Chinese FC-31 is also known as:", options:["J-31 Gyrfalcon","J-20B","Thunder Dragon","Swift Falcon"], answer:0},
+  {q:"NASA lifting-body vehicles related to fighter research:", options:["X-15","HL-10","M2-F2","Both b & c"], answer:3},
+  {q:"'Eagle Driver’s dream' often refers to:", options:["F-15 Eagle","F-22 Raptor","F-16 Viper","F-35A"], answer:0},
+  {q:"Yak-141 was an experimental fighter with:", options:["Twin tails","VTOL capability","Swing wings","Canards"], answer:1},
+  {q:"Gripen fighter is from:", options:["Sweden","Germany","Italy","UK"], answer:0},
+  {q:"F-22 Raptor was never exported because:", options:["Too expensive","US law prohibited it","Hard to maintain","Outdated"], answer:1},
+  {q:"Aircraft used in Israeli raid 'Operation Opera':", options:["Mirage III","F-15 Eagle","F-16 Fighting Falcon","A-4 Skyhawk"], answer:2},
+  {q:"US Navy jet with many Vietnam MiG kills:", options:["F-8 Crusader","F-4 Phantom II","A-6 Intruder","F-14 Tomcat"], answer:1},
+  {q:"NATO name for the MiG-31:", options:["Foxhound","Fulcrum","Flogger","Flanker"], answer:0}
+];
+
+// Level 2: Q34–Q66
+const L2 = [
+  {q:"Which aircraft is known as 'Flanker-E'?", options:["Su-27","Su-30MKI","Su-35","Su-57"], answer:2},
+  {q:"The F-4 Phantom II was built by:", options:["Boeing","McDonnell Douglas","Lockheed","Northrop"], answer:1},
+  {q:"Which jet is nicknamed 'Silent Eagle'?", options:["F-22","F-15SE","F-35","F-16"], answer:1},
+  {q:"Which Indian jet squadron nickname is 'Flying Daggers'?", options:["MiG-29UPG","Mirage 2000","HAL Tejas","Su-30MKI"], answer:2},
+  {q:"Korean War dogfighting icons:", options:["F-86 Sabre","MiG-15","Both a & b","None"], answer:2},
+  {q:"Su-34 Fullback is unique for:", options:["Side-by-side twin-seat cockpit","VTOL","Stealth","Nuclear propulsion"], answer:0},
+  {q:"Most produced supersonic aircraft:", options:["F-16","MiG-21","F-4 Phantom II","Mirage III"], answer:1},
+  {q:"F-35 program original name:", options:["Joint Strike Fighter","Lightning Project","Future Air Combat","X-Fighter"], answer:0},
+  {q:"Which aircraft downed a satellite in 1985?", options:["F-15 Eagle","F-22 Raptor","Su-27","MiG-31"], answer:0},
+  {q:"What replaced the Harrier in USMC?", options:["F-35B","F-18","A-10C","F-22"], answer:0},
+  {q:"Which aircraft is nicknamed 'Foxhound'?", options:["MiG-25","MiG-31","Su-24","Su-27"], answer:1},
+  {q:"Japan’s 6th-gen project (legacy term):", options:["Tempest","FX / F-X","GCAP","KF-21"], answer:1},
+  {q:"KF-21 Boramae is developed by:", options:["South Korea","Turkey","Japan","UAE"], answer:0},
+  {q:"Su-57’s vectoring nozzles chiefly give:", options:["Faster cruise","Extreme maneuverability","More stealth","Higher altitude"], answer:1},
+  {q:"'Top Gun jet' most associated:", options:["F-14 Tomcat","F-18 Hornet","F-22 Raptor","F-35C"], answer:0},
+  {q:"Chengdu J-10 NATO reporting name:", options:["Firebird","Fire Fang","Firebird Dragon","Fire Fang"], answer:0},
+  {q:"Which stealth bomber shares tech roots with stealth fighters?", options:["B-1B Lancer","B-2 Spirit","B-52","Tu-160"], answer:1},
+  {q:"'Thunderbolt II' refers to:", options:["A-10","F-16","F-35","Su-25"], answer:0},
+  {q:"First operational supersonic Soviet fighter:", options:["MiG-15","MiG-19 Farmer","MiG-21 Fishbed","Yak-25"], answer:1},
+  {q:"F-14 Tomcat featured prominently in:", options:["Korean War","Vietnam War","Iran–Iraq War","Falklands War"], answer:2},
+  {q:"Which fighter was 'Project 667'?", options:["F-16","Eurofighter Typhoon","Su-27","MiG-29"], answer:2},
+  {q:"Stealth jet used in 1999 Kosovo War:", options:["F-117","F-22","F-35","Su-57"], answer:0},
+  {q:"Which aircraft (again) shot down a satellite?", options:["MiG-25","F-15","Su-27","F-22"], answer:1},
+  {q:"Mirage 2000 was built by:", options:["Lockheed Martin","Dassault Aviation","Boeing","Saab"], answer:1},
+  {q:"IAF 'backbone' fighter:", options:["MiG-21","Su-30MKI","Mirage 2000","Tejas"], answer:1},
+  {q:"Which country operates KF-21 'Boramae'?", options:["Japan","South Korea","Turkey","China"], answer:1},
+  {q:"F-22 IOC year:", options:["1995","2000","2005","2010"], answer:2},
+  {q:"NATO reporting name for J-20:", options:["Fire Dragon","Firebird","Mighty Dragon","None"], answer:3}, /* NATO doesn't assign for Chinese? Often no official; keep 'None' */
+  {q:"US Navy fighter that replaced F-8 Crusader:", options:["F-14","F-18 Hornet","F-35C","A-6"], answer:1},
+  {q:"MiG-31 is primarily a:", options:["Dogfighter","Long-range interceptor","Ground attacker","Carrier fighter"], answer:1},
+  {q:"Which is 'Beagle'?", options:["Su-24","MiG-23","Yak-38","Tu-128"], answer:0},
+  {q:"First combat-service canards among these:", options:["Mirage III","Saab Viggen","Su-30MKI","Eurofighter Typhoon"], answer:1},
+  {q:"Su-33 is a navalized:", options:["Su-27","Su-35","Su-24","MiG-29"], answer:0}
+];
+
+// Level 3: Q67–Q100
+const L3 = [
+  {q:"Harrier Jump Jet originally developed by:", options:["US Navy","British Hawker Siddeley","Dassault Aviation","Mikoyan"], answer:1},
+  {q:"Which aircraft is 'Flogger'?", options:["MiG-23","Su-17","MiG-29","Su-25"], answer:0},
+  {q:"Gripen can operate from:", options:["High-alt bases only","Carriers","Short highways/roads","Underground hangars"], answer:2},
+  {q:"Canceled 1990s advanced US program:", options:["YF-23 Black Widow II","F-22","F-35","A-12 Avenger II"], answer:0},
+  {q:"Who popularized the term 'supercruise' in fighters?", options:["F-22 Raptor","Concorde","MiG-31","Eurofighter"], answer:0},
+  {q:"MiG-21 NATO name:", options:["Fishbed","Foxbat","Fulcrum","Flanker"], answer:0},
+  {q:"IAF Mirage 2000 used in which conflict (1999)?", options:["1971 war","Kargil War","Desert Storm","Opera"], answer:1},
+  {q:"KFIR fighter developed by:", options:["India","Israel","Egypt","Iran"], answer:1},
+  {q:"F-15E Strike Eagle is a:", options:["Air superiority","Multirole strike fighter","Stealth bomber","Naval interceptor"], answer:1},
+  {q:"Su-47 Berkut is unique for:", options:["VTOL","Forward-swept wings","Canard stealth","Tri-engine"], answer:1},
+  {q:"Backbone of US airpower in Vietnam:", options:["F-4 Phantom II","F-8 Crusader","F-100","A-6 Intruder"], answer:0},
+  {q:"Chengdu J-10 nickname:", options:["Fire Fang","Firebird","Thunder Hawk","Dragon Fang"], answer:0},
+  {q:"Which jet used thrust-vector paddles earlier than 3D nozzles?", options:["F-15 ACTIVE","Su-30MKI","Su-35","F-22"], answer:0},
+  {q:"'Swing Wing' applies to which fighter?", options:["MiG-21","Su-27","MiG-23","F-16"], answer:2},
+  {q:"Falklands War fighter star:", options:["Mirage III","Sea Harrier","Su-25","F-14"], answer:1},
+  {q:"MiG-15’s main adversary in Korea:", options:["F-86 Sabre","F-100","F-4 Phantom","A-4 Skyhawk"], answer:0},
+  {q:"F-35B is special because it has:", options:["Foldable wings","VTOL lift fan","Thrust vectoring only","Larger tanks"], answer:1},
+  {q:"NATO reporting name for Su-27:", options:["Flanker","Foxhound","Fencer","Fulcrum"], answer:0},
+  {q:"Which aircraft is nicknamed 'Electric Jet'?", options:["F-16","F-22","F-35","Eurofighter"], answer:0},
+  {q:"China-Pakistan co-developed fighter:", options:["JF-17 Thunder","J-20","MiG-29","Mirage V"], answer:0},
+  {q:"Russian armored strike fighter:", options:["Su-25 Frogfoot","Su-24","MiG-27","Yak-130"], answer:0},
+  {q:"Experimental US aircraft that competed with F-22:", options:["YF-23 Black Widow II","YF-17 Cobra","F-20 Tigershark","X-32"], answer:0},
+  {q:"Mitsubishi F-2 is based on:", options:["F-16 design","F-18 design","F-15 design","Gripen design"], answer:0},
+  {q:"Su-25 NATO name:", options:["Frogfoot","Fulcrum","Fencer","Foxbat"], answer:0},
+  {q:"Future UK replacement for Typhoon:", options:["FCAS","Tempest","FX","KF-21"], answer:2},
+  {q:"Turkish TF-X is called:", options:["Kaan","Altay","Boramae","Falcon"], answer:0},
+  {q:"US 'Skyborg' program relates to:", options:["Pilot AI assistant","Nuclear propulsion","Hypersonic fighters","Radar jamming"], answer:0},
+  {q:"Fastest manned fighter in level flight:", options:["MiG-25","MiG-31","F-15","F-22"], answer:1},
+  {q:"First US fighter with bubble canopy 360° view (among these)?", options:["F-15","F-16","F-86","F-100"], answer:1}, /* modern bubble as design hallmark */
+  {q:"F-35 name honors which classic?", options:["P-38 Lightning","F-22 Raptor","F-86 Sabre","F-4 Phantom"], answer:0},
+  {q:"NATO codename 'Fencer' is:", options:["Su-24","MiG-29","Su-30","Yak-38"], answer:0},
+  {q:"F/A-18E/F Super Hornet nickname:", options:["Rhino","Tiger","Eagle","Falcon"], answer:0},
+  {q:"Which fighters feature canards + delta wings?", options:["Eurofighter Typhoon","Rafale","Saab Gripen","All of the above"], answer:3},
+  {q:"US 6th-gen fighter program name:", options:["NGAD","Tempest","FCAS","FX"], answer:0},
+  /* Bring in any earlier edge ones to total 34 */
+  {q:"Which aircraft achieved supercruise earliest in US service?", options:["F-22","F-15C","F-35A","F-16C"], answer:0}
+];
+
+/* ------------------------------
+   QUIZ ENGINE
+--------------------------------*/
+const app = document.getElementById('app');
+
+// state
+let levelIndex = 0;                 // 0,1,2 for L1,L2,L3
+let selections = [];               // selected randomized sets per level
+let currentSet = [];               // active level questions
+let qi = 0;                        // current question idx within level
+let score = 0;                     // current level score
+let totals = [10, 10, 15];         // questions per level
+const pools = [L1, L2, L3];
+const passCut = [0.8, 0.8, 0.8];   // >80% to pass
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function pickRandom(arr, n){
+  return shuffle(arr).slice(0, n);
+}
+function initSelections(){
+  selections = [
+    pickRandom(L1, 10),
+    pickRandom(L2, 10),
+    pickRandom(L3, 15)
+  ];
+}
+
+function mountStart(){
+  app.innerHTML = `
+    <div class="center">
+      <div class="big"> Fighter Jet Quiz</div>
+      <div class="small"><br/>Cross <b>80%</b> to unlock the next level.</div>
+      <div class="levels-row">
+        <button class="lvlbtn" id="startBtn" type="button">Start Level 1</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('startBtn').onclick = () => startLevel(0);
+}
+
+function startLevel(idx){
+  levelIndex = idx;
+  currentSet = selections[levelIndex];
+  qi = 0;
+  score = 0;
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const total = totals[levelIndex];
+  const q = currentSet[qi];
+  const progress = ((qi)/total)*100;
+
+  app.innerHTML = `
+    <div class="stage">
+      <div class="title">Level ${levelIndex+1} • Question ${qi+1} / ${total}</div>
+      <div class="progress"><div class="bar" style="width:${progress}%"></div></div>
+      <div class="meta">Score: ${score}</div>
+    </div>
+
+    <div class="question-box">
+      <div class="qtext">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.options.map((o,i)=>`<div class="option" data-i="${i}">${o}</div>`).join('')}
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="status" id="status"></div>
+      <div class="button-row">
+        <button class="btn ghost" id="restart" type="button">Restart Level</button>
+        <button class="btn nxt" id="next" type="button" disabled>Next</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('restart').onclick = () => startLevel(levelIndex);
+
+  const opts = Array.from(document.querySelectorAll('.option'));
+  const nextBtn = document.getElementById('next');
+  const status = document.getElementById('status');
+
+  // hard disable (in case browser ignored the attribute for any reason)
+  nextBtn.disabled = true;
+
+  let locked = false;
+  opts.forEach(el=>{
+    el.addEventListener('click', ()=>{
+      if(locked) return;
+      locked = true;
+      const sel = Number(el.dataset.i);
+      const correct = q.answer;
+
+      // disable all clicks
+      opts.forEach(x=>x.style.pointerEvents='none');
+
+      // mark chosen
+      if(sel===correct){
+        el.classList.add('correct');
+        status.textContent = "";
+        score++;
+      }else{
+        el.classList.add('wrong');
+        status.textContent = "";
+        // show correct
+        opts[correct].classList.add('correct');
+      }
+
+      // pale out others (except chosen and correct if different)
+      opts.forEach((x,idx)=>{
+        if(idx!==sel && idx!==q.answer) x.classList.add('disabled');
+      });
+
+      nextBtn.disabled = false; // enable only after a choice
+    });
+  });
+
+  nextBtn.addEventListener('click', ()=>{
+    // safety: never advance if disabled (prevents any accidental jumps)
+    if (nextBtn.disabled) return;
+
+    qi++;
+    if(qi<total){
+      renderQuestion();
+    }else{
+      endLevel();
+    }
+  });
+}
+
+function endLevel(){
+  const total = totals[levelIndex];
+  const pct = score/total;
+  const passed = pct > passCut[levelIndex]; // strictly greater than 80%
+
+  const pctTxt = Math.round(pct*100);
+
+  const nextLevelAvail = levelIndex<2;
+  const canAdvance = passed && nextLevelAvail;
+
+  const msg = passed
+    ? (nextLevelAvail ? `Great job! You scored ${pctTxt}%.` : `Champion! You finished Level 3 with ${pctTxt}%.`)
+    : `You scored ${pctTxt}%. You need more than 80% to proceed.`;
+
+  const actions = [];
+  if(!passed){
+    actions.push(`<button class="btn" id="retry" type="button">Retry Level ${levelIndex+1}</button>`);
+  }
+  if(canAdvance){
+    actions.push(`<button class="btn" id="advance" type="button">Unlock Level ${levelIndex+2}</button>`);
+  }
+  if(levelIndex===2 && passed){
+    actions.push(`<button class="btn" id="again" type="button">Play Again</button>`);
+  }
+  // always allow restart from beginning
+  if(levelIndex!==0){
+    actions.push(`<button class="btn ghost" id="home" type="button">Back to Level 1</button>`);
+  }else{
+    actions.push(`<button class="btn ghost" id="restartL1" type="button">Replay Level 1</button>`);
+  }
+
+  app.innerHTML = `
+    <div class="center">
+      <div class="big">${msg}</div>
+      <div class="small">Level ${levelIndex+1} • Correct ${score} / ${total}</div>
+      <div class="levels-row">
+        ${actions.join('')}
+      </div>
+    </div>
+  `;
+
+  const hook = (id, fn)=>{ const el=document.getElementById(id); if(el) el.onclick=fn; };
+
+  hook('retry', ()=> startLevel(levelIndex));
+  hook('advance', ()=> startLevel(levelIndex+1));
+  hook('again', ()=> { initSelections(); mountStart(); });
+  hook('home', ()=> { initSelections(); startLevel(0); });
+  hook('restartL1', ()=> startLevel(0));
+}
+
+// bootstrap
+initSelections();
+mountStart();
+
+  </script>
+</body>
+</html>
