@@ -190,6 +190,14 @@
       }
       .options{ grid-template-columns:1fr 1fr; }
     }
+
+ @media(orientation:landscape){
+     .card {
+       margin-top: 15vh;
+       
+     }
+   }
+
   </style>
 </head>
 <body>
@@ -293,43 +301,42 @@ const L2 = [
 ];
 
 // Level 3: Q67–Q100
-const L3 = [
-  {q:"Harrier Jump Jet originally developed by:", options:["US Navy","British Hawker Siddeley","Dassault Aviation","Mikoyan"], answer:1},
-  {q:"Which aircraft is 'Flogger'?", options:["MiG-23","Su-17","MiG-29","Su-25"], answer:0},
-  {q:"Gripen can operate from:", options:["High-alt bases only","Carriers","Short highways/roads","Underground hangars"], answer:2},
-  {q:"Canceled 1990s advanced US program:", options:["YF-23 Black Widow II","F-22","F-35","A-12 Avenger II"], answer:0},
-  {q:"Who popularized the term 'supercruise' in fighters?", options:["F-22 Raptor","Concorde","MiG-31","Eurofighter"], answer:0},
-  {q:"MiG-21 NATO name:", options:["Fishbed","Foxbat","Fulcrum","Flanker"], answer:0},
-  {q:"IAF Mirage 2000 used in which conflict (1999)?", options:["1971 war","Kargil War","Desert Storm","Opera"], answer:1},
-  {q:"KFIR fighter developed by:", options:["India","Israel","Egypt","Iran"], answer:1},
-  {q:"F-15E Strike Eagle is a:", options:["Air superiority","Multirole strike fighter","Stealth bomber","Naval interceptor"], answer:1},
-  {q:"Su-47 Berkut is unique for:", options:["VTOL","Forward-swept wings","Canard stealth","Tri-engine"], answer:1},
-  {q:"Backbone of US airpower in Vietnam:", options:["F-4 Phantom II","F-8 Crusader","F-100","A-6 Intruder"], answer:0},
-  {q:"Chengdu J-10 nickname:", options:["Fire Fang","Firebird","Thunder Hawk","Dragon Fang"], answer:0},
-  {q:"Which jet used thrust-vector paddles earlier than 3D nozzles?", options:["F-15 ACTIVE","Su-30MKI","Su-35","F-22"], answer:0},
-  {q:"'Swing Wing' applies to which fighter?", options:["MiG-21","Su-27","MiG-23","F-16"], answer:2},
-  {q:"Falklands War fighter star:", options:["Mirage III","Sea Harrier","Su-25","F-14"], answer:1},
-  {q:"MiG-15’s main adversary in Korea:", options:["F-86 Sabre","F-100","F-4 Phantom","A-4 Skyhawk"], answer:0},
-  {q:"F-35B is special because it has:", options:["Foldable wings","VTOL lift fan","Thrust vectoring only","Larger tanks"], answer:1},
-  {q:"NATO reporting name for Su-27:", options:["Flanker","Foxhound","Fencer","Fulcrum"], answer:0},
-  {q:"Which aircraft is nicknamed 'Electric Jet'?", options:["F-16","F-22","F-35","Eurofighter"], answer:0},
-  {q:"China-Pakistan co-developed fighter:", options:["JF-17 Thunder","J-20","MiG-29","Mirage V"], answer:0},
-  {q:"Russian armored strike fighter:", options:["Su-25 Frogfoot","Su-24","MiG-27","Yak-130"], answer:0},
-  {q:"Experimental US aircraft that competed with F-22:", options:["YF-23 Black Widow II","YF-17 Cobra","F-20 Tigershark","X-32"], answer:0},
-  {q:"Mitsubishi F-2 is based on:", options:["F-16 design","F-18 design","F-15 design","Gripen design"], answer:0},
-  {q:"Su-25 NATO name:", options:["Frogfoot","Fulcrum","Fencer","Foxbat"], answer:0},
-  {q:"Future UK replacement for Typhoon:", options:["FCAS","Tempest","FX","KF-21"], answer:2},
-  {q:"Turkish TF-X is called:", options:["Kaan","Altay","Boramae","Falcon"], answer:0},
-  {q:"US 'Skyborg' program relates to:", options:["Pilot AI assistant","Nuclear propulsion","Hypersonic fighters","Radar jamming"], answer:0},
-  {q:"Fastest manned fighter in level flight:", options:["MiG-25","MiG-31","F-15","F-22"], answer:1},
-  {q:"First US fighter with bubble canopy 360° view (among these)?", options:["F-15","F-16","F-86","F-100"], answer:1}, /* modern bubble as design hallmark */
-  {q:"F-35 name honors which classic?", options:["P-38 Lightning","F-22 Raptor","F-86 Sabre","F-4 Phantom"], answer:0},
-  {q:"NATO codename 'Fencer' is:", options:["Su-24","MiG-29","Su-30","Yak-38"], answer:0},
-  {q:"F/A-18E/F Super Hornet nickname:", options:["Rhino","Tiger","Eagle","Falcon"], answer:0},
-  {q:"Which fighters feature canards + delta wings?", options:["Eurofighter Typhoon","Rafale","Saab Gripen","All of the above"], answer:3},
-  {q:"US 6th-gen fighter program name:", options:["NGAD","Tempest","FCAS","FX"], answer:0},
-  /* Bring in any earlier edge ones to total 34 */
-  {q:"Which aircraft achieved supercruise earliest in US service?", options:["F-22","F-15C","F-35A","F-16C"], answer:0}
+const L3 = [  
+  {q:"Harrier Jump Jet originally developed by:", options:["Dassault Aviation","British Hawker Siddeley","Mikoyan","US Navy"], answer:1},  
+  {q:"Which aircraft is 'Flogger'?", options:["Su-25","MiG-23","Su-17","MiG-29"], answer:1},  
+  {q:"Gripen can operate from:", options:["Short highways/roads","Carriers","Underground hangars","High-alt bases only"], answer:0},  
+  {q:"Canceled 1990s advanced US program:", options:["A-12 Avenger II","F-22","YF-23 Black Widow II","F-35"], answer:2},  
+  {q:"Who popularized the term 'supercruise' in fighters?", options:["Eurofighter","F-22 Raptor","MiG-31","Concorde"], answer:1},  
+  {q:"MiG-21 NATO name:", options:["Flanker","Foxbat","Fulcrum","Fishbed"], answer:3},  
+  {q:"IAF Mirage 2000 used in which conflict (1999)?", options:["Opera","Desert Storm","Kargil War","1971 war"], answer:2},  
+  {q:"KFIR fighter developed by:", options:["Israel","India","Iran","Egypt"], answer:0},  
+  {q:"F-15E Strike Eagle is a:", options:["Naval interceptor","Stealth bomber","Multirole strike fighter","Air superiority"], answer:2},  
+  {q:"Su-47 Berkut is unique for:", options:["Canard stealth","Forward-swept wings","VTOL","Tri-engine"], answer:1},  
+  {q:"Backbone of US airpower in Vietnam:", options:["F-8 Crusader","A-6 Intruder","F-4 Phantom II","F-100"], answer:2},  
+  {q:"Chengdu J-10 nickname:", options:["Fire Fang","Dragon Fang","Thunder Hawk","Firebird"], answer:0},  
+  {q:"Which jet used thrust-vector paddles earlier than 3D nozzles?", options:["Su-30MKI","F-15 ACTIVE","Su-35","F-22"], answer:1},  
+  {q:"'Swing Wing' applies to which fighter?", options:["F-16","Su-27","MiG-21","MiG-23"], answer:3},  
+  {q:"Falklands War fighter star:", options:["F-14","Su-25","Mirage III","Sea Harrier"], answer:3},  
+  {q:"MiG-15’s main adversary in Korea:", options:["F-86 Sabre","A-4 Skyhawk","F-100","F-4 Phantom"], answer:0},  
+  {q:"F-35B is special because it has:", options:["Thrust vectoring only","VTOL lift fan","Larger tanks","Foldable wings"], answer:1},  
+  {q:"NATO reporting name for Su-27:", options:["Flanker","Fencer","Fulcrum","Foxhound"], answer:0},  
+  {q:"Which aircraft is nicknamed 'Electric Jet'?", options:["Eurofighter","F-22","F-35","F-16"], answer:3},  
+  {q:"China-Pakistan co-developed fighter:", options:["JF-17 Thunder","Mirage V","J-20","MiG-29"], answer:0},  
+  {q:"Russian armored strike fighter:", options:["Su-25 Frogfoot","Su-24","Yak-130","MiG-27"], answer:0},  
+  {q:"Experimental US aircraft that competed with F-22:", options:["F-20 Tigershark","X-32","YF-23 Black Widow II","YF-17 Cobra"], answer:2},  
+  {q:"Mitsubishi F-2 is based on:", options:["F-15 design","F-18 design","Gripen design","F-16 design"], answer:3},  
+  {q:"Su-25 NATO name:", options:["Fulcrum","Frogfoot","Foxbat","Fencer"], answer:1},  
+  {q:"Future UK replacement for Typhoon:", options:["FCAS","Tempest","KF-21","FX"], answer:1},  
+  {q:"Turkish TF-X is called:", options:["Boramae","Altay","Kaan","Falcon"], answer:2},  
+  {q:"US 'Skyborg' program relates to:", options:["Pilot AI assistant","Nuclear propulsion","Radar jamming","Hypersonic fighters"], answer:0},  
+  {q:"Fastest manned fighter in level flight:", options:["F-22","F-15","MiG-31","MiG-25"], answer:2},  
+  {q:"First US fighter with bubble canopy 360° view (among these)?", options:["F-100","F-16","F-15","F-86"], answer:1},  
+  {q:"F-35 name honors which classic?", options:["P-38 Lightning","F-86 Sabre","F-4 Phantom","F-22 Raptor"], answer:0},  
+  {q:"NATO codename 'Fencer' is:", options:["Su-24","Yak-38","MiG-29","Su-30"], answer:0},  
+  {q:"F/A-18E/F Super Hornet nickname:", options:["Rhino","Tiger","Falcon","Eagle"], answer:0},  
+  {q:"Which fighters feature canards + delta wings?", options:["All of the above","Rafale","Eurofighter Typhoon","Saab Gripen"], answer:0},  
+  {q:"US 6th-gen fighter program name:", options:["FX","Tempest","NGAD","FCAS"], answer:2},  
+  {q:"Which aircraft achieved supercruise earliest in US service?", options:["F-15C","F-16C","F-35A","F-22"], answer:3}  
 ];
 
 /* ------------------------------
