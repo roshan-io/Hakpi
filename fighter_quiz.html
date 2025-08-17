@@ -137,8 +137,7 @@
   </div>
 
 <script>
-/* ------------ Quiz JS unchanged ------------ */
-// (Your entire JS from original stays exactly same)
+
   /* ------------------------------
    DATA: 100 Qs split L1(33) L2(33) L3(34)
    Each item: { q, options: [a,b,c,d], answer: index }
@@ -270,7 +269,7 @@ let qi = 0;                        // current question idx within level
 let score = 0;                     // current level score
 let totals = [10, 10, 15];         // questions per level
 const pools = [L1, L2, L3];
-const passCut = [0.8, 0.8, 0.8];   // >80% to pass
+const passCut = [0.7, 0.7, 0.7];   // >70% to pass
 
 function shuffle(arr){
   const a = arr.slice();
@@ -295,7 +294,7 @@ function mountStart(){
   app.innerHTML = `
     <div class="center">
       <div class="big"> Fighter Jet Quiz</div>
-      <div class="small"><br/>Cross <b>80%</b> to unlock the next level.</div>
+      <div class="small"><br/>Cross <b>70%</b> to unlock the next level.</div>
       <div class="levels-row">
         <button class="lvlbtn" id="startBtn" type="button">Start Level 1</button>
       </div>
