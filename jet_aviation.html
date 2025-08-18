@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fighter Jet Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg1:#020617; /* slate-950 */
+      --bg2:#0b1022;
+      --glass:rgba(255,255,255,0.06);
+      --glass2:rgba(255,255,255,0.1);
+      --cyan:#38bdf8;
+      --cyan-2:#0ea5e9;
+      --ok:#10b981;
+      --bad:#ef4444;
+      --ink:#e2e8f0;
+      --muted:#94a3b8;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      height:100dvh;   /* ✅ dynamic safe height */
+      margin:0;
+      background:
+        radial-gradient(1000px 700px at 20% -10%, #0f172a 0%, transparent 60%),
+        radial-gradient(800px 600px at 120% 20%, #0b132e 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      color:var(--ink);
+      font-family:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+      overflow:hidden; /* no scroll */
+    }
+    .wrap{
+      height:100%;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+    }
+    .card{
+      width:min(680px, 96vw);
+      height:min(92dvh, 760px);   /* ✅ vh -> dvh */
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:24px;
+      box-shadow:0 0 40px rgba(56,189,248,0.18);
+      backdrop-filter: blur(14px);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* Landscape fix */
+    @media (orientation: landscape) {
+      .card {
+        height: 86dvh; /* ✅ slightly smaller so it never clips */
+      }
+    }
+
+    .header{
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight:700; letter-spacing:0.4px;
+      color:var(--cyan);
+    }
+    .chip{
+      font-size:12px;
+      color:var(--ink);
+      background:rgba(56,189,248,0.08);
+      border:1px solid rgba(56,189,248,0.35);
+      padding:6px 10px; border-radius:999px;
+    }
+    .content{ flex:1; display:flex; flex-direction:column; padding:18px; gap:14px; overflow:hidden; }
+    .stage{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .stage .title{ font-size:18px; font-weight:700; color:var(--ink); }
+    .progress{ height:8px; flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:999px;
+      overflow:hidden; margin-left:14px; margin-right:10px; }
+    .bar{height:100%; width:0%; background:linear-gradient(90deg, var(--cyan), #22d3ee)}
+    .meta{font-size:12px; color:var(--muted)}
+    .question-box{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:14px;
+      border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; background:rgba(255,255,255,0.04); overflow:hidden; }
+    .qtext{ font-size:20px; line-height:1.35; color:#dbeafe; margin-bottom:4px; }
+    .options{ display:grid; grid-template-columns:1fr; gap:12px; }
+    .option{ padding:12px 14px; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+      cursor:pointer; user-select:none; transition:transform .06s ease, background .2s ease, border .2s ease, opacity .2s ease;
+      position:relative; text-align:left; font-size:16px; }
+    .option:hover{ transform:translateY(-1px); background:rgba(56,189,248,0.14); }
+    .option.disabled{ opacity:.45; }
+    .option.correct{ background:rgba(16,185,129,0.16); border-color:rgba(16,185,129,0.8); color:var(--ok); }
+    .option.correct::after{ content:"✔"; position:absolute; right:12px; top:50%; transform:translateY(-50%); font-weight:800; }
+    .option.wrong{ background:rgba(239,68,68,0.16); border-color:rgba(239,68,68,0.8); color:var(--bad); }
+    .option.wrong::after{ content:"✖"; position:absolute; right:12px; top:50%; transform:translateY(-50%); font-weight:800; }
+    .controls{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .btn{ appearance:none; border:none; border-radius:12px; padding:10px 16px; font-weight:700; cursor:pointer;
+      background:var(--cyan); color:#0b1220; letter-spacing:.3px; transition:filter .15s ease, transform .06s ease; }
+    .button-row { display:flex; justify-content:space-between; align-items:center; margin-top:15px; width:100%; }
+    .btn.nxt { margin-left:auto; }
+    .btn:hover{ filter:brightness(1.05); }
+    .btn:active{ transform:translateY(1px); }
+    .btn.ghost{ background:transparent; color:var(--ink); border:1px solid rgba(255,255,255,0.18); }
+    .btn:disabled{ opacity:.55; cursor:not-allowed; filter:none; }
+    .status{ font-size:13px; color:var(--muted); }
+    .center{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; text-align:center; }
+    .big{ font-size: 2rem; font-weight:800; color:#a5f3fc; }
+    .small{ font-size:14px; color:var(--muted); }
+    .levels-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+    .lvlbtn{ padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.16);
+      background:rgba(56,189,248,0.08); color:var(--ink); cursor:pointer; font-weight:700; }
+    @media(min-width:720px){
+      .options{ grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <div class="brand">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#38bdf8" stroke-width="2"/>
+            <path d="M12 6v6l4 2" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          HAKPI QUIZ
+        </div>
+        <div class="chip">Fighter Jets </div>
+      </div>
+      <div class="content" id="app"></div>
+    </div>
+  </div>
+
+<script>
+
+  /* ------------------------------
+   DATA: 100 Qs split L1(33) L2(33) L3(34)
+   Each item: { q, options: [a,b,c,d], answer: index }
+--------------------------------*/
+
+// Level 1: Q1–Q33
+const L1 = [
+  {q:"What is the main propulsion system of the SR-71 Blackbird?", options:["Turbojet","Ramjet","Turbofan","Propfan"], answer:0},
+  {q:"Which U.S. fighter jet is known for thrust vectoring in the F-series?", options:["F-15","F-16","F-22","F-35"], answer:2},
+  {q:"The Su-30MKI is jointly developed by India and which country?", options:["Russia","France","USA","Germany"], answer:0},
+  {q:"Rafale uses which type of engine?", options:["Turbofan","Turbojet","Ramjet","Propfan"], answer:0},
+  {q:"What design feature helps the B-2 Spirit achieve stealth?", options:["Delta wings","Flying wing","Swing wings","Twin tails"], answer:1},
+  {q:"The Su-57 Felon is designed primarily as:", options:["4th-gen fighter","5th-gen fighter","Bomber","Trainer"], answer:1},
+  {q:"BrahMos missile uses which propulsion type in its cruise phase?", options:["Ramjet","Scramjet","Turbojet","Rocket"], answer:0},
+  {q:"The Concorde used what propulsion system?", options:["Afterburning turbojet","Ramjet","Turbofan","Scramjet"], answer:0},
+  {q:"Which fighter is nicknamed the 'Raptor'?", options:["F-16","F-22","F-35","F-18"], answer:1},
+  {q:"Which aircraft can supercruise without afterburner?", options:["F-22","F-16","Su-30MKI","B-2 Spirit"], answer:0},
+  {q:"What feature makes SR-71 ideal for high altitude flight?", options:["Delta wing","Long fuselage","Pratt & Whitney J58 engines","Composite body"], answer:2},
+  {q:"Su-30MKI is equipped with thrust vectoring engines of which type?", options:["AL-31FP","RBE2-AA","F119-PW-100","RD-93"], answer:0},
+  {q:"Which of the following fighters is single engine?", options:["F-22","F-15","F-35","Su-30MKI"], answer:2},
+  {q:"Rafale cockpit uses:", options:["Analog dials","Full glass cockpit","Partly analog","Mechanical gauges"], answer:1},
+  {q:"The B-2 Spirit primarily carries:", options:["Passengers","Strategic bombs","Recon sensors","Cargo"], answer:1},
+  {q:"Su-57 incorporates which stealth feature?", options:["Open weapons bays","Internal weapons bays","External pylons","Twin fins"], answer:1},
+  {q:"BrahMos missile is a joint venture between India and:", options:["France","Russia","USA","China"], answer:1},
+  {q:"Concorde’s cruising speed was:", options:["Mach 0.9","Mach 1.5","Mach 2.0","Mach 2.5"], answer:2},
+  {q:"Which F-series fighter is primarily for electronic warfare?", options:["F-15","F-16","F-18 Growler","F-22"], answer:2},
+  {q:"SR-71 fuel was special because:", options:["Regular kerosene","Low volatility JP-7","Hydrogen","Ethanol mix"], answer:1},
+  {q:"Which fighter jet has canards for maneuverability?", options:["Rafale","F-15","F-35","B-2"], answer:0},
+  {q:"Su-30MKI radar is:", options:["PESA","AESA","Mechanical","LIDAR"], answer:0},
+  {q:"Which aircraft uses the AN/APG-81 AESA radar?", options:["F-16","F-22","F-35","Su-30MKI"], answer:2},
+  {q:"The B-2’s airframe is mostly made of:", options:["Titanium","Aluminum","Composite materials","Steel"], answer:2},
+  {q:"Su-57 is designed with how many engines?", options:["1","2","3","4"], answer:1},
+  {q:"BrahMos missile max speed is around:", options:["Mach 1","Mach 2","Mach 3","Mach 4"], answer:2},
+  {q:"Concorde’s nose cone could:", options:["Fold down","Detach","Rotate","Stay fixed"], answer:0},
+  {q:"Which fighter is designed for close air support?", options:["F-35","F-16","F-15","F-22"], answer:1},
+  {q:"What fuel do modern turbofans use?", options:["Diesel","Kerosene-based Jet A","Petrol","Hydrogen"], answer:1},
+  {q:"Which fighter features a helmet-mounted display called ‘DAS’?", options:["F-16","F-35","F-15","Su-30"], answer:1},
+  {q:"SR-71 body was mostly made from:", options:["Titanium","Aluminum","Steel","Carbon fiber"], answer:0},
+  {q:"Rafale is capable of carrying how many external hardpoints?", options:["7","9","11","13"], answer:2},
+  {q:"Su-30MKI thrust vectoring helps with:", options:["Fuel efficiency","Supermaneuverability","Noise reduction","Altitude climb"], answer:1},
+  {q:"B-2 Spirit engines are mounted:", options:["Externally","Embedded in wings","Above fuselage","Below fuselage"], answer:1},
+  {q:"Which jet is called ‘Lightning II’?", options:["F-22","F-35","F-16","F-15"], answer:1},
+  {q:"Su-57 stealth coatings are designed to absorb:", options:["Infrared","Radio waves","Light","Radar"], answer:3},
+  {q:"BrahMos has which type of guidance system?", options:["GPS only","INS + GPS","Magnetic","Laser"], answer:1},
+  {q:"Concorde engines were made by:", options:["Rolls-Royce/Snecma","Pratt & Whitney","GE Aviation","Klimov"], answer:0},
+  {q:"Which U.S. bomber uses stealth as its main defense?", options:["B-1","B-52","B-2","F-22"], answer:2},
+  {q:"SR-71 operated mostly at:", options:["Low altitude","Subsonic speeds","High altitude & Mach 3","Hover"], answer:2}
+];
+
+// Level 2: Q34–Q66
+const L2 = [
+  {q:"Which feature helps F-22 achieve extreme maneuverability?", options:["Stealth coating","Thrust vectoring nozzles","Delta wings","Twin fins"], answer:1},
+  {q:"Su-30MKI has how many thrust vectoring engines?", options:["1","2","3","4"], answer:1},
+  {q:"The Rafale’s RBE2-AA radar is of which type?", options:["PESA","AESA","Mechanical","Pulse Doppler"], answer:1},
+  {q:"SR-71 Blackbird airframe expands during flight due to:", options:["Aluminum","Titanium heating","Composite stress","Steel"], answer:1},
+  {q:"Which aircraft uses Electro-Optical Distributed Aperture System (EODAS)?", options:["F-15","F-22","F-35","Su-57"], answer:2},
+  {q:"B-2 Spirit’s exhaust is designed to minimize:", options:["Noise","Heat signature","Vibration","Fuel use"], answer:1},
+  {q:"Su-57 Felon’s radar array is:", options:["Fixed","Side-looking AESA","Pulse Doppler","Mechanical"], answer:1},
+  {q:"BrahMos missile has a range of about:", options:["50 km","290 km","1000 km","2000 km"], answer:1},
+  {q:"Concorde intake ramps controlled:", options:["Fuel pressure","Airflow to engines","Nose pitch","Elevators"], answer:1},
+  {q:"Which F-series aircraft first had fly-by-wire system?", options:["F-14","F-15","F-16","F-22"], answer:2},
+  {q:"The Su-30MKI thrust vectoring improves:", options:["Stealth","Dogfight agility","Payload","Radar"], answer:1},
+  {q:"Which aircraft uses Pratt & Whitney F119 engines?", options:["F-22","F-35","F-15","SR-71"], answer:0},
+  {q:"Rafale is powered by how many engines?", options:["1","2","3","4"], answer:1},
+  {q:"SR-71’s inlet spikes control:", options:["Fuel burn","Shockwaves","Flameout","Noise"], answer:1},
+  {q:"Which U.S. fighter jet is carrier-capable?", options:["F-22","F-18","F-15","F-35A"], answer:1},
+  {q:"B-2 uses what landing gear type?", options:["Taildragger","Tricycle","Quad-wheel bogies","Skids"], answer:1},
+  {q:"Su-57 IRST system detects:", options:["Stealth coatings","Infrared emissions","Radar reflections","GPS signals"], answer:1},
+  {q:"BrahMos is classified as:", options:["Hypersonic","Supersonic cruise missile","Ballistic missile","Subsonic"], answer:1},
+  {q:"Concorde had a maximum passenger capacity of about:", options:["100","500","300","50"], answer:0},
+  {q:"Which aircraft uses blended wing design?", options:["F-22","F-35","B-2","Su-57"], answer:2},
+  {q:"Su-30MKI avionics suite is sourced partly from:", options:["Israel","China","France","Germany"], answer:2},
+  {q:"F-35 helmet provides:", options:["Night vision","360° situational awareness","Radar boost","Stealth coatings"], answer:1},
+  {q:"B-2 Spirit is optimized for:", options:["Supersonic strike","Stealth penetration","Dogfights","Escort missions"], answer:1},
+  {q:"SR-71 J58 engines could act partly as:", options:["Rocket","Ramjet","Scramjet","Turboprop"], answer:1},
+  {q:"Rafale is capable of aerial refueling via:", options:["Boom","Probe-and-drogue","Hybrid","Laser"], answer:1},
+  {q:"Su-57 weapons are carried in:", options:["External pods","Internal bays","Wing pylons","Fuel tanks"], answer:1},
+  {q:"Which aircraft uses the AN/APG-77 radar?", options:["F-16","F-22","F-35","B-2"], answer:1},
+  {q:"BrahMos launch platforms include:", options:["Air","Sea","Land","All of these"], answer:3},
+  {q:"Concorde wings were of which type?", options:["Delta","Swept","Straight","Variable"], answer:0},
+  {q:"Which F-series jet is primarily air-superiority?", options:["F-15","F-16","F-35","F-18"], answer:0},
+  {q:"Su-30MKI max maneuverability aided by:", options:["Fly-by-wire","Mechanical stick","Hydraulics","Autopilot"], answer:0},
+  {q:"B-2 Spirit uses which engine?", options:["F118-GE-100","F119-PW-100","AL-31","M88"], answer:0},
+  {q:"Su-57 stealth paint reduces:", options:["Radar return","Infrared glow","Fuel burn","Noise"], answer:0},
+  {q:"BrahMos missile flight altitude can be as low as:", options:["15m","500m","1000m","5km"], answer:0},
+  {q:"Concorde engines included:", options:["Afterburners","Ramjets","Scramjets","Propfans"], answer:0},
+  {q:"F-35’s design emphasizes:", options:["Speed","Stealth and multirole","Payload","Dogfight only"], answer:1},
+  {q:"SR-71 skin leaks fuel on ground because:", options:["Loose rivets","Expansion gaps","Thin metal","Poor sealing"], answer:1},
+  {q:"Su-30MKI avionics include systems from:", options:["USA","UK","France & Israel","China"], answer:2},
+  {q:"Which fighter jet uses LiftFan VTOL system?", options:["F-22","F-35B","Su-57","Rafale"], answer:1}
+];
+
+// Level 3: Q80-120
+
+
+  const L3 = [
+  {q:"Which company developed the Harrier Jump Jet?", options:["Dassault Aviation","Hawker Siddeley","Mikoyan","Lockheed"], answer:1},
+  {q:"What is the primary purpose of variable-sweep wings?", options:["Increase range","Allow short takeoff","Optimize performance across speeds","Reduce radar signature"], answer:2},
+  {q:"The F-117 Nighthawk was primarily designed for:", options:["Dogfighting","Ground attack with stealth","High-altitude reconnaissance","Carrier operations"], answer:1},
+  {q:"What major material was used to reduce radar cross-section in the F-117?", options:["Carbon composites","Aluminum-lithium alloys","Titanium","Wood laminates"], answer:0},
+  {q:"The SR-71 Blackbird's skin expanded during flight mainly due to:", options:["Aerodynamic lift","Thermal expansion from friction","Fuel pressurization","Afterburner shockwaves"], answer:1},
+  {q:"Which propulsion type does the Harrier use for VTOL capability?", options:["Tiltrotor","Lift fan","Vectored-thrust turbofan","Dual-jet"], answer:2},
+  {q:"The F-35B achieves short takeoff using:", options:["Direct lift nozzles","Tiltrotors","Lift fan with roll nozzles","Reaction control rockets"], answer:2},
+  {q:"Fly-by-wire replaces:", options:["Electronic jamming","Manual hydraulic controls","Propeller synchronization","Wing folding"], answer:1},
+  {q:"Which advantage does a delta wing provide?", options:["High-speed stability","Low-speed maneuverability","Reduced landing distance","Higher fuel capacity"], answer:0},
+  {q:"Why is radar absorbent material applied in layers?", options:["Ease of maintenance","Multi-band absorption","Lower cost","Weight balance"], answer:1},
+  {q:"What cooling method is used for the SR-71 fuel system?", options:["Liquid hydrogen","Fuel as coolant","Cryogenic oxygen","Water injection"], answer:1},
+  {q:"Canards on fighters like Eurofighter Typhoon help with:", options:["Reduced drag at cruise","Enhanced maneuverability and lift","Noise reduction","Lower stall speed"], answer:1},
+  {q:"What was the main purpose of thrust vectoring in the Su-35?", options:["Higher climb rate","Supermaneuverability","Fuel efficiency","Stealth enhancement"], answer:1},
+  {q:"What engine powers the F-22 Raptor?", options:["F119-PW-100","RD-33","F110-GE-129","EJ200"], answer:0},
+  {q:"Leading edge extensions on fighters primarily improve:", options:["Low-speed handling","Supersonic acceleration","Fuel economy","Payload"], answer:0},
+  {q:"The Concorde's droop nose was engineered for:", options:["Reducing drag at supersonic speed","Improving pilot visibility on takeoff/landing","Storing avionics","Reducing turbulence"], answer:1},
+  {q:"What is the major aerodynamic issue with swing wings?", options:["Stall tendency","Increased weight and complexity","Engine overheating","Low fuel efficiency at cruise"], answer:1},
+  {q:"Which flight control concept stabilizes unstable aircraft designs?", options:["Thrust vectoring","Artificial stability via fly-by-wire","Larger tail fins","Vortex flaps"], answer:1},
+  {q:"The F-14 Tomcat used which radar system?", options:["APG-68","AWG-9","Zhuk-ME","Blue Vixen"], answer:1},
+  {q:"How does area ruling reduce drag in supersonic aircraft?", options:["By widening fuselage","By narrowing fuselage near wings","By increasing thrust","By adding canards"], answer:1},
+  {q:"Which material replaced riveted aluminum to improve stealth?", options:["Carbon fiber composites","Titanium plates","Magnesium alloys","Kevlar"], answer:0},
+  {q:"What is the main function of a chine on SR-71?", options:["Increase fuel storage","Provide lift and reduce drag","Stealth shaping","Shockwave deflection"], answer:1},
+  {q:"Which advantage does a turbofan engine have over turbojet?", options:["Better high-speed thrust","Lower fuel consumption at subsonic speeds","Simpler construction","Lower weight"], answer:1},
+  {q:"The F-35’s Distributed Aperture System (DAS) allows:", options:["360° infrared coverage","Improved stealth coating","Shorter landing roll","Increased fuel storage"], answer:0},
+  {q:"Which instability do all modern fighter jets exploit for agility?", options:["Static instability","Dynamic instability","Directional stability","Neutral buoyancy"], answer:0},
+  {q:"The B-2 Spirit achieves stealth partly through:", options:["Afterburner cooling","Blended wing body design","Internal cannon placement","Raked winglets"], answer:1},
+  {q:"On the Harrier, roll control at hover is achieved by:", options:["Elevons","Reaction control jets","Rudder deflection","Tilted wings"], answer:1},
+  {q:"Why was titanium chosen for SR-71 construction?", options:["Corrosion resistance","Strength at high temperatures","Lightweight and cheap","Ease of machining"], answer:1},
+  {q:"Boundary layer control helps in:", options:["Reducing stall and drag","Fuel mixing","Noise suppression","Radar evasion"], answer:0},
+  {q:"Which part of an aircraft often houses the radar?", options:["Cockpit canopy","Nose cone radome","Wing tips","Vertical tail"], answer:1},
+  {q:"The MiG-29 uses LERX primarily to:", options:["Enhance supersonic speed","Create vortices for lift at high angles","Reduce radar signature","Improve fuel efficiency"], answer:1},
+  {q:"Anhedral wings on transport aircraft like Il-76 help with:", options:["Ground clearance","High-speed maneuverability","Roll stability for heavy loads","Noise reduction"], answer:2},
+  {q:"Supercruise refers to:", options:["Flying supersonic without afterburner","Flying at maximum Mach number","Using supercooled fuel","Engaging ramjets"], answer:0},
+  {q:"What is the purpose of serrated engine nozzles (chevrons)?", options:["Increase thrust","Stealth enhancement","Noise reduction","Reduce drag"], answer:2},
+  {q:"Inlet cones on MiG-21 serve to:", options:["Increase engine cooling","Control supersonic shockwaves","Reduce radar cross-section","Support landing gear"], answer:1},
+  {q:"Which issue arises from shockwave formation near Mach 1?", options:["Wave drag","Engine flameout","Loss of lift","Fuel vaporization"], answer:0},
+  {q:"The term 'glass cockpit' refers to:", options:["Use of HUD only","Cockpit with transparent armor","Digital displays replacing analog gauges","Radar-transparent panels"], answer:2},
+  {q:"Thrust-to-weight ratio above 1 in fighters enables:", options:["Zero-speed takeoff","Vertical climb","Lower stall speed","Supersonic cruise"], answer:1},
+  {q:"The Eurofighter Typhoon’s engines allow:", options:["Supermaneuverability via thrust vectoring","Sustained supercruise","Zero fuel consumption in idle","Ramjet operation"], answer:1},
+  {q:"How does radar cross-section reduction affect design?", options:["More internal bays","Thinner fuselage walls","Higher wing sweep","Exposed engine fans"], answer:0}
+];
+
+
+/* ------------------------------
+   QUIZ ENGINE
+--------------------------------*/
+const app = document.getElementById('app');
+
+// state
+let levelIndex = 0;                 // 0,1,2 for L1,L2,L3
+let selections = [];               // selected randomized sets per level
+let currentSet = [];               // active level questions
+let qi = 0;                        // current question idx within level
+let score = 0;                     // current level score
+let totals = [10, 10, 15];         // questions per level
+const pools = [L1, L2, L3];
+const passCut = [0.7, 0.7, 0.7];   // >70% to pass
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function pickRandom(arr, n){
+  return shuffle(arr).slice(0, n);
+}
+function initSelections(){
+  selections = [
+    pickRandom(L1, 10),
+    pickRandom(L2, 10),
+    pickRandom(L3, 15)
+  ];
+}
+
+function mountStart(){
+  app.innerHTML = `
+    <div class="center">
+      <div class="big"> Jet Aviation Quizz </div>
+      <div class="small"><br/>Cross <b>70%</b> to unlock the next level.</div>
+      <div class="levels-row">
+        <button class="lvlbtn" id="startBtn" type="button">Start Level 1</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('startBtn').onclick = () => startLevel(0);
+}
+
+function startLevel(idx){
+  levelIndex = idx;
+  currentSet = selections[levelIndex];
+  qi = 0;
+  score = 0;
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const total = totals[levelIndex];
+  const q = currentSet[qi];
+  const progress = ((qi)/total)*100;
+
+  app.innerHTML = `
+    <div class="stage">
+      <div class="title">Level ${levelIndex+1} • Question ${qi+1} / ${total}</div>
+      <div class="progress"><div class="bar" style="width:${progress}%"></div></div>
+      <div class="meta">Score: ${score}</div>
+    </div>
+
+    <div class="question-box">
+      <div class="qtext">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.options.map((o,i)=>`<div class="option" data-i="${i}">${o}</div>`).join('')}
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="status" id="status"></div>
+      <div class="button-row">
+        <button class="btn ghost" id="restart" type="button">Restart Level</button>
+        <button class="btn nxt" id="next" type="button" disabled>Next</button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('restart').onclick = () => startLevel(levelIndex);
+
+  const opts = Array.from(document.querySelectorAll('.option'));
+  const nextBtn = document.getElementById('next');
+  const status = document.getElementById('status');
+
+  // hard disable (in case browser ignored the attribute for any reason)
+  nextBtn.disabled = true;
+
+  let locked = false;
+  opts.forEach(el=>{
+    el.addEventListener('click', ()=>{
+      if(locked) return;
+      locked = true;
+      const sel = Number(el.dataset.i);
+      const correct = q.answer;
+
+      // disable all clicks
+      opts.forEach(x=>x.style.pointerEvents='none');
+
+      // mark chosen
+      if(sel===correct){
+        el.classList.add('correct');
+        status.textContent = "";
+        score++;
+      }else{
+        el.classList.add('wrong');
+        status.textContent = "";
+        // show correct
+        opts[correct].classList.add('correct');
+      }
+
+      // pale out others (except chosen and correct if different)
+      opts.forEach((x,idx)=>{
+        if(idx!==sel && idx!==q.answer) x.classList.add('disabled');
+      });
+
+      nextBtn.disabled = false; // enable only after a choice
+    });
+  });
+
+  nextBtn.addEventListener('click', ()=>{
+    // safety: never advance if disabled (prevents any accidental jumps)
+    if (nextBtn.disabled) return;
+
+    qi++;
+    if(qi<total){
+      renderQuestion();
+    }else{
+      endLevel();
+    }
+  });
+}
+
+function endLevel(){
+  const total = totals[levelIndex];
+  const pct = score/total;
+  const passed = pct > passCut[levelIndex]; // strictly greater than 80%
+
+  const pctTxt = Math.round(pct*100);
+
+  const nextLevelAvail = levelIndex<2;
+  const canAdvance = passed && nextLevelAvail;
+
+  const msg = passed
+    ? (nextLevelAvail ? `Great job! You scored ${pctTxt}%.` : `Champion! You finished Level 3 with ${pctTxt}%.`)
+    : `You scored ${pctTxt}%. You need more than 80% to proceed.`;
+
+  const actions = [];
+  if(!passed){
+    actions.push(`<button class="btn" id="retry" type="button">Retry Level ${levelIndex+1}</button>`);
+  }
+  if(canAdvance){
+    actions.push(`<button class="btn" id="advance" type="button">Unlock Level ${levelIndex+2}</button>`);
+  }
+  if(levelIndex===2 && passed){
+    actions.push(`<button class="btn" id="again" type="button">Play Again</button>`);
+  }
+  // always allow restart from beginning
+  if(levelIndex!==0){
+    actions.push(`<button class="btn ghost" id="home" type="button">Back to Level 1</button>`);
+  }else{
+    actions.push(`<button class="btn ghost" id="restartL1" type="button">Replay Level 1</button>`);
+  }
+
+  app.innerHTML = `
+    <div class="center">
+      <div class="big">${msg}</div>
+      <div class="small">Level ${levelIndex+1} • Correct ${score} / ${total}</div>
+      <div class="levels-row">
+        ${actions.join('')}
+      </div>
+    </div>
+  `;
+
+  const hook = (id, fn)=>{ const el=document.getElementById(id); if(el) el.onclick=fn; };
+
+  hook('retry', ()=> startLevel(levelIndex));
+  hook('advance', ()=> startLevel(levelIndex+1));
+  hook('again', ()=> { initSelections(); mountStart(); });
+  hook('home', ()=> { initSelections(); startLevel(0); });
+  hook('restartL1', ()=> startLevel(0));
+}
+
+// bootstrap
+initSelections();
+mountStart();
+
+</script>
+
+
+</body>
+</html>
