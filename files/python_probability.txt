@@ -1,0 +1,426 @@
+Chapter
+
+2 Communication Cycle
+
+Learning Outcomes
+
+The student will be able to:
+
+understand the various principles of effective communication.
+
+know about the elements of a communication cycle.
+
+define feedback, its types, and its importance in the communication process.
+
+In the previous chapter, you have learnt about communication and its types and how it pla significant role in one's professional career. In this chapter, you will read about the Communica cycle and its importance.
+
+As you know, communication is a process of sharing information between two or more pe through an exchange of thoughts, messages, using the medium of speech, visuals, sym writing, or behaviour. Thus, the communication process enlists the steps we take to compreh each other properly.
+
+In the communication process, one person is a sender who conveys a message to another perso a group of persons) known as the receiver. When the receiver gets the message, he acknowle it and sends back a response. This leads to a cyclic process known as a Communication c The cycle describes how an idea, impression, or feeling is made known to others. A communication cycle includes resources such as e-mail threads, social media outlets, VoIP message outlets, etc. The effectiveness of a communication cycle depends on how long it takes for the feedback to be received by the initial sender. The quicker the response, the more effective is the cycle.
+
+Formulate
+
+Communica
+
+Send
+
+Receive
+
+Decode(understand
+
+Formulate
+
+Respo
+
+Example
+
+Your teacher asks you to read an unseen passage carefully and then answer the questions that fol You do exactly the same as instructed by your teacher, and all your answers are correct. However, do not follow your teacher's instructions and immediately start solving the questions before reading passage, you might take a lot of time in doing the exercise, and your answers might not be up to Imark
+
+22can say that effective communication is one where the intended message is successfully vered, received, and understood.
+
+Principles of Effective Communication
+
+main principles of effective communication are as follows:
+
+ple Language: The language used in communication should be simple. It should be erstandable by both the sender and the receiver
+
+finite: The communication should be definite, ie, its aim should be clear in the mind of the der
+
+omplete and Concise: The information provided in the communication should be complete and the point
+
+propriate Medium: A proper medium of communication should be used, taking several factors account such as timing, the distance between the sender and the receiver, and the nature of interaction.
+
+thentic: Information given should be factual, ie, it should not be misleading or false
+
+Durteous: The sender should be polite and courteous while communicating, It helps in building ealthy relationship.
+
+Elements of a Communication Cycle
+
+More proceeding further, let us discuss the various elements of the communication cycle
+
+(Sender) Ideas Generate
+
+Message Coded
+
+Message Sent using a Channel
+
+Message Perceived
+
+Feedback
+
+(Receiver) Message Decoded
+
+mder: A sender is the person who expresses his opinion, idea, or message and sends it to th eiver
+
+ssage: Message refers to the information that the sender wishes to convey.
+
+coding: It refers to how the sender wishes to communicate the message, ie, using spoken ten language, signs or body language.
+
+annel: It is a medium through which the message has to be carried and sent to others
+
+ceiver: A receiver is the person for whom the message is intended.
+
+coding: It refers to how the receiver interprets the message and translates it into thoug Dending on his circumstances and understanding.
+
+dback: It is the response that a receiver gives after the message is received and underst himby oneDefining Feedback
+
+Feedback is an essential factor in the process of the communication cycle. It is the respons reaction of the receiver to the sender after perceiving or understanding the message. Here, receiver becomes the sender and vice versa. After gaining the receiver's response, the ser takes further actions, thereby completing the communication cycle.
+
+Example
+
+The monitor of your class has been instructed by the teacher to explain the rules of sitting in the libra She explains each nule one by one. You all listen to her carefully and follow the rules. As a result, the cl gets the reward of being the most disciplined class in school. The recognition reveals the impact of feedback
+
+Based on the feedback from the receiver, the sender can evaluate the effectiveness of the mess. Let us understand this with the help of an example.
+
+Example
+
+Your teacher guides you about the place to keep your skates in the classroom after the activity g over You do not listen carefully and keep it carelessly in between the passage. As a result, one of ye classmates hurts himself. This reveals that communication was not effective. If you had carefully p attention to your teacher's instructions, you would have kept the skates at the designated place, a your classmate would have been saved from injury.
+
+Feedback can be positive or negative. Positive feedback indicates that the sender can continue communication in the same manner as before. Negative feedback, on the other hand, sugges need for change in the mode of communication. If the receiver gives appropriate feedback to sender, the sender can modify or remodel his strategy of communication. If no feedback is gi it indicates agreement or reluctance in accepting ideas.
+
+Importance of Feedback
+
+Feedback is required to continue the process of active communication. It can be effective when it is heard, interpreted, and accepted. It determines the way forward. Feedback helps pe to get on track. It guides them to know how others perceive their performance. Feedback is a vital part of effective learning as it gives clear guidance to the students on ho improve their knowledge and performance. It can enhance a student's confidence, self-awarer and enthusiasm for learning. Depending on the feedback, one can take the right action fom next step
+
+DataBe linked to the work the student is doing and not measured against other student's progress
+
+Be linked to the learning intention and success criteria
+
+Effective feedback
+
+must...
+
+Include specific areas of improvement and provide next steps for the students
+
+Be delivered in accessible ways and at an appropriate time so that the students are able to act upon it
+
+us understand the importance of feedback with the help of an example.
+
+xample
+
+aring a clay modeling period, the teacher was giving feedback on the performance of students. Rohan, of the students, was disheartened as he could not make a model of an aeroplane even after it demonstrated to him 4-5 times. The teacher observed him and figured out the problem. She said, han, you can do it. It's just that you need to do it carefully with a focused mind. I have full confidence you. Try again!"
+
+lt: With such positive feedback from the teacher, Rohan experienced a surge in his confidence. id well this time. Everybody clapped loudly as his efforts were laudable.
+
+back is important in the following ways:
+
+of Problem-Solving: When the receiver gets a message, it is up to him to agree with the
+
+er or not. If the receiver disagrees with the sender, it can cause a problem. In this case, the back can help the sender justify the response of the receiver. It enables the sender to interpret Dehaviour of the receiver and take the next step accordingly. Hence, it serves as the basis of em-solving.
+
+tive Listening: Feedback results into effective listening. When feedback is given, the sender mes cautious of the message sent by him. He re-analyses his message and correlates it with Bedback. This enables him to understand if the communication has been successful.
+
+Motivate: Students need motivation to study
+
+o perform the given task well. Right feedback at the right time can do wonders for them. show them the right path that needs to be ved to lead then towards their desired goal.
+
+Improve Performance: Good performance mat everybody strives for. It can take you to
+
+Data Sciencenew heights. For that, you need to overcome your fears, shortcomings, and worries, Go feedback enables you to overcome your fears and accomplish your goals with courage a determination.
+
+Tool for Continued Learning: Feedback plays a vital role in learning. Learning is an ongo
+
+process. Proper feedback prevents you from getting distracted and pushes you to remain alig to your goals. It helps you to focus on the improvement areas and learn continuously, which turn, opens a new world of opportunities.
+
+Descriptive Feedback
+
+Descriptive feedback includes specific information in the form of written comments or ve conversations that help the learner understand what he needs to do in order to improve.
+
+According to Black, Harrison, Lee & Wiliam (2003), "Descriptive Feedback is the most pow tool for improving students' learning."
+
+In other words, it enables students to learn about their current achievement along with weaknesses which need to be improved. It includes suggestions to help them achieve objectives. It also provides a direction for the students to identify the steps taken to fulfil goals. However, it does not include grades, marks, or coded symbols.
+
+Benefits of Descriptive Feedback
+
+Descriptive Feedback should be focused on how well the task has been accomplished along providing suggestions to improve further. It offers the following benefits:
+
+Provides useful information to students about their learning.
+
+Fills the gap between their present level of performance and the learning goal.
+
+Enables the students to self-assess and set their goals accordingly.
+
+Feedback
+
+When the students get informative feedback about their work, they get a chance to analyse how they have performed, which concepts they understood clearly, and which concepts need improvement. They can make an outline of the which need improvement and proceed further with more clarity.
+
+Factors Essential to Giving Descriptive Feedback
+
+The following points should be taken into consideration to make descriptive feedback effe
+
+Goal-Oriented: Feedback should be given keeping the aim of learning in mind, as studen towards achieving the learning objective. Many a time, students are unaware of the learni They should know what their learning aim is and how they are going to achieve it.
+
+Actionable: When students have knowledge but do not know where to apply it, they lose in learning. Hence, their experience should be put to use by giving them specific direction
+
+26
+
+Data ScienUser-Friendly: The feedback should be given in
+
+an easy to understand language so that students can comprehend what they are supposed to do to achieve the learning aim. Otherwise, the feedback provided to them will prove to be worthless
+
+Tamely: The students should receive the feedback on time, ie, when it is still possible for them to put it to use. The feedback needs to be given to them when they are still striving for their goal, not when they have already achieved it.
+
+Evaluate
+
+Discover Issues
+
+Self dscowery
+
+Effective feedback cycle
+
+Commit to Action
+
+Create options and solutions
+
+Analyse causes and consequences
+
+Continuous: Feedback should be given continuously, along with instructions. This enables the students to remain focused on their goal.
+
+Consistent: The students should be given a consistent feedback. Otherwise, they will not be able to rely on it, and in turn, will not be able to follow it
+
+It is the quality of the feedback that determines its effectiveness, rather than its existence or absence. Feedback must be task-oriented that allows the students to refine their skills, re-engage in their learning, and concentrate on their goal. It must channelise their energy in the right direction so that they can self-monitor. This will enable them to proceed towards their goal with minimum supervision
+
+Specific and Non-Specific Feedback
+
+Feedback can be specific and non-specific, depending on the information being conveye hrough it.
+
+Specific Feedback
+
+pecific feedback provides detailed information bout something particular, relating to a task or the dividual's performance. It is beneficial as it gives me receiver something substantial to think about nd work on the areas which need improvement.
+
+or example, "It was impressive that you started with question to hook the listeners. I like it."
+
+ote that here this tactic can be replicated while arrating the stories in future to leave a lasting pression on the listeners mind. It provides ideline for the future.Non-Specific Feedback
+
+Non-specific feedback, in general, gives a vague response to the receiver. It may not be of muo help, as it does not guide the receiver properly to achieve the desired goal. It gives the impression that the sender has not given a thoughtful response.
+
+For example, "Great job!"
+
+A
+
+The issue with the above remark is that it is not specific. It does not indicate what went right the led to success. It also does not provide any detail about how to repeat this success story with future projects.
+
+Need for Specific Feedback: Specific feedback can be highly constructive. It might prove to be beneficial to the receiver. It makes the receiver aware of the specific details that need to be focused on to improve one's work and performance. It, hence, results in effective communication.
+
+Most people, however, do not give feedback in order to avoid a defensive reaction. Feedback is of vital importance if you wish to see the other person improve. If feedback is given with the righ intention, it can bring a remarkable change in the attitude or performance of a person. Ensure that your feedback is specific so that it is accepted and appreciated by others.
+
+Quick Recall
+
+Communication is a process of sharing information between two or more people through an exchange of thoughts, messages, and information, using the medium of speech, visuals, symbols, writing, or behaviour.
+
+Communication cycle describes how an idea, impression, or feeling is made known to others.
+
+Feedback is the response that a receiver gives after the message is received and understood by him.
+
+Based on the feedback from the receiver, the sender can evaluate the effectiveness of the message
+
+Feedback is required to continue the process of active communication. It can be effective only when it is heard, interpreted, and accepted.
+
+Descriptive feedback includes specific information in the form of written comments or verbal conversations that help the learner understand what he needs to do in order to improve
+
+Feedback must be task-oriented that allows the students to refine their skills, re-engage in their learning, and concentrate on their goal.
+
+-Specific feedback provides detailed information about something particular, relating to a task or the individual's performance.
+
+Non-specific feedback gives a vague response to the receiver.
+
+E
+
+Data Science3 Communication Barriers
+
+Learning Outcomes
+
+The student will be able to:
+
+know about the different types of communication barriers.
+
+take the measures to overcome the barriers of communication.
+
+In the previous chapters, you have read about the importance of communication in our daily lives and the different methods we use to communicate. In this chapter, we will discuss about the barriers which hinder communication.
+
+A communication barrier is an obstacle that prevents the receiver from receiving and understanding the message that has been sent by a sender. If a message is not understood clearly, it may lead to communication gaps, causing confusion and misunderstanding.
+
+?
+
+It is therefore essential that the communicator seeks feedback to check that the message was clearly understood. These barriers may be internal barriers (related to your thoughts and feelings) or external barriers.
+
+Types of Communication Barriers
+
+There are many barriers that hinder our ability to communicate. We will now learn about each t of barrier and the various factors causing them.
+
+Barriers Related to the Formation of Message
+
+These barriers occur due to problems in the composition or formation of the message i Multiple factors cause these barriers like lengthy messages, language problems, intonation is or the non-verbal communication used. For example, if you are watching a Hollywood movie actors speak English in an American accent, and sometimes you may not be able to under what they are saying. These types of problems are related to the message that is being conv
+
+Lengthy or Complicated Messages: Sometimes the vocabulary used in a conversation
+
+difficult and complicated to understand or a sentence may be too long for one to perce meaning. This factor can cause a communication barrier.
+
+Kips Data SciencePrejudice or Bias: Bias against a particular person may lead to false assumptions and cause miscommunication.
+
+For example, if you do not like somebody personally, even if he is saying something in your favour, you may not belleve him. The mistrust that you have against that person has caused a barrier between the two of you.
+
+tion not res iso σης the
+
+Ors ce
+
+Cultural Differences: Social interaction varies in different cultures
+
+What may seem like an appropriate gesture in one culture mighe be inappropriate in another. For example, making eye contact is considered a good communication technique in the US, but in most Asian countries, making eye contact with a senior person considered to be disrespectful.
+
+External Barriers
+
+External barriers occur due to factors we have no control over and are outside our body an mind. Factors like noise, different time zones and distance, faulty communication equipments, c technologies, physical disabilities, and physical barriers preventing us from observing non-verba communication are some of the causes for this type of barrier. It is a general experience that whil you are talking on a cell phone and the signal is weak, it becomes difficult for you to hear wha your friend is trying to convey. These types of barriers are called External barriers
+
+Noise and Other Distractions: These prevent the message from being heard correctly. One ma miss an important part of the communication and misunderstand due to these barriers.
+
+Physical Barriers between Communicators: Technological
+
+problems with equipment used for communication is a physical barrier. For example, weak signals or a faulty handset may prevent proper contact and cause dissatisfaction and irritation among the people communicating. Additionally, the distance between the sender and receiver, or different time zones can also create problems in communication.
+
+Physical Disabilities: Disabilities such as hearing problems or speech difficulties can becom barmer to communication.
+
+Physical Barriers to Non-verbal Communication:
+
+?
+
+cannot see the non-verbal gestures, posture, and gen body language when you are making phone calls or send text messages. Hence, they are less effective than face-to-communication.
+
+These barriers keep the message from getting through. needs to find ways to overcome these barriers. Let us know about the measures that can be ta
+
+to overcome these barriers in the next topic.
+
+Kips |
+
+Data Scienc
+Linguistic Issues. The interferences which occur due to accent,
+
+speech disorders of symbols having multiple, and often completely different meanings, can affect the communication process. Additionally, the lack of proficiency in the language affects the interpretation of the message as well. These issues are also known as semantic issues.
+
+Inconsistent Tone or Non-verbal Communication: You have read earlier that commu
+
+correct, it will create barriers. In verbal or oral communication, our tone, pitch, pace, ge is both verbal and non-verbal. If the body language or tone used while communicating eye contact, posture, facial expression, etc, enhance communication if applied well. They c distort communication if not matched with the message. A simple message of 'Congra can be communicated honestly or sarcastically depending on the facial expressions or tone voice.
+
+Internal Barriers
+
+These barriers occur due to some inherent traits or the frame of mind of the commung Factors responsible for internal barriers include intense emotions, poor listening skills, pre different viewpoints, or different cultural backgrounds.
+
+Example
+
+You are very excited about a class picnic and do not pay attention when your teacher asks you to permission letter from your parents for the picnic. As a result, you may not be allowed to go withou permission letter.
+
+These types of barriers, which are related to our state of mind or some other internal issue called Internal barriers.
+
+Fatigue, Disinterest, or Excitement: Sometimes, the receiver may be too excited, tired, c
+
+topic of conversation may not be interesting for the receiver. This may result in a lack of atte to what the sender is stating.
+
+Poor Listening Skills: Poor listeners do not attend carefully to all the information being given by the speaker, ie, both verbal and non-verbal signals, including intonation and body language.
+
+Emotional Barriers: Some people find it difficult to express their
+
+emotions appropriately during communication. For example, a worried person cannot communicate properly, and an angry recipient cannot understand the message correctly. Thus, at the time of communication, both the sender and eceiver need to be in the right frame of mind psychologically.
+
+Differences in Perception and Viewpoint: The receiver may not look at things the same way as erson who is communicating. This causes communication gaps because there is a disagreeme etween the sender and the receiver.
+
+Data Science Ki
+
+eMeasures to Overcome the Barriers of Communication
+
+Barmers become a root cause for many problems as they can hamper productive an communication. This might lead to poor relationships, loss of trust, misunderstanding time and energy, and other such undesirable outcomes. It is essential to overcome the to ensure smooth and effective communication.
+
+Overcoming Barriers Related to the Formation of the Message
+
+To overcome the barriers formed due to problems with the formation of the message, o ensure proper encoding of the message being conveyed before it is sent. Some of thes Keep it Simple: Messages should be simple and appropriate to serve the purpose of comm Communication must be clear and precise to ensure better understanding. One must a complicated terminology during a discussion.
+
+Using Correct Language: By using the appropriate language, the sender can ensure
+
+receiver correctly interprets the meaning of the message being conveyed. We c interpreters and translators, or digital language translators when it comes to communi unknown or lesser-known languages.
+
+Using Appropriate Body Language: The sender should
+
+use correct gestures, facial expressions, and body posture while talking. The receiver should use non-verbal signs which include smiling, making eye contact, nodding at appropriate times, and avoiding distractions. These non-verbal cues convey the message that you are interested in what the speaker has to say and that your attention is fully invested.
+
+Overcoming Internal Barriers
+
+Internal barriers are caused due to one's state of mind and some inbuilt characteris personality. Hence, one has to make a conscious effort to overcome them.
+
+Be Sensitive and Empathetic: The sender must make
+
+sure that the receiver is in the right frame of mind, and be confident of having the attention and interest of the receiver.
+
+Develop Good Listening Skills: Giving proper attention
+
+without interrupting the sender and without making any distractions, are essential listening skills that lead to effective communication. Active listening is a skill that can be acquired and develope practice. This skill can be difficult to master and command, and therefore, takes time and pat It means fully concentrating on what is being said rather than just "hearing' the message speaker. Active listening involves listening with all the senses.
+
+DataDevelop Trust: Mutual trust between the sender and the receiver helps in reducing perception Tors
+
+Deep Your Emotions in Check: Being in a balanced frame of mind while communicating, helps to meate trust. If a receiver responds with criticism, the sender should not overreact or become love but instead, consider the feedback as purposeful as possible
+
+not Assume: Assumptions should not be held against a person he is communicating. It is necessary to be open-minded while mmunicating
+
+Unbiased and Fair: Do not hold prejudices or be judgemental bout people when communicating.
+
+espect Other Cultures: Sensitivity and understanding should
+
+developed towards other cultures especially while communicating in a different cultural vironment
+
+wercoming External Barriers
+
+mercoming external barriers requires a change in the environment we are communicating in mich includes the use of appropriate equipment or facilities.
+
+Proper Communication Channels: Using proper infrastructure and equipment prevents
+
+se and other distractions. For example, ensure that you have a good pen whille writing a ssage, or the telephone line that you are using is in working condition.
+
+Alternate Means of Communication to Overcome Physiological Problems: Physical abilities should be taken into consideration and handled sensitively. Appropriate means of munication such as sign language, written communication, or hearing aids should be used in situations.
+
+Emojis while Texting: Use of emoticons (emojis) to express ings during messaging helps to overcome some of the tations of texting.
+
+king Feedback: One common and effective way to overcome
+
+the different types of communication barriers is seeking back from the receiver. A skilled communicator must be aware of the communication barriers try to reduce their impact by continually checking the perception of the message sent, and by Duraging the receivers to give appropriate feedback to ensure that the message was delivered tended.
+
+t of the personal, professional, and social problems can be overcome maintaining a clear, appropriate, and unambiguous communication. All is needed is some effort on our part to identify and avoid the barriers fective communication, to make our lives and the lives of those around etter. Science
+
+
+Recccal. 
+Acommunication barrier is an obstacle that prevents the receiver from receiving and undersимац the message that has been sent by a sender
+
+If a message is not understood clearly, it may lead to communication gaps, causing conditions misunderstanding
+
+B
+
+Bariers related to the message that is being communicated occur due to problems in s composition or formation of the message itself.
+
+The factors that cause barriers related to the message being conveyed include lengthy messag language problems, intonation issues, or the non-verbal communication used
+
+Internal barriers occur due to some inherent traits or the frame of mind of the communicators
+
+Factors responsible for internal barriers include intense emotions, poor listening skills, prejudic different viewpoints, or different cultural backgrounds.
+
+External barriers occur due to factors we have no control over and are outside our body and mind
+
+C.
+
+Factors like noise, different time zones and distance, faulty communication equipments technologies, physical disabilities, and physical barriers preventing us from observing non-verta comununication are some of the causes of external barriers
