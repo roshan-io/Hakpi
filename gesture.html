@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gesture Recognition</title>
+  <style>
+    html, body {
+      margin: 0; padding: 0;
+      width: 100vw; height: 100vh;
+      background: #181818; color: #fff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+    #container {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 100vw; height: 100vh;
+    }
+    h1 { font-size: 1.1em; margin-top: 10px; }
+    #gesture { font-size: 1.5em; margin: 10px 0 0 0; }
+    video, canvas {
+  background: #222;
+  border-radius: 10px;
+  width: 90vw;
+  max-width: 480px; 
+  height: 580px;
+  max-height: 70vh;
+  display: block;
+  margin: 0 auto;
+}
+
+    #input_video { display: none; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Responsive Hand Gesture Recognition</h1>
+    <video id="input_video" autoplay muted playsinline></video>
+    <canvas id="output_canvas"></canvas>
+    <div id="gesture">Detecting...</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.min.js"></script>
+
+  <script>
+        // Responsive canvas sizing
+    function resizeCanvas() {
+      const aspect = 4/3;
+      let w = window.innerWidth * 0.98;
+      let h = window.innerHeight * 0.80;
+      if (w/h > aspect) w = h * aspect;
+      else h = w / aspect;
+      canvasElement.width = w;
+      canvasElement.height = h;
+    }
+
+    const videoElement = document.getElementById('input_video');
+    const canvasElement = document.getElementById('output_canvas');
+    const canvasCtx = canvasElement.getContext('2d');
+    const gestureElement = document.getElementById('gesture');
+    let lastLandmarks = null, lastGesture = "", gestureCount = 0;
+    const HAND_CONNECTIONS = [
+      [0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],
+      [5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],
+      [13,17],[0,17],[17,18],[18,19],[19,20]
+    ];
+
+    function classifyGesture(lm, lastLm) {
+      if (!lm || lm.length < 21) return "No hand";
+      function dist(a, b) { if (!a || !b) return 0; return Math.hypot(a.x - b.x, a.y - b.y); }
+      const wrist = lm[0], index = lm[1], mid = lm, ring = lm, pinky = lm, thumb = lm[2];
+      if (!wrist || !index || !mid || !ring || !pinky || !thumb) return "No hand";
+      const spread = (dist(wrist,index)+dist(wrist,mid)+dist(wrist,ring)+dist(wrist,pinky))/4;
+      const thumbToPalm = dist(thumb,wrist);
+      const indexToPalm = dist(index,wrist);
+      let handSize = Math.max(...lm.map(l => dist(l, wrist)));
+      if (spread < 0.4*handSize && thumbToPalm < 0.4*handSize) return "Closed Fist";
+      if (spread > 0.65*handSize && thumbToPalm > 0.4*handSize) return "Open Palm";
+      if (thumbToPalm > 0.45*handSize && indexToPalm < 0.35*handSize && thumb.y < wrist.y - 0.15) { return "Thumbs Up"; }
+      if (thumbToPalm > 0.45*handSize && indexToPalm < 0.35*handSize && thumb.y > wrist.y + 0.11) { return "Thumbs Down"; }
+      if (lastLm && Math.abs(lm[0].x-lastLm.x)>0.08) return "Wave";
+      return "Unknown Gesture";
+    }
+
+    function drawConnectors(ctx, landmarks, connections, style = {}) {
+      const {color = '#00FF00', lineWidth = 3} = style;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      for (const [start, end] of connections) {
+        if (landmarks[start] && landmarks[end]) {
+          ctx.beginPath();
+          ctx.moveTo(landmarks[start].x*canvasElement.width, landmarks[start].y*canvasElement.height);
+          ctx.lineTo(landmarks[end].x*canvasElement.width, landmarks[end].y*canvasElement.height);
+          ctx.stroke();
+        }
+      }
+    }
+    function drawLandmarks(ctx, landmarks, style = {}) {
+      const {color = '#FF0000', lineWidth = 2} = style;
+      ctx.fillStyle = color;
+      for (const lm of landmarks) {
+        if (lm) {
+          ctx.beginPath();
+          ctx.arc(lm.x*canvasElement.width, lm.y*canvasElement.height, lineWidth, 0, 2*Math.PI);
+          ctx.fill();
+        }
+      }
+    }
+
+    function onResults(results) {
+      try {
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+        // Flip horizontally (mirror)
+        canvasCtx.translate(canvasElement.width, 0);
+        canvasCtx.scale(-1, 1);
+
+        // Draw the video frame
+        canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+        let gesture = "No hand";
+        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+          const lm = results.multiHandLandmarks[0];
+          drawConnectors(canvasCtx, lm, HAND_CONNECTIONS);
+          drawLandmarks(canvasCtx, lm);
+          gesture = classifyGesture(lm, lastLandmarks);
+          lastLandmarks = lm;
+        } else {
+          lastLandmarks = null;
+        }
+        if (gesture === lastGesture) { gestureCount++; } else { gestureCount = 0; }
+        lastGesture = gesture;
+        gestureElement.textContent = (gestureCount > 2) ? gesture : "Detecting...";
+
+        canvasCtx.restore();
+      } catch (e) {
+        gestureElement.textContent = "Error: " + e.message;
+      }
+    }
+
+    const hands = new Hands({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+    });
+    hands.setOptions({
+      maxNumHands: 1,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.7,
+      minTrackingConfidence: 0.7
+    });
+    hands.onResults(onResults);
+
+    let lastProcessTime = 0;
+    async function onCameraFrameOptimized() {
+      const now = performance.now();
+      if (now - lastProcessTime > 67) { // ~15fps
+        lastProcessTime = now;
+        await hands.send({image: videoElement});
+      }
+    }
+
+    function startCamera() {
+      if(window.Camera){
+        const camera = new Camera(videoElement, {
+          onFrame: onCameraFrameOptimized,
+          width: 640, height: 480
+        });
+        camera.start();
+      }else{
+        gestureElement.textContent = "CameraUtils not supported on this device/browser.";
+      }
+    }
+
+    // Resize on orientation change or resize
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', resizeCanvas);
+
+    // Initial setup
+    resizeCanvas();
+    startCamera();
+  </script>
+</body>
+</html>
