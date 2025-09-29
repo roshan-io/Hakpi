@@ -1,4 +1,4 @@
-I am Sheik Roshan a casual IT developer . 
+I am Sheik Roshan a casual developer . 
 
 This basic website is demonstration of complexities of simple static pages .
 
