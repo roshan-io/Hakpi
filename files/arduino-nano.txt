@@ -1,0 +1,117 @@
+[26/10, 7:41 pm] JAGAN OG: /*
+  L298N Continuous Motor Test for Arduino Nano
+  Wiring:
+    IN1 -> D4
+    IN2 -> D5
+    ENA -> D6 (PWM)
+    IN3 -> D7
+    IN4 -> D8
+    ENB -> D9 (PWM)
+*/
+
+const int IN1 = 4;
+const int IN2 = 5;
+const int ENA = 6;
+const int IN3 = 7;
+const int IN4 = 8;
+const int ENB = 9;
+
+void setup() {
+  // Set all motor pins as output
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  Serial.begin(9600);
+  Serial.println("Starting Continuous Motor Test...");
+  delay(2000);
+}
+
+void loop() {
+  // Step 1: Forward
+  Serial.println("Moving Forward");
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENA, 200);  // Speed 0-255
+  analogWrite(ENB, 200);
+  delay(3000);
+
+  // Step 2: Stop (coast)
+  Serial.println("Coasting...");
+  analogWrite(ENA, 0);
+  analogWrite(ENB, 0);
+  delay(1000);
+
+  // Step 3: Backward
+  Serial.println("Moving Backward");
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENA, 200);
+  analogWrite(ENB, 200);
+  delay(3000);
+
+  // Step 4: Brake
+  Serial.println("Braking");
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENA, 0);
+  analogWrite(ENB, 0);
+  delay(1500);
+
+  // Step 5: Turn Left
+  Serial.println("Turning Left");
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENA, 180);
+  analogWrite(ENB, 180);
+  delay(2000);
+
+  // Step 6: Turn Right
+  Serial.println("Turning Right");
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENA, 180);
+  analogWrite(ENB, 180);
+  delay(2000);
+}
+
+
+
+
+
+import serial
+import time
+
+# Open Pi serial port
+ser = serial.Serial('/dev/serial0', 9600, timeout=1)
+time.sleep(2)  # wait for Arduino reset
+
+def send(cmd):
+    ser.write((cmd + '\n').encode())
+    reply = ser.readline().decode().strip()
+    print(f"→ {cmd} | ← {reply}")
+
+# Test sequence
+send("PING")        # Should return PONG
+send("SETV 100 100") # Both motors forward 100%
+time.sleep(2)
+send("SETV -50 50") # Left backward, right forward (turn)
+time.sleep(2)
+send("STOP")        # Coast
+time.sleep(1)
+send("BRAKE")       # Short brake
+
+ser.close()
