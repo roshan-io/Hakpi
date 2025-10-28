@@ -1,93 +1,163 @@
-[26/10, 7:41 pm] JAGAN OG: /*
-  L298N Continuous Motor Test for Arduino Nano
-  Wiring:
-    IN1 -> D4
-    IN2 -> D5
-    ENA -> D6 (PWM)
-    IN3 -> D7
-    IN4 -> D8
-    ENB -> D9 (PWM)
+/* L298N robust motor controller
+   Wiring:
+     IN1 -> D4
+     IN2 -> D5
+     ENA -> D6 (PWM)
+     IN3 -> D7
+     IN4 -> D8
+     ENB -> D9 (PWM)
+
+   Commands over Serial (/dev/serial0):
+     SETV <L> <R>   -> set left/right percent -100..100
+     DRIVE <v> <w>  -> v cm/s, w deg/s (maps to wheel speeds)
+     STOP           -> stop (coast)
+     BRAKE          -> brake both motors (short)
+     PING           -> PONG
+     M1Fxx / M1Bxx  -> motor1 forward/back percent
+     M2Fxx / M2Bxx  -> motor2 forward/back percent
 */
 
-const int IN1 = 4;
-const int IN2 = 5;
-const int ENA = 6;
-const int IN3 = 7;
-const int IN4 = 8;
-const int ENB = 9;
+#include <Arduino.h>
+
+const uint8_t IN1 = 4;
+const uint8_t IN2 = 5;
+const uint8_t ENA = 6; // PWM
+const uint8_t IN3 = 7;
+const uint8_t IN4 = 8;
+const uint8_t ENB = 9; // PWM
+
+const int LOOP_MS = 40;
+const int MAX_PWM = 255;
+const int SLEW_STEP = 10;
+
+int target_pwm_L = 0, target_pwm_R = 0;
+int current_pwm_L = 0, current_pwm_R = 0;
+
+void setMotorA(int pwm) {
+  if (pwm > 0) {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    analogWrite(ENA, min(pwm, MAX_PWM));
+  } else if (pwm < 0) {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, HIGH);
+    analogWrite(ENA, min(-pwm, MAX_PWM));
+  } else {
+    // coast
+    analogWrite(ENA, 0);
+  }
+}
+
+void setMotorB(int pwm) {
+  if (pwm > 0) {
+    digitalWrite(IN3, HIGH);
+    digitalWrite(IN4, LOW);
+    analogWrite(ENB, min(pwm, MAX_PWM));
+  } else if (pwm < 0) {
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENB, min(-pwm, MAX_PWM));
+  } else {
+    analogWrite(ENB, 0);
+  }
+}
+
+void applySlew() {
+  if (current_pwm_L < target_pwm_L) current_pwm_L = min(current_pwm_L + SLEW_STEP, target_pwm_L);
+  else if (current_pwm_L > target_pwm_L) current_pwm_L = max(current_pwm_L - SLEW_STEP, target_pwm_L);
+
+  if (current_pwm_R < target_pwm_R) current_pwm_R = min(current_pwm_R + SLEW_STEP, target_pwm_R);
+  else if (current_pwm_R > target_pwm_R) current_pwm_R = max(current_pwm_R - SLEW_STEP, target_pwm_R);
+
+  setMotorA(current_pwm_L);
+  setMotorB(current_pwm_R);
+}
+
+void stopAllCoast() {
+  target_pwm_L = target_pwm_R = 0;
+}
+
+void brakeAll() {
+  // quick brake: set both INs same to short motor terminals (module-specific)
+  digitalWrite(IN1, HIGH); digitalWrite(IN2, HIGH);
+  digitalWrite(IN3, HIGH); digitalWrite(IN4, HIGH);
+  analogWrite(ENA, 0); analogWrite(ENB, 0);
+  target_pwm_L = target_pwm_R = 0;
+  current_pwm_L = current_pwm_R = 0;
+}
 
 void setup() {
-  // Set all motor pins as output
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(ENA, OUTPUT);
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
-  pinMode(ENB, OUTPUT);
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT); pinMode(ENA, OUTPUT);
+  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT); pinMode(ENB, OUTPUT);
+
+  digitalWrite(IN1, LOW); digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
+  analogWrite(ENA, 0); analogWrite(ENB, 0);
 
   Serial.begin(9600);
-  Serial.println("Starting Continuous Motor Test...");
-  delay(2000);
+  Serial.println("L298N Controller Ready");
+  Serial.setTimeout(50);
 }
 
+String readCmd() {
+  if (Serial.available()) {
+    String s = Serial.readStringUntil('\n');
+    s.trim();
+    return s;
+  }
+  return "";
+}
+
+void handleCmd(String cmd) {
+  if (!cmd.length()) return;
+  if (cmd == "PING") { Serial.println("PONG"); return; }
+  if (cmd == "STOP") { stopAllCoast(); Serial.println("ACK STOP"); return; }
+  if (cmd == "BRAKE") { brakeAll(); Serial.println("ACK BRAKE"); return; }
+
+  if (cmd.startsWith("M1F")) {
+    int p = cmd.substring(3).toInt();
+    target_pwm_L = map(constrain(p,0,100),0,100,0,MAX_PWM);
+    Serial.print("ACK M1F "); Serial.println(p); return;
+  }
+  if (cmd.startsWith("M1B")) {
+    int p = cmd.substring(3).toInt();
+    target_pwm_L = -map(constrain(p,0,100),0,100,0,MAX_PWM);
+    Serial.print("ACK M1B "); Serial.println(p); return;
+  }
+  if (cmd.startsWith("M2F")) {
+    int p = cmd.substring(3).toInt();
+    target_pwm_R = map(constrain(p,0,100),0,100,0,MAX_PWM);
+    Serial.print("ACK M2F "); Serial.println(p); return;
+  }
+  if (cmd.startsWith("M2B")) {
+    int p = cmd.substring(3).toInt();
+    target_pwm_R = -map(constrain(p,0,100),0,100,0,MAX_PWM);
+    Serial.print("ACK M2B "); Serial.println(p); return;
+  }
+  if (cmd.startsWith("SETV")) {
+    int l=0,r=0;
+    sscanf(cmd.c_str(),"SETV %d %d",&l,&r);
+    target_pwm_L = map(constrain(l,-100,100),-100,100,-MAX_PWM,MAX_PWM);
+    target_pwm_R = map(constrain(r,-100,100),-100,100,-MAX_PWM,MAX_PWM);
+    Serial.print("ACK SETV "); Serial.print(l); Serial.print(" "); Serial.println(r);
+    return;
+  }
+  Serial.print("UNKNOWN "); Serial.println(cmd);
+}
+
+unsigned long last = 0;
 void loop() {
-  // Step 1: Forward
-  Serial.println("Moving Forward");
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENA, 200);  // Speed 0-255
-  analogWrite(ENB, 200);
-  delay(3000);
+  String c = readCmd();
+  if (c.length()) handleCmd(c);
 
-  // Step 2: Stop (coast)
-  Serial.println("Coasting...");
-  analogWrite(ENA, 0);
-  analogWrite(ENB, 0);
-  delay(1000);
-
-  // Step 3: Backward
-  Serial.println("Moving Backward");
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
-  analogWrite(ENA, 200);
-  analogWrite(ENB, 200);
-  delay(3000);
-
-  // Step 4: Brake
-  Serial.println("Braking");
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, HIGH);
-  analogWrite(ENA, 0);
-  analogWrite(ENB, 0);
-  delay(1500);
-
-  // Step 5: Turn Left
-  Serial.println("Turning Left");
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
-  analogWrite(ENA, 180);
-  analogWrite(ENB, 180);
-  delay(2000);
-
-  // Step 6: Turn Right
-  Serial.println("Turning Right");
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-  analogWrite(ENA, 180);
-  analogWrite(ENB, 180);
-  delay(2000);
+  unsigned long now = millis();
+  if (now - last >= LOOP_MS) {
+    last = now;
+    applySlew();
+    // telemetry example:
+    // Serial.print("TEL "); Serial.print(current_pwm_L); Serial.print(" "); Serial.println(current_pwm_R);
+  }
 }
-
 
 
 
@@ -95,23 +165,40 @@ void loop() {
 import serial
 import time
 
-# Open Pi serial port
+# Open serial connection to Arduino
 ser = serial.Serial('/dev/serial0', 9600, timeout=1)
-time.sleep(2)  # wait for Arduino reset
+time.sleep(2)  # Allow Arduino to reset
 
 def send(cmd):
     ser.write((cmd + '\n').encode())
     reply = ser.readline().decode().strip()
-    print(f"→ {cmd} | ← {reply}")
+    if reply:
+        print(f"→ {cmd} | ← {reply}")
+    else:
+        print(f"→ {cmd}")
 
-# Test sequence
-send("PING")        # Should return PONG
-send("SETV 100 100") # Both motors forward 100%
-time.sleep(2)
-send("SETV -50 50") # Left backward, right forward (turn)
-time.sleep(2)
-send("STOP")        # Coast
-time.sleep(1)
-send("BRAKE")       # Short brake
+try:
+    print("Starting drive sequence...")
 
-ser.close()
+    # Forward for 5 seconds
+    send("SETV 100 100")
+    time.sleep(5)
+
+    # Smooth U-turn (left wheels slow, right wheels fast)
+    send("SETV 40 100")
+    time.sleep(3)  # Adjust this duration for a ~180° turn
+
+    # Straight again for 5 seconds
+    send("SETV 100 100")
+    time.sleep(5)
+
+    # Stop at end of sequence
+    send("STOP")
+
+except KeyboardInterrupt:
+    print("\nKeyboard interrupt detected — braking...")
+    send("BRAKE")
+
+finally:
+    ser.close()
+    print("Serial connection closed.")
