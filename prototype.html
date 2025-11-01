@@ -1564,7 +1564,9 @@ async function sendToAI(text) {
 </script>
   
 
-    <script>
+ <script>
+const RADAR_URL = "http://192.168.168.104:4000"; // or use http://<your-raspberrypi-ip>:4000 if accessed from another device
+
 const canvas = document.getElementById('radarCanvas');
 const ctx = canvas.getContext('2d');
 const distanceBox = document.getElementById('distanceBox');
@@ -1590,13 +1592,13 @@ let radarActive = false;
 const detections = [];
 const fadeTrail = 20;
 
-// -------- Activation --------
+// -------- Activation Button --------
 distanceBox.innerHTML = `<button id="activateBtn" class="activate-btn">Activate Radar</button>`;
 
 document.getElementById('activateBtn').addEventListener('click', async () => {
   distanceBox.innerHTML = "⏳ Initializing radar...";
   try {
-    const res = await fetch("/activate", { method: "POST" });
+    const res = await fetch(`${RADAR_URL}/activate`, { method: "POST" });
     const data = await res.json();
     if (data.message) {
       radarActive = true;
@@ -1615,7 +1617,7 @@ document.getElementById('activateBtn').addEventListener('click', async () => {
 async function fetchRadarData() {
   if (!radarActive) return;
   try {
-    const res = await fetch("/radar");
+    const res = await fetch(`${RADAR_URL}/radar`);
     const data = await res.json();
     angle = data.angle;
     detectedDistance = data.distance;
@@ -1721,7 +1723,7 @@ drawRadar();
 // -------- Auto Stop When Tab Closed --------
 window.addEventListener("beforeunload", () => {
   if (radarActive) {
-    navigator.sendBeacon("/stop");  // graceful stop on tab close
+    navigator.sendBeacon(`${RADAR_URL}/stop`);
   }
 });
 
