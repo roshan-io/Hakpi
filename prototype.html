@@ -1516,6 +1516,30 @@ document.addEventListener('DOMContentLoaded', () => {
     stopVisualizer();
   };
 });
+
+async function sendToAI(text) {
+  const payload = {
+    model: "sonar-small", 
+    messages: [{ role: "user", content: text }],
+    max_tokens: 200
+  };
+
+  const res = await fetch("http://YOUR_PI_IP:5050/proxy/perplexity", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await res.json();
+  let reply = data.choices?.[0]?.message?.content || "(no reply)";
+
+  const box = document.getElementById("aiOutput");
+  box.innerHTML += `<div>➡️ <b>You:</b> ${text}</div>`;
+  box.innerHTML += `<div>🤖 <b>AI:</b> ${reply}</div><br>`;
+  box.parentNode.scrollTop = box.parentNode.scrollHeight;
+}
+
+
 </script>
   
   
