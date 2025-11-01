@@ -1009,18 +1009,19 @@ if (!SpeechRecognition) {
     voiceBtn.classList.add("active");
   };
 
-  recognition.onresult = (event) => {
-    let finalTranscript = "";
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      if (event.results[i].isFinal) {
-        finalTranscript += event.results[i][0].transcript;
-      }
+recognition.onresult = (event) => {
+  let finalTranscript = "";
+  for (let i = event.resultIndex; i < event.results.length; i++) {
+    if (event.results[i].isFinal) {
+      finalTranscript += event.results[i][0].transcript;
     }
+  }
+  console.log("Heard:", finalTranscript);
+  voiceStatus.textContent = "Heard: " + finalTranscript;
 
-    // You can handle commands here using finalTranscript
-    console.log("Heard:", finalTranscript);
-    // e.g., trigger page navigation or other actions
-  };
+  // Send recognized text to AI
+  sendToAI(finalTranscript);
+};
 
   recognition.onerror = (e) => {
     voiceStatus.textContent = "Error";
