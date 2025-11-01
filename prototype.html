@@ -789,6 +789,21 @@
   }
 }
   
+ .activate-btn {
+  background: linear-gradient(90deg, #00ffee44, #00ffaa33);
+  border: 1px solid #00ffee88;
+  color: #00fff0;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.activate-btn:hover {
+  background: linear-gradient(90deg, #00ffee88, #00ffaa66);
+  box-shadow: 0 0 10px #00ffee88;
+}
+
   </style>
 </head>
 <body>
@@ -888,13 +903,15 @@
 
     
 <div class="card second-column">
-  
   <div class="radar-panel">
-  <div id="radar">
-    <canvas id="radarCanvas"></canvas>
+    <div id="radar">
+      <canvas id="radarCanvas"></canvas>
+    </div>
+    <div id="distanceBox">
+      <button id="activateBtn" onclick="activateRadar()">Activate Radar</button>
+    </div>
   </div>
-  <div id="distanceBox">Object: ---</div>
-  </div>
+</div>
   
   
 </div>
@@ -1546,14 +1563,15 @@ async function sendToAI(text) {
 
 </script>
   
-  
-  <script>
+
+    <script>
 const canvas = document.getElementById('radarCanvas');
 const ctx = canvas.getContext('2d');
 const distanceBox = document.getElementById('distanceBox');
 
 let width, height, centerX, centerY, radius;
 
+// -------- Resize Handling --------
 function resize() {
   width = canvas.width = canvas.offsetWidth;
   height = canvas.height = canvas.offsetHeight;
@@ -1564,20 +1582,44 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
+// -------- Radar Data --------
 let angle = 0;
 let detectedDistance = null;
-let radarStatus = "idle";
+let radarStatus = "inactive";
+let radarActive = false;
 const detections = [];
 const fadeTrail = 20;
 
-// -------- Fetch Data --------
-async function fetchRadarData() {
+// -------- Activation --------
+distanceBox.innerHTML = `<button id="activateBtn" class="activate-btn">Activate Radar</button>`;
+
+document.getElementById('activateBtn').addEventListener('click', async () => {
+  distanceBox.innerHTML = "⏳ Initializing radar...";
   try {
-    const res = await fetch("/radar"); // same host as Flask
+    const res = await fetch("/activate", { method: "POST" });
+    const data = await res.json();
+    if (data.message) {
+      radarActive = true;
+      radarStatus = "starting";
+      distanceBox.innerHTML = "🌀 Radar Active — scanning...";
+    } else {
+      throw new Error(data.error || "Activation failed");
+    }
+  } catch (err) {
+    distanceBox.innerHTML = "❌ Failed to activate radar";
+    console.error(err);
+  }
+});
+
+// -------- Fetch Data from Backend --------
+async function fetchRadarData() {
+  if (!radarActive) return;
+  try {
+    const res = await fetch("/radar");
     const data = await res.json();
     angle = data.angle;
     detectedDistance = data.distance;
-    radarStatus = data.status;
+    radarStatus = data.status || "active";
   } catch (err) {
     console.warn("⚠️ Radar fetch failed:", err);
   }
@@ -1659,22 +1701,33 @@ function drawRadar() {
   }
 
   // push new dot when valid distance
-  if (detectedDistance && detectedDistance < 100) {
+  if (radarActive && detectedDistance && detectedDistance < 100) {
     const distRatio = detectedDistance / 100;
     const dx = centerX + Math.cos(angle * Math.PI / 180) * (radius * distRatio);
     const dy = centerY - Math.sin(angle * Math.PI / 180) * (radius * distRatio);
     detections.push({ x: dx, y: dy, time: Date.now() });
   }
 
-  distanceBox.textContent =
-    `Status: ${radarStatus} | Object: ${detectedDistance ? detectedDistance.toFixed(1) + " cm" : "---"}`;
+  // live status text
+  if (radarActive) {
+    distanceBox.textContent =
+      `Status: ${radarStatus} | Object: ${detectedDistance ? detectedDistance.toFixed(1) + " cm" : "---"}`;
+  }
 
   requestAnimationFrame(drawRadar);
 }
 drawRadar();
 
+// -------- Auto Stop When Tab Closed --------
+window.addEventListener("beforeunload", () => {
+  if (radarActive) {
+    navigator.sendBeacon("/stop");  // graceful stop on tab close
+  }
+});
 
-  
+      
+
+
     /*
      * ---- BACKEND SYNC LOGIC ----
      * Connect your Pi or Arduino and send JSON:
