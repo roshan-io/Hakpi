@@ -1,0 +1,1707 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+
+   canvas#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+    :root {
+      --bg: #0e1117;
+      --card: #161b22;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --border: #30363d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      margin: 0;
+      background: black;
+
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: minmax(120px, auto);
+      gap: 0.85rem;
+      padding-top: 0.25rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+
+
+.card.visits-card {
+  
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 20px;
+  padding-top: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: center;
+
+
+}
+
+.visit-number {
+  font-family: 'Russo One', sans-serif;
+  font-size: 3.4rem; 
+  font-weight: bold;
+  display: block;
+  margin-top: 20px;
+  color: #c1f0c1;
+  font-weight: bold;
+  text-shadow: 0 0 1px #c1f0c166;
+}
+
+
+
+    .header {
+      grid-column: 1 / -1;
+      display: flex;
+      padding-left: 30px ; 
+      align-items: center;
+      margin: 0;
+      height: 80px;
+      justify-content: space-between;
+
+    }
+
+
+.header h2 {
+  background: linear-gradient(to right, #4582ED, #D56673);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.1rem;
+  letter-spacing: 2px;
+  font-weight: 500;
+
+}
+
+
+.card, .header {
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+} 
+
+
+
+    .big-card {
+      grid-column: span 2;
+      grid-row: span 2;
+      display: flex;
+  align-items: center;     /* horizontal centering */
+  justify-content: flex-start; /* vertical centering */
+  text-align: center;
+ padding-left:2vw ;
+
+}
+
+    .double-height {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .user-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem;
+      background: var(--bg);
+      border-radius: 6px;
+    }
+
+    .users-heading {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Clock styling */
+    .clock-container {
+      text-align: center;
+      color: var(--accent);
+      padding-top: 30px;
+    }
+
+    .time {
+      font-family: 'Audiowide', sans-serif;
+      font-size: 4rem;
+      font-weight: bold;
+      color: white;
+      display: inline-block;
+    }
+
+    .period {
+      font-size: 1.2rem;
+      margin-left: 0.5rem;
+      color: var(--text);
+      display: inline-block;
+    }
+
+    .date {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      color: var(--text);
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+     /* .second-column {
+        grid-row: span 2;
+      }*/
+    } 
+
+
+
+/* Center content inside the crypto and USD cards */
+.card.second-column,
+#cryptoCard,
+#usdCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card.second-column h3 {
+  font-family: 'Chakra Petch', sans-serif;
+  padding-bottom: 10px;
+}
+
+
+
+
+
+    .ram-chart-container {
+      position: relative;
+      width: 260px;
+      height: 160px;
+      z-index: 9999;
+    }
+
+    .ram-percentage {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+    }
+ .ramm {
+      position: absolute;
+      bottom: 55px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+
+    }
+
+/* cpu styles  */
+.chart-box {
+      position: relative;
+      background: var(--bg);
+      padding: 15px 20px 8px;
+      border-radius: 16px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      width: auto;
+
+    }
+
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;                                                                                                                                                      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chart-title {
+      font-size: 18px;
+      color: #94a3b8;
+    }
+
+    #tempDisplay {
+      font-size: 18px;
+      color: #ff9c9c;
+      font-weight: 600;
+    }
+
+
+  /*  full screen button*/
+  
+  .fullscreen-btn {
+  position: fixed;              /* stays in one place while scrolling */
+  bottom: 20px;                 /* distance from bottom edge */
+  right: 20px;                  /* distance from right edge */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 20px;
+  padding: 10px 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 9999;                /* ensures it appears above everything */
+}
+
+.fullscreen-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+/*   weather css */
+
+
+    .weather-card {
+      background: transparent;
+      border-radius: 16px;
+      padding: 5px;
+      width: 300px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .weather-city {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #94a3b8;
+    }
+
+    .weather-temp {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(to right, #5ea9ff, #ff7c94);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .weather-desc {      font-size: 16px;
+      margin-top: 5px;
+      color: #cbd5e1;
+      text-transform: capitalize;
+    }
+
+    .humidity {
+      font-size: 16px;
+      color: #94a3b8;
+      margin-top: 5px;
+    }
+
+
+.disklabel {
+      font-size: 20px;
+      margin-top: 10px;
+        position: absolute;
+  top: 55%;
+  left: 50%;
+ transform: translate(-55%, -50%);
+  /* Optional styling */
+  z-index: 999;
+  pointer-events: none;
+
+    }
+    .value {
+      font-size: 1.2rem;
+      font-weight: bold;
+     color: #fff;
+}
+
+.diskwrap{
+   width: 228px;
+   height:140px;
+   position: relative;
+   flex-direction: column; /* or row depending on layout */
+   align-items: center;     /* horizontal centering */
+   justify-content: center; /* vertical centering */
+   text-align: center;      /* optional: centers text inside elements */
+   width: auto;
+}
+
+
+.button-stack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertical centering */
+  align-items: center;     /* horizontal centering */
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.button {
+  margin: 8px 0;
+  padding-top: 10px ;
+  padding-bottom:; 10px
+  text-align: center;
+  width: 170px;
+}
+
+/* Your custom button style */
+.button {
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 40px;
+  color: white;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  background: transparent;
+  transition: all 0.4s ease-in-out;
+  text-transform: uppercase;
+
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #8e2de2, #4a00e0);
+  border-radius: 50px;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  background: #0a0a0a;
+  border-radius: 50px;
+  z-index: -1;
+  transition: all 0.4s ease-in-out;
+}
+
+.button:hover::after {
+  background: linear-gradient(45deg, #8e2de2, #4a00e0);
+}
+
+
+/* HOMME BUTTON*/
+
+.home-button::before,
+.home-button:hover::after {
+
+	background: transparent;
+}
+.home-button {
+	margin-right: 8px;
+        width: 50px;
+        }
+
+/* voice styling */
+
+  .voice-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  background: radial-gradient(circle at top left, #0a0a0f, #0d0d16);
+  box-shadow: 0 0 20px rgba(150, 100, 255, 0.2);
+  border-radius: 1.2rem;
+  padding: 1rem;
+  color: #e0e0ff;
+  position: relative;
+  overflow: hidden;
+}
+
+.voice-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #a46bff22, #ff79c622);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.voice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+#voiceStatus {
+  color: #a46bff;
+  font-family: monospace;
+}
+
+.voice-display {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.8rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: #dcdcff;
+  text-shadow: 0 0 4px #a46bff55;
+  overflow-y: auto;
+  max-height: 100px;
+  transition: 0.2s;
+}
+
+.voice-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.audio-visualizer-container {
+  position: relative;
+  width: 80%;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: transparent;
+  gap: 30px; /* small space between visualizer and mic */
+}
+
+#visualizer {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: transparent;
+  display: block;
+  position: relative;
+}
+
+/* Mic button positioned slightly above the visualizer's bottom line */
+#voiceBtn {
+  position: relative;
+  bottom: 15px;              /* lift mic slightly above visualizer baseline */
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #a46bff, #ff79c6);
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;            /* prevent size shrink when resizing */
+  margin-bottom: 0px;
+}
+
+#voiceBtn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px #ff79c688;
+}
+
+#voiceBtn.active {
+  box-shadow: 0 0 25px 4px #a46bffaa;
+  animation: pulse 1.2s infinite;
+}
+  
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 8px 2px #a46bff55; }
+  50% { box-shadow: 0 0 20px 5px #ff79c655; }
+  100% { box-shadow: 0 0 8px 2px #a46bff55; }
+}
+  
+
+  /* radar styles*/  
+ 
+ 
+.radar-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  width: 100%;
+  max-width: 320px; /* fits small dashboard cards  */
+  
+  
+}
+
+#radar {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  
+}
+
+#radarCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#distanceBox {
+  margin-top: 8px;
+  font-size: 0.85em;
+  padding: 4px 8px;
+  color: #00ffcc;
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+  font-family: "Orbitron", sans-serif;
+  
+}
+  .car {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  gap: 1rem; /* No unwanted spacing */
+  box-sizing: border-box;
+}
+
+.wheel {
+  /* Each wheel scales up to fill its cell while staying circular */
+  width: min(60%, 120px);  /* grows as big as possible but never overflows */
+  aspect-ratio: 1 / 1;
+  background: url('wheel.png') center/contain no-repeat;
+  border-radius: 50%;
+}
+
+/* Rotation animations */
+@keyframes rotateForward {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes rotateBackward {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+/* Movement states */
+.forward .wheel {
+  animation: rotateForward 1.5s linear infinite;
+}
+.backward .wheel {
+  animation: rotateBackward 1.5s linear infinite;
+}
+.left .left-wheel {
+  animation: rotateForward 1.5s linear infinite;
+}
+.left .right-wheel {
+  animation: rotateBackward 1.5s linear infinite;
+}
+.right .left-wheel {
+  animation: rotateBackward 1.5s linear infinite;
+}
+.right .right-wheel {
+  animation: rotateForward 1.5s linear infinite;
+}
+.idle .wheel {
+  animation: none;
+  opacity: 0.9;
+}
+
+/* Centered status text */
+#status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(.8em, 2vw, 1.3em);
+  color: #00bfff;
+  font-weight: 700;
+  text-shadow: 0 0 10px #00bfff;
+  pointer-events: none;
+}
+  
+  .camera-panel {
+  width: 100%;
+  max-width: 800px;
+  margin: 0px auto;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    
+  
+  border: 1px solid var(--border);
+  padding: 0px;
+  padding-top: 0px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+.camera-panel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#toggleBtn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  padding: 8px 18px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.3s ease, border 0.3s ease;
+}
+
+#toggleBtn:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4);
+}
+  
+  
+  
+  .wifi-panel {
+  background: #0d0f14;
+  border-radius: 10px;
+  padding: 12px 15px;
+  color: #d1d1d1;
+  font-family: 'Orbitron', 'Poppins', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  h3 {
+    font-size: 14px;
+    color: #66ccff;
+    text-shadow: 0 0 6px #66ccff;
+    margin: 0 0 8px;
+    letter-spacing: 1px;
+  }
+
+  .signal-bar {
+    background: #1a1d23;
+    border-radius: 4px;
+    height: 7px;
+    width: 100%;
+    overflow: hidden;
+    margin: 4px 0;
+
+    .signal-fill {
+      background: linear-gradient(90deg, #66ccff, #9966ff);
+      height: 100%;
+      width: 0%;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00ffaa;
+    box-shadow: 0 0 6px #00ffaa;
+    vertical-align: middle;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 4px #00ffaa; opacity: 0.9; }
+    50% { box-shadow: 0 0 8px #00ffaa; opacity: 1; }
+    100% { box-shadow: 0 0 4px #00ffaa; opacity: 0.9; }
+  }
+
+  p {
+    margin: 4px 0;
+  }
+}
+  
+  </style>
+</head>
+<body>
+
+    <canvas id="bgCanvas"></canvas>
+
+
+  <div class="dashboard">
+
+  <div class="header">
+      <h2>Hello, ROSHAN</h2>
+      <a href="index.php">
+	<button class="button home-button" >
+
+        	<svg xmlns="http://www.w3.org/2000/svg"
+     fill="none"
+     viewBox="0 0 24 24"
+     stroke-width="1.5"
+     stroke="currentColor"
+     width="24"
+     height="24">
+  <path stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M2.25 12L11.204 3.045c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0
+        .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125
+        1.125-1.125h2.25c.621 0 1.125.504
+        1.125 1.125V21h4.125c.621 0 1.125-.504
+        1.125-1.125V9.75M8.25 21h8.25" />
+		</svg>
+
+
+        </button>
+		      </a>
+    </div>
+
+
+    
+        <!-- CAMERA FEED PANEL -->
+         <div class="camera-panel">
+          <video id="cameraFeed" autoplay playsinline></video>
+          <button id="toggleBtn">Start</button>
+       </div>
+  
+
+  
+   <div class="card visits-card">    
+      <div class="car idle" id="car">
+  <div class="wheel right-wheel"></div>
+  <div class="wheel right-wheel"></div>
+  <div class="wheel left-wheel"></div>
+  <div class="wheel left-wheel"></div>
+  <div id="status">Idle</div>
+</div>
+   
+    </div>
+    
+
+<!--weather caard -->
+    <div class="card">
+
+
+ <div class="weather-card">
+    <div class="weather-city" id="city">Loading...</div>
+    <div class="weather-temp" id="temp">--°C</div>
+    <div class="weather-desc" id="desc">--</div>
+   </div>
+  </div>
+
+
+    <div class="card clock-container">
+      <div id="time" class="time"></div>
+      <div id="period" class="period"></div>
+      <div id="date" class="date"></div>
+    </div>
+
+    
+    <div class="card second-column">
+          <div class="panel wifi-panel">
+  <h3>⚡ WI-FI LINK STATUS </h3>
+
+  <div class="wifi-data">
+    <p>SSID : <span id="ssid">--</span></p>
+
+    <div class="signal-bar">
+      <div class="signal-fill" id="signal-fill" style="width:0%;"></div>
+    </div>
+
+    <p>IP   : <span id="ip">--</span></p>
+    <p>PING : <span id="ping">--</span> ⟫ <span id="stability">--</span></p>
+
+    <p>LINK : <span class="status-dot" id="status-dot"></span>
+      <span id="link-status">CHECKING...</span>
+    </p>
+  </div>
+</div>
+    </div>
+
+    
+<div class="card second-column">
+  
+  <div class="radar-panel">
+  <div id="radar">
+    <canvas id="radarCanvas"></canvas>
+  </div>
+  <div id="distanceBox">Object: ---</div>
+  </div>
+  
+  
+</div>
+
+
+<div class="chart-box">
+    <div class="chart-header">
+      <div class="chart-title">CPU Usage (%)</div>
+      <div id="tempDisplay">--°C</div>
+    </div>
+    <canvas id="cpuChart" height="130px" ></canvas>
+  </div>
+
+
+
+
+    <div class="card second-column">
+
+<!--	<div class="ram-chart-container">  -->
+
+
+    <canvas id="ramChart" width="228" height="140"></canvas>
+    <div class="ramm" id="ram"> </div>
+    <div class="ram-percentage" id="ramSpan"> --%</div>
+    </div>
+
+  <div class="card big-card">
+
+  <div class="diskwrap">
+     <canvas id="diskChart" width="228" height="140"></canvas>
+  <div id="disked" class="disklabel"></div>
+  <div class="value" id="diskLabel">0 GB / 0 GB</div>
+  </div>
+
+<div class="button-stack">
+
+  <button onclick="performAction('run_script')"  class="button">Ngrok</button>
+  <form action="fetch/logout.php" method="post" style="display:inline;">
+	<button type="submit" class="button">Logout</button>
+  </form>
+  <button onclick="performAction('shutdown')" class="button">Shutdown</button>
+
+</div>
+
+ 
+ </div>
+    
+
+    <div class="card double-height ">
+ 
+     
+    <div class="voice-header">  
+    <h3>Voice Input</h3>  
+    <span id="voiceStatus">Idle</span>  
+  </div>  
+  
+  <div class="voice-display">  
+    <p id="liveText">Press 🎤 to start speaking</p>  
+  </div>  
+      <div class="audio-visualizer-container">  
+         <canvas id="visualizer"></canvas>  
+        <button id="voiceBtn">  
+           <span class="glow-ring"></span>  
+      🎤  
+    </button> 
+</div>  
+  
+ 
+      
+          
+    </div>
+
+
+
+	<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
+  <span id="fsIcon">⛶</span>
+	</div>
+
+</div>
+
+  
+
+
+  
+  <script>
+
+const voiceBtn = document.getElementById("voiceBtn");
+const voiceStatus = document.getElementById("voiceStatus");
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (!SpeechRecognition) {
+  voiceStatus.textContent = "Speech recognition not supported.";
+  voiceBtn.disabled = true;
+} else {
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = false; // no live transcription
+  recognition.continuous = false;
+
+  voiceBtn.onclick = async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      recognition.start();
+    } catch (err) {
+      voiceStatus.textContent = "Mic access denied.";
+    }
+  };
+
+  recognition.onstart = () => {
+    voiceStatus.textContent = "Listening… 🎧";
+    voiceBtn.classList.add("active");
+  };
+
+  recognition.onresult = (event) => {
+    let finalTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      }
+    }
+
+    // You can handle commands here using finalTranscript
+    console.log("Heard:", finalTranscript);
+    // e.g., trigger page navigation or other actions
+  };
+
+  recognition.onerror = (e) => {
+    voiceStatus.textContent = "Error";
+    console.error("STT Error:", e.error);
+    voiceBtn.classList.remove("active");
+  };
+
+  recognition.onend = () => {
+    voiceStatus.textContent = "Idle";
+    voiceBtn.classList.remove("active");
+  };
+}    
+
+</script>
+
+  
+ 
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    
+
+	function updateClock() {
+  const timeElement = document.getElementById('time');
+  const periodElement = document.getElementById('period');
+  const dateElement = document.getElementById('date');
+
+  const now = new Date();
+
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  const period = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+
+  const timeString = `${hours}:${minutes}`;
+  const weekday = now.toLocaleString('default', { weekday: 'long' });
+  const month = now.toLocaleString('default', { month: 'long' });
+  const dateString = `${weekday}, ${now.getDate()} ${month} ${now.getFullYear()}`;
+
+  timeElement.textContent = timeString;
+  periodElement.textContent = period;
+  dateElement.textContent = dateString;
+}
+
+setInterval(updateClock, 1000);
+updateClock(); // Initial call
+
+ 
+ </script>
+  
+<script src="script.js"> </script>
+
+
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const ctx = document.getElementById('ramChart').getContext('2d');
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, 160);
+      gradient.addColorStop(0, '#a5b4fc');
+      gradient.addColorStop(0.5, '#c4b5fd');
+      gradient.addColorStop(1, '#f0abfc');
+
+      const ramChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: [0, 100],
+            backgroundColor: [gradient, '#1e293b'],
+            borderColor: ['transparent', 'transparent'],
+            borderWidth: 0,
+            borderRadius: 10,
+            cutout: '80%',
+            circumference: 220,
+            rotation: 250
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          responsive: false
+        }
+      });
+
+      function updateRAM() {
+        fetch('fetch/ram.php')
+          .then(res => {
+            if (!res.ok) throw new Error('HTTP error ' + res.status);
+            return res.text();
+          })
+          .then(percent => {
+            console.log('Fetched:', percent);
+            const used = parseInt(percent);
+            if (isNaN(used)) throw new Error('Invalid RAM value: ' + percent);
+            const free = 100 - used;
+            ramChart.data.datasets[0].data = [used, free];
+            ramChart.update();
+	    document.getElementById('ram').textContent = "RAM" ;
+            document.getElementById('ramSpan').textContent =   used + '%';
+          })
+          .catch(err => {
+            console.error('Fetch/update error:', err);
+          });
+      }
+
+      updateRAM();
+      setInterval(updateRAM, 10000);
+    });
+  </script>
+
+
+
+<script>
+  const city = "Sarapaka"; // Change to your city or pincode
+
+  fetch(`https://wttr.in/${city}?format=j1`)
+    .then(res => res.json())
+    .then(data => {
+      const weather = data.current_condition[0];
+      document.getElementById("city").textContent = city;
+      document.getElementById("temp").textContent = `${weather.temp_C}°C`;
+      document.getElementById("desc").textContent =
+        `${weather.weatherDesc[0].value} | Humidity: ${weather.humidity}%`;
+    })
+    .catch(err => {
+      document.getElementById("city").textContent = "Failed to load";
+      document.getElementById("temp").textContent = "--°C";
+      document.getElementById("desc").textContent = "Check network or wttr.in";
+      console.error(err);
+    });
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+  // your existing chart code here
+
+// script for disk usage
+    const ctx = document.getElementById('diskChart').getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 160);
+    gradient.addColorStop(0, '#a5b4fc');
+    gradient.addColorStop(0.5, '#c4b5fd');
+    gradient.addColorStop(1, '#f0abfc');
+
+    const diskChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [0, 100], 
+          backgroundColor: [gradient, '#1e293b'],
+          borderColor: ['transparent', 'transparent'],
+          borderWidth: 0,
+          borderRadius: 10,
+          cutout: '80%',
+          circumference: 220,
+          rotation: 250             }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        responsive: false
+      }
+    });
+
+    function updateDisk() {
+      fetch('fetch/disk.php')
+        .then(res => res.json())
+        .then(data => {
+          const used = data.percent;
+const free = 100 - used;
+          diskChart.data.datasets[0].data = [used, free];
+          diskChart.update();
+          document.getElementById('disked').textContent =  "Disk";
+          document.getElementById('diskLabel').textContent =
+            `${data.used_gb} GB / ${data.total_gb} GB`;
+        });
+    }
+
+    updateDisk();
+    setInterval(updateDisk, 300000);
+  });
+
+  </script>
+
+<script>
+  
+// placeholder JS to connect later with backend
+const video = document.getElementById('cameraFeed');
+document.getElementById('startBtn').onclick = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+  } catch (err) {
+    console.error('Camera access denied:', err);
+  }
+};
+document.getElementById('stopBtn').onclick = () => {
+  const stream = video.srcObject;
+  if (stream) {
+    stream.getTracks().forEach(track => track.stop());
+    video.srcObject = null;
+  }
+};
+</script>
+
+<script>
+   window.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('cpuChart').getContext('2d');
+
+    const cpuData = {
+      labels: [],
+      datasets: [{
+        label: 'CPU %',
+        data: [],  
+        fill: true,  
+        borderColor: '#60a5fa',  
+        backgroundColor: 'rgba(96, 165, 250, 0.2)',  
+        tension: 0.4,  
+        pointRadius: 0  
+      }]  
+    };  
+  
+    const cpuChart = new Chart(ctx, {  
+      type: 'line',  
+      data: cpuData,  
+      options: {  
+        animation: false,  
+        responsive: true,  
+        scales: {  
+          x: { display: false },  
+          y: {  
+            beginAtZero: true,  
+            max: 100,  
+            ticks: {  
+               stepSize: 20,  
+               color: '#cbd5e1'  
+            },  
+            grid: { color: '#334155' }  
+          }  
+        },  
+        plugins: {  
+          legend: { display: false }  
+        }  
+      }  
+    });
+  
+    function updateCPU() {  
+      fetch('fetch/cpu.php')  
+        .then(res => res.json())  
+        .then(data => {
+          const now = new Date().toLocaleTimeString();  
+          const percent = parseFloat(data.usage);  
+          const temp = data.temp;
+          const warning = temp > 60 ? ' ⚠️' : '';  
+  
+          if (cpuData.labels.length >= 30) {  
+            cpuData.labels.shift();  
+            cpuData.datasets[0].data.shift();  
+          }  
+          cpuData.labels.push(now);  
+          cpuData.datasets[0].data.push(percent);  
+          cpuChart.update();  
+  
+          document.getElementById('tempDisplay').textContent = ` ${temp}°C${warning}`;  
+        });  
+    }  
+  
+    setInterval(updateCPU, 10000);  
+    updateCPU();  
+  });  
+</script>
+
+
+<script>
+// script for fullscreen
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('fullscreenToggle');
+  const icon = document.getElementById('fsIcon');
+
+  function updateIcon() {
+    // hide button when fullscreen, show otherwise
+    if (document.fullscreenElement) {
+      toggle.style.display = 'none';
+    } else {
+      toggle.style.display = 'flex'; // or 'block' depending on your layout
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+
+  document.addEventListener('fullscreenchange', updateIcon);
+});
+</script>
+
+
+<script>
+//script for buttons
+
+function performAction(action) {
+  fetch('fetch/button.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'action=' + action
+  })
+  .then(response => response.text())
+  .then(result => alert(result));
+}
+</script>
+
+  
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('visualizer');
+  const ctx = canvas.getContext('2d');
+  const voiceBtn = document.getElementById('voiceBtn');
+  const voiceStatus = document.getElementById('voiceStatus');
+
+  let audioCtx, analyser, source, dataArray, barStore = [];
+  let isVisualizing = false;
+  let animationId;
+
+  // --- Resize visualizer dynamically ---
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // --- Initialize visualizer ---
+  async function startVisualizer(stream) {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 1024;
+      source = audioCtx.createMediaStreamSource(stream);
+      source.connect(analyser);
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+    }
+
+    isVisualizing = true;
+
+    function draw() {
+      if (!isVisualizing) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const h = canvas.height, baseY = Math.round(h / 2);
+
+      // baseline
+      ctx.save();
+      ctx.strokeStyle = "#fff";
+      ctx.shadowColor = "#fff";
+      ctx.shadowBlur = 8;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(0, baseY);
+      ctx.lineTo(canvas.width, baseY);
+      ctx.stroke();
+      ctx.restore();
+
+      analyser.getByteFrequencyData(dataArray);
+      const nLines = Math.floor(canvas.width / 5.2);
+      const xStep = canvas.width / nLines;
+      const sampleStep = dataArray.length / nLines;
+      const upMax = h * 0.33, downMax = h * 0.06;
+      const SMOOTH = 0.35, SENSITIVITY = 1.65;
+
+      for (let i = 0; i < nLines; i++) {
+        const idx = Math.floor(i * sampleStep);
+        let rawValue = dataArray[idx] / 255;
+        rawValue = Math.pow(rawValue, 1.03) * SENSITIVITY;
+        rawValue = Math.min(rawValue, 1);
+        if (!barStore[i]) barStore[i] = rawValue;
+        barStore[i] += (rawValue - barStore[i]) * SMOOTH;
+        const value = barStore[i];
+
+        const upLen = value * upMax;
+        const downLen = value * downMax;
+        const x = xStep * i + xStep / 2;
+
+        const blendGrad = ctx.createLinearGradient(x, baseY - upLen, x, baseY + downLen);
+        blendGrad.addColorStop(0.0, "#89edff");
+        blendGrad.addColorStop(0.45, "#fff");
+        blendGrad.addColorStop(0.53, "#fff");
+        blendGrad.addColorStop(0.85, "#fd89e9");
+        blendGrad.addColorStop(1.0, "#fd79d0");
+
+        ctx.save();
+        ctx.lineCap = "round";
+        ctx.strokeStyle = blendGrad;
+        ctx.shadowColor = "#a0eaff";
+        ctx.shadowBlur = 13;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(x, baseY + downLen);
+        ctx.lineTo(x, baseY - upLen);
+        ctx.stroke();
+        ctx.restore();
+      }
+      animationId = requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  function stopVisualizer() {
+  isVisualizing = false;
+  cancelAnimationFrame(animationId);
+
+  // clear and redraw baseline
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const h = canvas.height, baseY = Math.round(h / 2);
+  ctx.save();
+  ctx.strokeStyle = "#fff";
+  ctx.shadowColor = "#fff";
+  ctx.shadowBlur = 8;
+  ctx.lineWidth = 1.3;
+  ctx.beginPath();
+  ctx.moveTo(0, baseY);
+  ctx.lineTo(canvas.width, baseY);
+  ctx.stroke();
+  ctx.restore();
+}
+
+  // --- Speech Recognition ---
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    voiceStatus.textContent = "Speech recognition not supported.";
+    voiceBtn.disabled = true;
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+  recognition.continuous = false;
+
+  let micStream;
+
+  voiceBtn.onclick = async () => {
+    if (voiceBtn.classList.contains("active")) {
+      recognition.stop();
+      stopVisualizer();
+      voiceBtn.classList.remove("active");
+      voiceStatus.textContent = "Stopped";
+      return;
+    }
+
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      voiceBtn.classList.add("active");
+      voiceStatus.textContent = "Listening… 🎧";
+      startVisualizer(micStream);
+      recognition.start();
+    } catch (err) {
+      voiceStatus.textContent = "Mic access denied.";
+      console.error(err);
+    }
+  };
+
+  recognition.onresult = (event) => {
+    let finalTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      }
+    }
+    console.log("Heard:", finalTranscript);
+    voiceStatus.textContent = "Heard: " + finalTranscript;
+  };
+
+  recognition.onerror = (e) => {
+    console.error("STT Error:", e.error);
+    voiceStatus.textContent = "Error";
+    voiceBtn.classList.remove("active");
+    stopVisualizer();
+  };
+
+  recognition.onend = () => {
+    voiceStatus.textContent = "Idle";
+    voiceBtn.classList.remove("active");
+    stopVisualizer();
+  };
+});
+</script>
+  
+  
+  <script>
+const canvas = document.getElementById('radarCanvas');
+const ctx = canvas.getContext('2d');
+const distanceBox = document.getElementById('distanceBox');
+
+let width, height, centerX, centerY, radius;
+
+function resize() {
+  width = canvas.width = canvas.offsetWidth;
+  height = canvas.height = canvas.offsetHeight;
+  centerX = width / 2;
+  centerY = height;
+  radius = width / 2;
+}
+resize();
+window.addEventListener('resize', resize);
+
+let angle = 0;
+let detectedDistance = null;
+let radarStatus = "idle";
+const detections = [];
+const fadeTrail = 20;
+
+// -------- Fetch Data --------
+async function fetchRadarData() {
+  try {
+    const res = await fetch("/radar"); // same host as Flask
+    const data = await res.json();
+    angle = data.angle;
+    detectedDistance = data.distance;
+    radarStatus = data.status;
+  } catch (err) {
+    console.warn("⚠️ Radar fetch failed:", err);
+  }
+}
+setInterval(fetchRadarData, 100);
+
+// -------- Draw Radar --------
+function drawRadar() {
+  ctx.fillStyle = "rgba(14,17,23,0.25)";
+  ctx.fillRect(0, 0, width, height);
+
+  // grid rings
+  ctx.strokeStyle = "rgba(0,255,200,0.3)";
+  for (let i = 1; i <= 4; i++) {
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, (radius / 4) * i, Math.PI, 2 * Math.PI);
+    ctx.stroke();
+  }
+
+  // tick marks
+  ctx.save();
+  ctx.translate(centerX, centerY);
+  ctx.strokeStyle = "rgba(0,255,200,0.5)";
+  for (let deg = 0; deg <= 180; deg += 15) {
+    const rad = deg * Math.PI / 180;
+    const x1 = Math.cos(rad) * (radius - 10);
+    const y1 = -Math.sin(rad) * (radius - 10);
+    const x2 = Math.cos(rad) * radius;
+    const y2 = -Math.sin(rad) * radius;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // scanning line trail
+  for (let i = 0; i < fadeTrail; i++) {
+    const fadeAngle = angle - i * 1.5;
+    const fadeAlpha = 1 - i / fadeTrail;
+    const x = centerX + Math.cos(fadeAngle * Math.PI / 180) * radius;
+    const y = centerY - Math.sin(fadeAngle * Math.PI / 180) * radius;
+    const grad = ctx.createLinearGradient(centerX, centerY, x, y);
+    grad.addColorStop(0, "rgba(0,255,200,0.0)");
+    grad.addColorStop(1, `rgba(0,255,200,${0.12 * fadeAlpha})`);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
+
+  // main scanning line
+  const x = centerX + Math.cos(angle * Math.PI / 180) * radius;
+  const y = centerY - Math.sin(angle * Math.PI / 180) * radius;
+  ctx.strokeStyle = "#00ffee";
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+
+  // detected dots
+  const now = Date.now();
+  for (let i = detections.length - 1; i >= 0; i--) {
+    const d = detections[i];
+    const fade = 1 - (now - d.time) / 1500;
+    if (fade <= 0) detections.splice(i, 1);
+    else {
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, 4, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(0,255,150,${fade})`;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#00ffcc";
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  // push new dot when valid distance
+  if (detectedDistance && detectedDistance < 100) {
+    const distRatio = detectedDistance / 100;
+    const dx = centerX + Math.cos(angle * Math.PI / 180) * (radius * distRatio);
+    const dy = centerY - Math.sin(angle * Math.PI / 180) * (radius * distRatio);
+    detections.push({ x: dx, y: dy, time: Date.now() });
+  }
+
+  distanceBox.textContent =
+    `Status: ${radarStatus} | Object: ${detectedDistance ? detectedDistance.toFixed(1) + " cm" : "---"}`;
+
+  requestAnimationFrame(drawRadar);
+}
+drawRadar();
+
+
+  
+    /*
+     * ---- BACKEND SYNC LOGIC ----
+     * Connect your Pi or Arduino and send JSON:
+     * { angle: servoAngle, distance: measuredDistance }
+     * Then:
+     * socket.on('data', msg => {
+     *   const d = JSON.parse(msg.data);
+     *   angle = d.angle;
+     *   detectedDistance = d.distance;
+     *   const rad = d.angle * Math.PI / 180;
+     *   const dx = centerX + Math.cos(rad) * (radius * d.distance / 100);
+     *   const dy = centerY - Math.sin(rad) * (radius * d.distance / 100);
+     *   detections.push({ x: dx, y: dy, time: Date.now() });
+     * });
+     */
+  </script>
+  
+  <!-- button onclick="setState('backward','Forward')">Forward</button>
+  <button onclick="setState('forward','Backward')">Backward</button>
+  <button onclick="setState('right','Left')">Left</button>
+  <button onclick="setState('left','Right')">Right</button>
+  <button onclick="setState('idle','Idle')">Stop</button> -->
+  
+  <script>
+    async function updateWifiPanel() {
+  try {
+    const res = await fetch('fetch/wifi_status.php');
+    const data = await res.json();
+
+    document.getElementById('ssid').textContent = data.ssid;
+    document.getElementById('ip').textContent = data.ip;
+    document.getElementById('ping').textContent = data.ping + ' ms';
+    document.getElementById('signal-fill').style.width = data.signal + '%';
+    document.getElementById('stability').textContent = data.status;
+
+    const dot = document.getElementById('status-dot');
+    const linkStatus = document.getElementById('link-status');
+
+    if (data.signal > 20 && data.ping < 100) {
+      dot.style.background = '#00ffaa';
+      dot.style.boxShadow = '0 0 6px #00ffaa';
+      linkStatus.textContent = 'ONLINE';
+    } else {
+      dot.style.background = '#ff4444';
+      dot.style.boxShadow = '0 0 6px #ff4444';
+      linkStatus.textContent = 'UNSTABLE';
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+setInterval(updateWifiPanel, 5000); // update every 5s
+updateWifiPanel();
+  
+  </script>
+  
+</body>
+</html>
