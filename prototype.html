@@ -951,9 +951,11 @@
     <span id="voiceStatus">Idle</span>  
   </div>  
   
-  <div class="voice-display">  
-    <p id="liveText">Press 🎤 to start speaking</p>  
+
+  <div class="voice-display" style="overflow-y:auto; max-height:120px;">
+    <div id="liveText">Press 🎤 to start speaking</div>
   </div>  
+
       <div class="audio-visualizer-container">  
          <canvas id="visualizer"></canvas>  
         <button id="voiceBtn">  
@@ -961,11 +963,7 @@
       🎤  
     </button> 
 
- <div class="card" style="height: 150px; overflow-y: auto; padding: 8px;" id="aiBox">
-  <h4>AI Response</h4>
-  <div id="aiOutput" style="font-size:14px; line-height:1.4;"></div>
-</div>
-      
+
           
     </div>
 
@@ -1521,7 +1519,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function sendToAI(text) {
   const payload = {
-    model: "sonar-small", 
+    model: "sonar-small",
     messages: [{ role: "user", content: text }],
     max_tokens: 200
   };
@@ -1535,9 +1533,13 @@ async function sendToAI(text) {
   const data = await res.json();
   let reply = data.choices?.[0]?.message?.content || "(no reply)";
 
-  const box = document.getElementById("aiOutput");
+  const box = document.getElementById("liveText");
+
   box.innerHTML += `<div>➡️ <b>You:</b> ${text}</div>`;
-  box.innerHTML += `<div>🤖 <b>AI:</b> ${reply}</div><br>`;
+  box.innerHTML += `<div>🤖 <b>AI:</b> ${reply}</div>`;
+  box.innerHTML += `<div style="border-bottom:1px solid rgba(255,255,255,0.2); margin:4px 0;"></div>`;
+
+  // Auto-scroll inside same box
   box.parentNode.scrollTop = box.parentNode.scrollHeight;
 }
 
