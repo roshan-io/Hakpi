@@ -789,21 +789,6 @@
   }
 }
   
- .activate-btn {
-  background: linear-gradient(90deg, #00ffee44, #00ffaa33);
-  border: 1px solid #00ffee88;
-  color: #00fff0;
-  padding: 10px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-}
-.activate-btn:hover {
-  background: linear-gradient(90deg, #00ffee88, #00ffaa66);
-  box-shadow: 0 0 10px #00ffee88;
-}
-
   </style>
 </head>
 <body>
@@ -867,7 +852,7 @@
 
  <div class="weather-card">
     <div class="weather-city" id="city">Loading...</div>
-    <div class="weather-temp" id="temp">--°C</div>
+    <div class="weather-temp" id="temp">--Â°C</div>
     <div class="weather-desc" id="desc">--</div>
    </div>
   </div>
@@ -882,7 +867,7 @@
     
     <div class="card second-column">
           <div class="panel wifi-panel">
-  <h3>⚡ WI-FI LINK STATUS </h3>
+  <h3>âš¡ WI-FI LINK STATUS </h3>
 
   <div class="wifi-data">
     <p>SSID : <span id="ssid">--</span></p>
@@ -892,7 +877,7 @@
     </div>
 
     <p>IP   : <span id="ip">--</span></p>
-    <p>PING : <span id="ping">--</span> ⟫ <span id="stability">--</span></p>
+    <p>PING : <span id="ping">--</span> âŸ« <span id="stability">--</span></p>
 
     <p>LINK : <span class="status-dot" id="status-dot"></span>
       <span id="link-status">CHECKING...</span>
@@ -903,15 +888,13 @@
 
     
 <div class="card second-column">
+  
   <div class="radar-panel">
-    <div id="radar">
-      <canvas id="radarCanvas"></canvas>
-    </div>
-    <div id="distanceBox">
-      <button id="activateBtn" onclick="activateRadar()">Activate Radar</button>
-    </div>
+  <div id="radar">
+    <canvas id="radarCanvas"></canvas>
   </div>
-</div>
+  <div id="distanceBox">Object: ---</div>
+  </div>
   
   
 </div>
@@ -920,7 +903,7 @@
 <div class="chart-box">
     <div class="chart-header">
       <div class="chart-title">CPU Usage (%)</div>
-      <div id="tempDisplay">--°C</div>
+      <div id="tempDisplay">--Â°C</div>
     </div>
     <canvas id="cpuChart" height="130px" ></canvas>
   </div>
@@ -968,26 +951,26 @@
     <span id="voiceStatus">Idle</span>  
   </div>  
   
-
-  <div class="voice-display" style="overflow-y:auto; max-height:120px;">
-    <div id="liveText">Press 🎤 to start speaking</div>
+  <div class="voice-display">  
+    <p id="liveText">Press ðŸŽ¤ to start speaking</p>  
   </div>  
-
       <div class="audio-visualizer-container">  
          <canvas id="visualizer"></canvas>  
         <button id="voiceBtn">  
            <span class="glow-ring"></span>  
-      🎤  
+      ðŸŽ¤  
     </button> 
-
-
+</div>  
+  
+ 
+      
           
     </div>
 
 
 
 	<div class="fullscreen-btn" id="fullscreenToggle" title="Toggle Fullscreen">
-  <span id="fsIcon">⛶</span>
+  <span id="fsIcon">â›¶</span>
 	</div>
 
 </div>
@@ -1022,23 +1005,22 @@ if (!SpeechRecognition) {
   };
 
   recognition.onstart = () => {
-    voiceStatus.textContent = "Listening… 🎧";
+    voiceStatus.textContent = "Listeningâ€¦ ðŸŽ§";
     voiceBtn.classList.add("active");
   };
 
-recognition.onresult = (event) => {
-  let finalTranscript = "";
-  for (let i = event.resultIndex; i < event.results.length; i++) {
-    if (event.results[i].isFinal) {
-      finalTranscript += event.results[i][0].transcript;
+  recognition.onresult = (event) => {
+    let finalTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      }
     }
-  }
-  console.log("Heard:", finalTranscript);
-  voiceStatus.textContent = "Heard: " + finalTranscript;
 
-  // Send recognized text to AI
-  sendToAI(finalTranscript);
-};
+    // You can handle commands here using finalTranscript
+    console.log("Heard:", finalTranscript);
+    // e.g., trigger page navigation or other actions
+  };
 
   recognition.onerror = (e) => {
     voiceStatus.textContent = "Error";
@@ -1166,13 +1148,13 @@ updateClock(); // Initial call
     .then(data => {
       const weather = data.current_condition[0];
       document.getElementById("city").textContent = city;
-      document.getElementById("temp").textContent = `${weather.temp_C}°C`;
+      document.getElementById("temp").textContent = `${weather.temp_C}Â°C`;
       document.getElementById("desc").textContent =
         `${weather.weatherDesc[0].value} | Humidity: ${weather.humidity}%`;
     })
     .catch(err => {
       document.getElementById("city").textContent = "Failed to load";
-      document.getElementById("temp").textContent = "--°C";
+      document.getElementById("temp").textContent = "--Â°C";
       document.getElementById("desc").textContent = "Check network or wttr.in";
       console.error(err);
     });
@@ -1297,7 +1279,7 @@ document.getElementById('stopBtn').onclick = () => {
           const now = new Date().toLocaleTimeString();  
           const percent = parseFloat(data.usage);  
           const temp = data.temp;
-          const warning = temp > 60 ? ' ⚠️' : '';  
+          const warning = temp > 60 ? ' âš ï¸' : '';  
   
           if (cpuData.labels.length >= 30) {  
             cpuData.labels.shift();  
@@ -1307,7 +1289,7 @@ document.getElementById('stopBtn').onclick = () => {
           cpuData.datasets[0].data.push(percent);  
           cpuChart.update();  
   
-          document.getElementById('tempDisplay').textContent = ` ${temp}°C${warning}`;  
+          document.getElementById('tempDisplay').textContent = ` ${temp}Â°C${warning}`;  
         });  
     }  
   
@@ -1500,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       voiceBtn.classList.add("active");
-      voiceStatus.textContent = "Listening… 🎧";
+      voiceStatus.textContent = "Listeningâ€¦ ðŸŽ§";
       startVisualizer(micStream);
       recognition.start();
     } catch (err) {
@@ -1533,202 +1515,128 @@ document.addEventListener('DOMContentLoaded', () => {
     stopVisualizer();
   };
 });
-
-async function sendToAI(text) {
-  const payload = {
-    model: "sonar-small",
-    messages: [{ role: "user", content: text }],
-    max_tokens: 200
-  };
-
-  const res = await fetch("http://YOUR_PI_IP:5050/proxy/perplexity", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
-  const data = await res.json();
-  let reply = data.choices?.[0]?.message?.content || "(no reply)";
-
-  const box = document.getElementById("liveText");
-
-  box.innerHTML += `<div>➡️ <b>You:</b> ${text}</div>`;
-  box.innerHTML += `<div>🤖 <b>AI:</b> ${reply}</div>`;
-  box.innerHTML += `<div style="border-bottom:1px solid rgba(255,255,255,0.2); margin:4px 0;"></div>`;
-
-  // Auto-scroll inside same box
-  box.parentNode.scrollTop = box.parentNode.scrollHeight;
-}
-
-
 </script>
   
+  <script>
+    const canvas = document.getElementById('radarCanvas');
+    const ctx = canvas.getContext('2d');
+    const distanceBox = document.getElementById('distanceBox');
+    let width, height, centerX, centerY, radius;
 
- <script>
-const RADAR_URL = "http://192.168.168.104:4000"; // or use http://<your-raspberrypi-ip>:4000 if accessed from another device
-
-const canvas = document.getElementById('radarCanvas');
-const ctx = canvas.getContext('2d');
-const distanceBox = document.getElementById('distanceBox');
-
-let width, height, centerX, centerY, radius;
-
-// -------- Resize Handling --------
-function resize() {
-  width = canvas.width = canvas.offsetWidth;
-  height = canvas.height = canvas.offsetHeight;
-  centerX = width / 2;
-  centerY = height;
-  radius = width / 2;
-}
-resize();
-window.addEventListener('resize', resize);
-
-// -------- Radar Data --------
-let angle = 0;
-let detectedDistance = null;
-let radarStatus = "inactive";
-let radarActive = false;
-const detections = [];
-const fadeTrail = 20;
-
-// -------- Activation Button --------
-distanceBox.innerHTML = `<button id="activateBtn" class="activate-btn">Activate Radar</button>`;
-
-document.getElementById('activateBtn').addEventListener('click', async () => {
-  distanceBox.innerHTML = "⏳ Initializing radar...";
-  try {
-    const res = await fetch(`${RADAR_URL}/activate`, { method: "POST" });
-    const data = await res.json();
-    if (data.message) {
-      radarActive = true;
-      radarStatus = "starting";
-      distanceBox.innerHTML = "🌀 Radar Active — scanning...";
-    } else {
-      throw new Error(data.error || "Activation failed");
+    function resize() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      centerX = width / 2;
+      centerY = height;
+      radius = width / 2;
     }
-  } catch (err) {
-    distanceBox.innerHTML = "❌ Failed to activate radar";
-    console.error(err);
-  }
-});
 
-// -------- Fetch Data from Backend --------
-async function fetchRadarData() {
-  if (!radarActive) return;
-  try {
-    const res = await fetch(`${RADAR_URL}/radar`);
-    const data = await res.json();
-    angle = data.angle;
-    detectedDistance = data.distance;
-    radarStatus = data.status || "active";
-  } catch (err) {
-    console.warn("⚠️ Radar fetch failed:", err);
-  }
-}
-setInterval(fetchRadarData, 100);
+    resize();
+    window.addEventListener('resize', resize);
 
-// -------- Draw Radar --------
-function drawRadar() {
-  ctx.fillStyle = "rgba(14,17,23,0.25)";
-  ctx.fillRect(0, 0, width, height);
+    let angle = 0;
+    let dir = 1; // 1 = right, -1 = left
+    const sweepSpeed = 0.6;
+    const fadeTrail = 20;
 
-  // grid rings
-  ctx.strokeStyle = "rgba(0,255,200,0.3)";
-  for (let i = 1; i <= 4; i++) {
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, (radius / 4) * i, Math.PI, 2 * Math.PI);
-    ctx.stroke();
-  }
+    let detectedDistance = null;
+    const detections = []; // store detected dots
 
-  // tick marks
-  ctx.save();
-  ctx.translate(centerX, centerY);
-  ctx.strokeStyle = "rgba(0,255,200,0.5)";
-  for (let deg = 0; deg <= 180; deg += 15) {
-    const rad = deg * Math.PI / 180;
-    const x1 = Math.cos(rad) * (radius - 10);
-    const y1 = -Math.sin(rad) * (radius - 10);
-    const x2 = Math.cos(rad) * radius;
-    const y2 = -Math.sin(rad) * radius;
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-  }
-  ctx.restore();
+    function drawRadar() {
+      ctx.fillStyle = "rgba(14, 17, 23, 0.25)";
+      ctx.fillRect(0, 0, width, height);
 
-  // scanning line trail
-  for (let i = 0; i < fadeTrail; i++) {
-    const fadeAngle = angle - i * 1.5;
-    const fadeAlpha = 1 - i / fadeTrail;
-    const x = centerX + Math.cos(fadeAngle * Math.PI / 180) * radius;
-    const y = centerY - Math.sin(fadeAngle * Math.PI / 180) * radius;
-    const grad = ctx.createLinearGradient(centerX, centerY, x, y);
-    grad.addColorStop(0, "rgba(0,255,200,0.0)");
-    grad.addColorStop(1, `rgba(0,255,200,${0.12 * fadeAlpha})`);
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.lineTo(x, y);
-    ctx.stroke();
-  }
+      // Radar grid rings
+      ctx.strokeStyle = "rgba(0,255,200,0.3)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 4; i++) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, (radius / 4) * i, Math.PI, 2 * Math.PI);
+        ctx.stroke();
+      }
 
-  // main scanning line
-  const x = centerX + Math.cos(angle * Math.PI / 180) * radius;
-  const y = centerY - Math.sin(angle * Math.PI / 180) * radius;
-  ctx.strokeStyle = "#00ffee";
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.moveTo(centerX, centerY);
-  ctx.lineTo(x, y);
-  ctx.stroke();
+      // Outer tick marks (every 15Â°, no labels)
+      ctx.save();
+      ctx.translate(centerX, centerY);
+      ctx.strokeStyle = "rgba(0,255,200,0.5)";
+      for (let deg = 0; deg <= 180; deg += 15) {
+        const rad = deg * Math.PI / 180;
+        const x1 = Math.cos(rad) * (radius - 10);
+        const y1 = -Math.sin(rad) * (radius - 10);
+        const x2 = Math.cos(rad) * radius;
+        const y2 = -Math.sin(rad) * radius;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+      ctx.restore();
 
-  // detected dots
-  const now = Date.now();
-  for (let i = detections.length - 1; i >= 0; i--) {
-    const d = detections[i];
-    const fade = 1 - (now - d.time) / 1500;
-    if (fade <= 0) detections.splice(i, 1);
-    else {
+      // Fade trail behind scanning line
+      for (let i = 0; i < fadeTrail; i++) {
+        const fadeAngle = angle - i * dir * 1.5;
+        const fadeAlpha = 1 - i / fadeTrail;
+        const x = centerX + Math.cos(fadeAngle * Math.PI / 180) * radius;
+        const y = centerY - Math.sin(fadeAngle * Math.PI / 180) * radius;
+        const grad = ctx.createLinearGradient(centerX, centerY, x, y);
+        grad.addColorStop(0, `rgba(0,255,200,0.0)`);
+        grad.addColorStop(1, `rgba(0,255,200,${0.12 * fadeAlpha})`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+
+      // Main scanning line
+      const x = centerX + Math.cos(angle * Math.PI / 180) * radius;
+      const y = centerY - Math.sin(angle * Math.PI / 180) * radius;
+      ctx.strokeStyle = "#00ffee";
+      ctx.lineWidth = 2.5;
       ctx.beginPath();
-      ctx.arc(d.x, d.y, 4, 0, 2 * Math.PI);
-      ctx.fillStyle = `rgba(0,255,150,${fade})`;
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = "#00ffcc";
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.moveTo(centerX, centerY);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+
+      // Draw detected spots (fade out)
+      const now = Date.now();
+      for (let i = detections.length - 1; i >= 0; i--) {
+        const d = detections[i];
+        const fade = 1 - (now - d.time) / 1500;
+        if (fade <= 0) detections.splice(i, 1);
+        else {
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, 4, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(0,255,150,${fade})`;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = "#00ffcc";
+          ctx.fill();
+          ctx.shadowBlur = 0;
+        }
+      }
+
+      // Simulated detection (replace with sensor logic)
+      if (Math.random() < 0.02) {
+        detectedDistance = Math.floor(Math.random() * 100) + 10;
+        const rad = angle * Math.PI / 180;
+        const distRatio = detectedDistance / 100;
+        const dx = centerX + Math.cos(rad) * (radius * distRatio);
+        const dy = centerY - Math.sin(rad) * (radius * distRatio);
+        detections.push({ x: dx, y: dy, time: Date.now() });
+      }
+
+      distanceBox.textContent = detectedDistance
+        ? `Object: ${detectedDistance} cm`
+        : "Object: ---";
+
+      angle += dir * sweepSpeed;
+      if (angle >= 180 || angle <= 0) dir *= -1;
+
+      requestAnimationFrame(drawRadar);
     }
-  }
 
-  // push new dot when valid distance
-  if (radarActive && detectedDistance && detectedDistance < 100) {
-    const distRatio = detectedDistance / 100;
-    const dx = centerX + Math.cos(angle * Math.PI / 180) * (radius * distRatio);
-    const dy = centerY - Math.sin(angle * Math.PI / 180) * (radius * distRatio);
-    detections.push({ x: dx, y: dy, time: Date.now() });
-  }
-
-  // live status text
-  if (radarActive) {
-    distanceBox.textContent =
-      `Status: ${radarStatus} | Object: ${detectedDistance ? detectedDistance.toFixed(1) + " cm" : "---"}`;
-  }
-
-  requestAnimationFrame(drawRadar);
-}
-drawRadar();
-
-// -------- Auto Stop When Tab Closed --------
-window.addEventListener("beforeunload", () => {
-  if (radarActive) {
-    navigator.sendBeacon(`${RADAR_URL}/stop`);
-  }
-});
-
-      
-
+    drawRadar();
 
     /*
      * ---- BACKEND SYNC LOGIC ----
@@ -1746,8 +1654,6 @@ window.addEventListener("beforeunload", () => {
      * });
      */
   </script>
-
-
   
   <!-- button onclick="setState('backward','Forward')">Forward</button>
   <button onclick="setState('forward','Backward')">Backward</button>
