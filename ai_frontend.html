@@ -1,0 +1,206 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+
+   canvas#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+    :root {
+      --bg: #0e1117;
+      --card: #161b22;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --border: #30363d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      margin: 0;
+      background: black;
+
+    }
+
+  .voice-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  background: radial-gradient(circle at top left, #0a0a0f, #0d0d16);
+  box-shadow: 0 0 20px rgba(150, 100, 255, 0.2);
+  border-radius: 1.2rem;
+  padding: 1rem;
+  color: #e0e0ff;
+  position: relative;
+  overflow: hidden;
+}
+
+.voice-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, #a46bff22, #ff79c622);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.voice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+#voiceStatus {
+  color: #a46bff;
+  font-family: monospace;
+}
+
+.voice-display {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 0.8rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  font-size: 0.95rem;
+  color: #dcdcff;
+  text-shadow: 0 0 4px #a46bff55;
+  overflow-y: auto;
+  max-height: 100px;
+  transition: 0.2s;
+}
+
+.voice-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.audio-visualizer-container {
+  position: relative;
+  width: 80%;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: transparent;
+  gap: 30px; /* small space between visualizer and mic */
+}
+
+#visualizer {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: transparent;
+  display: block;
+  position: relative;
+}
+
+/* Mic button positioned slightly above the visualizer's bottom line */
+#voiceBtn {
+  position: relative;
+  bottom: 15px;              /* lift mic slightly above visualizer baseline */
+  width: 47px;
+  height: 47px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #a46bff, #ff79c6);
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;            /* prevent size shrink when resizing */
+  margin-bottom: 0px;
+}
+
+#voiceBtn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px #ff79c688;
+}
+
+#voiceBtn.active {
+  box-shadow: 0 0 25px 4px #a46bffaa;
+  animation: pulse 1.2s infinite;
+}
+
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 8px 2px #a46bff55; }
+  50% { box-shadow: 0 0 20px 5px #ff79c655; }
+  100% { box-shadow: 0 0 8px 2px #a46bff55; }
+}
+
+</style>
+</head>  
+
+
+<body>
+
+    <div class="card double-height ">
+
+
+    <div class="voice-header">  
+    <h3>Voice Input</h3>  
+    <span id="voiceStatus">Idle</span>  
+  </div>  
+
+  <div class="voice-display">  
+    <p id="liveText">Press ðŸŽ¤ to start speaking</p>  
+  </div>  
+      <div class="audio-visualizer-container">  
+         <canvas id="visualizer"></canvas>  
+        <button id="voiceBtn">  
+           <span class="glow-ring"></span>  
+      ðŸŽ¤  
+    </button> 
+</div>  
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
