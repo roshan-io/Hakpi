@@ -192,9 +192,301 @@
 
 
 
+<script>
+//script for buttons
+
+function performAction(action) {
+  fetch('fetch/button.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'action=' + action
+  })
+  .then(response => response.text())
+  .then(result => alert(result));
+}
+</script>
+
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const canvas = document.getElementById('visualizer');
+  const ctx = canvas.getContext('2d');
+  const voiceBtn = document.getElementById('voiceBtn');
+  const voiceStatus = document.getElementById('voiceStatus');
+
+  let audioCtx, analyser, source, dataArray, barStore = [];
+  let isVisualizing = false;
+  let animationId;
+
+  // --- Resize visualizer dynamically ---
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // --- Initialize visualizer ---
+  async function startVisualizer(stream) {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 1024;
+      source = audioCtx.createMediaStreamSource(stream);
+      source.connect(analyser);
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+    }
+
+    isVisualizing = true;
+
+    function draw() {
+      if (!isVisualizing) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const h = canvas.height, baseY = Math.round(h / 2);
+
+      // baseline
+      ctx.save();
+      ctx.strokeStyle = "#fff";
+      ctx.shadowColor = "#fff";
+      ctx.shadowBlur = 8;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(0, baseY);
+      ctx.lineTo(canvas.width, baseY);
+      ctx.stroke();
+      ctx.restore();
+
+      analyser.getByteFrequencyData(dataArray);
+      const nLines = Math.floor(canvas.width / 5.2);
+      const xStep = canvas.width / nLines;
+      const sampleStep = dataArray.length / nLines;
+      const upMax = h * 0.33, downMax = h * 0.06;
+      const SMOOTH = 0.35, SENSITIVITY = 1.65;
+
+      for (let i = 0; i < nLines; i++) {
+        const idx = Math.floor(i * sampleStep);
+        let rawValue = dataArray[idx] / 255;
+        rawValue = Math.pow(rawValue, 1.03) * SENSITIVITY;
+        rawValue = Math.min(rawValue, 1);
+        if (!barStore[i]) barStore[i] = rawValue;
+        barStore[i] += (rawValue - barStore[i]) * SMOOTH;
+        const value = barStore[i];
+
+        const upLen = value * upMax;
+        const downLen = value * downMax;
+        const x = xStep * i + xStep / 2;
+
+        const blendGrad = ctx.createLinearGradient(x, baseY - upLen, x, baseY + downLen);
+        blendGrad.addColorStop(0.0, "#89edff");
+        blendGrad.addColorStop(0.45, "#fff");
+        blendGrad.addColorStop(0.53, "#fff");
+        blendGrad.addColorStop(0.85, "#fd89e9");
+        blendGrad.addColorStop(1.0, "#fd79d0");
+
+        ctx.save();
+        ctx.lineCap = "round";
+        ctx.strokeStyle = blendGrad;
+        ctx.shadowColor = "#a0eaff";
+        ctx.shadowBlur = 13;
+        ctx.lineWidth = 2.2;
+        ctx.beginPath();
+        ctx.moveTo(x, baseY + downLen);
+        ctx.lineTo(x, baseY - upLen);
+        ctx.stroke();
+        ctx.restore();
+      }
+      animationId = requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  function stopVisualizer() {
+  isVisualizing = false;
+  cancelAnimationFrame(animationId);
+
+  // clear and redraw baseline
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const h = canvas.height, baseY = Math.round(h / 2);
+  ctx.save();
+  ctx.strokeStyle = "#fff";
+  ctx.shadowColor = "#fff";
+  ctx.shadowBlur = 8;
+  ctx.lineWidth = 1.3;
+  ctx.beginPath();
+  ctx.moveTo(0, baseY);
+  ctx.lineTo(canvas.width, baseY);
+  ctx.stroke();
+  ctx.restore();
+}
+
+  // --- Speech Recognition ---
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    voiceStatus.textContent = "Speech recognition not supported.";
+    voiceBtn.disabled = true;
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = false;
+  recognition.continuous = false;
+
+  let micStream;
+
+  voiceBtn.onclick = async () => {
+    if (voiceBtn.classList.contains("active")) {
+      recognition.stop();
+      stopVisualizer();
+      voiceBtn.classList.remove("active");
+      voiceStatus.textContent = "Stopped";
+      return;
+    }
+
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      voiceBtn.classList.add("active");
+      voiceStatus.textContent = "Listeningâ€¦ ðŸŽ§";
+      startVisualizer(micStream);
+      recognition.start();
+    } catch (err) {
+      voiceStatus.textContent = "Mic access denied.";
+      console.error(err);
+    }
+  };
+
+  recognition.onresult = (event) => {
+    let finalTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      }
+    }
+    console.log("Heard:", finalTranscript);
+    voiceStatus.textContent = "Heard: " + finalTranscript;
+  };
+
+  recognition.onerror = (e) => {
+    console.error("STT Error:", e.error);
+    voiceStatus.textContent = "Error";
+    voiceBtn.classList.remove("active");
+    stopVisualizer();
+  };
+
+  recognition.onend = () => {
+    voiceStatus.textContent = "Idle";
+    voiceBtn.classList.remove("active");
+    stopVisualizer();
+  };
+});
+</script>
 
 
 
+
+  <script>
+
+const voiceBtn = document.getElementById("voiceBtn");
+const voiceStatus = document.getElementById("voiceStatus");
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (!SpeechRecognition) {
+  voiceStatus.textContent = "Speech recognition not supported.";
+  voiceBtn.disabled = true;
+} else {
+  const recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = false; // no live transcription
+  recognition.continuous = false;
+
+  voiceBtn.onclick = async () => {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      recognition.start();
+    } catch (err) {
+      voiceStatus.textContent = "Mic access denied.";
+    }
+  };
+
+  recognition.onstart = () => {
+    voiceStatus.textContent = "Listeningâ€¦ ðŸŽ§";
+    voiceBtn.classList.add("active");
+  };
+
+  recognition.onresult = (event) => {
+    let finalTranscript = "";
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        finalTranscript += event.results[i][0].transcript;
+      }
+    }
+
+    // You can handle commands here using finalTranscript
+    console.log("Heard:", finalTranscript);
+    // e.g., trigger page navigation or other actions
+  };
+
+  recognition.onerror = (e) => {
+    voiceStatus.textContent = "Error";
+    console.error("STT Error:", e.error);
+    voiceBtn.classList.remove("active");
+  };
+
+  recognition.onend = () => {
+    voiceStatus.textContent = "Idle";
+    voiceBtn.classList.remove("active");
+  };
+}    
+
+</script>
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+
+
+        function updateClock() {
+  const timeElement = document.getElementById('time');
+  const periodElement = document.getElementById('period');
+  const dateElement = document.getElementById('date');
+
+  const now = new Date();
+
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  const period = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+
+  const timeString = `${hours}:${minutes}`;
+  const weekday = now.toLocaleString('default', { weekday: 'long' });
+  const month = now.toLocaleString('default', { month: 'long' });
+  const dateString = `${weekday}, ${now.getDate()} ${month} ${now.getFullYear()}`;
+
+  timeElement.textContent = timeString;
+  periodElement.textContent = period;
+  dateElement.textContent = dateString;
+}
+
+setInterval(updateClock, 1000);
+updateClock(); // Initial call
+
+
+ </script>
+
+</body>
+</html>
 
 
 
