@@ -45,19 +45,7 @@
 
     }
 
-  .voice-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: center;
-  background: radial-gradient(circle at top left, #0a0a0f, #0d0d16);
-  box-shadow: 0 0 20px rgba(150, 100, 255, 0.2);
-  border-radius: 1.2rem;
-  padding: 1rem;
-  color: #e0e0ff;
-  position: relative;
-  overflow: hidden;
-}
+ 
 
 .voice-card::before {
   content: "";
@@ -68,32 +56,14 @@
   mix-blend-mode: overlay;
 }
 
-.voice-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 500;
-  font-size: 1rem;
-}
+
 
 #voiceStatus {
   color: #a46bff;
   font-family: monospace;
 }
 
-.voice-display {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 0.8rem;
-  margin: 1rem 0;
-  padding: 1rem;
-  font-size: 0.95rem;
-  color: #dcdcff;
-  text-shadow: 0 0 4px #a46bff55;
-  overflow-y: auto;
-  max-height: 100px;
-  transition: 0.2s;
-}
+
 
 .voice-controls {
   display: flex;
@@ -102,17 +72,6 @@
 }
 
 
-.audio-visualizer-container {
-  position: relative;
-  width: 80%;
-  height: 120px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  background: transparent;
-  gap: 30px; /* small space between visualizer and mic */
-}
 
 #visualizer {
   width: 100%;
@@ -126,7 +85,7 @@
 /* Mic button positioned slightly above the visualizer's bottom line */
 #voiceBtn {
   position: relative;
-  bottom: 15px;              /* lift mic slightly above visualizer baseline */
+  bottom: 10px;              /* lift mic slightly above visualizer baseline */
   width: 47px;
   height: 47px;
   border-radius: 50%;
@@ -158,36 +117,101 @@
   100% { box-shadow: 0 0 8px 2px #a46bff55; }
 }
 
+
+/* ====== Centering the whole card ====== */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at center, #050510 0%, #000 100%);
+  overflow: hidden;
+}
+
+/* ====== Voice card adjustments ====== */
+.voice-card {
+  width: 340px;
+  max-width: 90%;
+  min-height: 360px;
+  background: radial-gradient(circle at top left, #0a0a0f, #0d0d16);
+  border: 1px solid #2a2a33;
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  box-shadow: 0 0 35px rgba(150, 100, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth text alignment and sizing */
+.voice-header h3 {
+  font-family: 'Russo One', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.voice-display {
+  margin: 1.2rem 0;
+  font-family: 'Chakra Petch', sans-serif;
+  line-height: 1.5;
+}
+
+/* Make sure visualizer fits nicely */
+.audio-visualizer-container {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+}
+
+/* Adjust mic position */
+#voiceBtn {
+  bottom: 10px;
+}
+
+/* Optional: glowing backdrop */
+.main-container::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #8a2be255 0%, transparent 70%);
+  filter: blur(120px);
+  z-index: 0;
+}
+
 </style>
 </head>  
 
 
 <body>
 
-    <div class="card double-height ">
+   <body>
 
+  <div class="main-container">
+    <div class="voice-card">
+      <div class="voice-header">
+        <h3>Voice Input</h3>
+        <span id="voiceStatus">Idle</span>
+      </div>
 
-    <div class="voice-header">  
-    <h3>Voice Input</h3>  
-    <span id="voiceStatus">Idle</span>  
-  </div>  
+      <div class="voice-display">
+        <p id="liveText">Press 🎤 to start speaking</p>
+      </div>
 
-  <div class="voice-display">  
-    <p id="liveText">Press ðŸŽ¤ to start speaking</p>  
-  </div>  
-      <div class="audio-visualizer-container">  
-         <canvas id="visualizer"></canvas>  
-        <button id="voiceBtn">  
-           <span class="glow-ring"></span>  
-      ðŸŽ¤  
-    </button> 
-</div>  
-
-
-
-
+      <div class="audio-visualizer-container">
+        <canvas id="visualizer"></canvas>
+        <button id="voiceBtn">🎤</button>
+      </div>
     </div>
+  </div>
 
+</body>
 
 
 
