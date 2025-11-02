@@ -46,143 +46,130 @@
     }
 
  
+/* ========= VOICE SECTION (Dashboard Style) ========= */
 
-.voice-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, #a46bff22, #ff79c622);
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-
-
-
-#voiceStatus {
-  color: #a46bff;
-  font-family: monospace;
-}
-
-
-
-.voice-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-
-#visualizer {
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  background: transparent;
-  display: block;
-  position: relative;
-}
-
-/* Mic button positioned slightly above the visualizer's bottom line */
-#voiceBtn {
-  position: relative;
-  bottom: 10px;              /* lift mic slightly above visualizer baseline */
-  width: 47px;
-  height: 47px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #a46bff, #ff79c6);
-  border: none;
-  color: #fff;
-  font-size: 1.1rem;
-  cursor: pointer;
-  outline: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex-shrink: 0;            /* prevent size shrink when resizing */
-  margin-bottom: 0px;
-}
-
-#voiceBtn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 15px #ff79c688;
-}
-
-#voiceBtn.active {
-  box-shadow: 0 0 25px 4px #a46bffaa;
-  animation: pulse 1.2s infinite;
-}
-
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 8px 2px #a46bff55; }
-  50% { box-shadow: 0 0 20px 5px #ff79c655; }
-  100% { box-shadow: 0 0 8px 2px #a46bff55; }
-}
-
-
-/* ====== Centering the whole card ====== */
-.main-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: radial-gradient(circle at center, #050510 0%, #000 100%);
-  overflow: hidden;
-}
-
-/* ====== Voice card adjustments ====== */
 .voice-card {
-  width: 340px;
-  max-width: 90%;
-  min-height: 360px;
-  background: radial-gradient(circle at top left, #0a0a0f, #0d0d16);
-  border: 1px solid #2a2a33;
-  border-radius: 1.2rem;
-  padding: 1.2rem;
-  box-shadow: 0 0 35px rgba(150, 100, 255, 0.25);
+  background: #0e1117;
+  border: 1px solid #20242c;
+  border-radius: 14px;
+  box-shadow: 0 0 20px rgba(120, 80, 255, 0.08);
+  padding: 1rem 1.2rem;
+  color: var(--text);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  z-index: 1;
-}
-
-/* Smooth text alignment and sizing */
-.voice-header h3 {
-  font-family: 'Russo One', sans-serif;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-}
-
-.voice-display {
-  margin: 1.2rem 0;
-  font-family: 'Chakra Petch', sans-serif;
-  line-height: 1.5;
-}
-
-/* Make sure visualizer fits nicely */
-.audio-visualizer-container {
   width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: relative;
+  max-width: 420px;
+  min-height: 180px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
-/* Adjust mic position */
-#voiceBtn {
-  bottom: 10px;
-}
-
-/* Optional: glowing backdrop */
-.main-container::before {
+/* soft glass overlay glow */
+.voice-card::before {
   content: "";
   position: absolute;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #8a2be255 0%, transparent 70%);
-  filter: blur(120px);
-  z-index: 0;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(164, 107, 255, 0.06), rgba(255, 121, 198, 0.04));
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* header bar */
+.voice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Russo One', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  color: #c9d1d9;
+}
+
+/* small status indicator */
+#voiceStatus {
+  color: #a46bff;
+  font-family: 'Chakra Petch', monospace;
+  font-size: 0.85rem;
+}
+
+/* display area (text shown while idle/listening) */
+.voice-display {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  margin: 0.9rem 0;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 0.9rem;
+  color: #cfcfff;
+  text-shadow: 0 0 6px rgba(164, 107, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* visualizer area (horizontal waveform feel) */
+.audio-visualizer-container {
+  position: relative;
+  width: 100%;
+  height: 55px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+#visualizer {
+  flex: 1;
+  height: 4px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #a46bff, #ff79c6);
+  opacity: 0.7;
+}
+
+/* microphone button */
+#voiceBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background: linear-gradient(135deg, #a46bff, #ff79c6);
+  color: white;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#voiceBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #ff79c688;
+}
+
+#voiceBtn.active {
+  box-shadow: 0 0 15px 3px rgba(164, 107, 255, 0.6);
+  animation: pulse 1.2s infinite;
+}
+
+/* glowing pulse while recording */
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px 2px rgba(164, 107, 255, 0.4); }
+  50% { box-shadow: 0 0 18px 4px rgba(255, 121, 198, 0.5); }
+  100% { box-shadow: 0 0 10px 2px rgba(164, 107, 255, 0.4); }
+}
+
+/* optional centering (if used standalone) */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000;
 }
 
 </style>
